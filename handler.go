@@ -16,34 +16,43 @@ type Filter struct {
 
 func apply_filter(img image.Image, start image.Point, end image.Point, f Filter) {
 
-  n := 10
-  for i := 0; i < n; i ++ {
-    go func() {
-      rank := i
+    n := 10
+    done := make(chan bool, n)
 
-      for x := start.X + rank; x <= end.X; x += n {
-        for y := start.Y; y <= end.Y; y++ {
-          sum_r := float64(0)
-          sum_g := float64(0)
-          sum_b := float64(0)
+    for p := 0; p < n; p ++ {
+        aux_rank := p
+        go func() {
+            rank := aux_rank
 
-          for i := -1; i <= 1; i++ {
-            for j := -1; j <= 1; j++ {
-              // values are returned as uint16
-              r, g, b, _ := img.At(x + i, y + j).RGBA()
+            for x := start.X + rank; x <= end.X; x += n {
+                for y := start.Y; y <= end.Y; y++ {
+                    sum_r := float64(0)
+                    sum_g := float64(0)
+                    sum_b := float64(0)
 
-              sum_r += float64(r) * f.mat[i + 1][j + 1]
-              sum_g += float64(g) * f.mat[i + 1][j + 1]
-              sum_b += float64(b) * f.mat[i + 1][j + 1]
+                    for i := -1; i <= 1; i++ {
+                        for j := -1; j <= 1; j++ {
+                            // values are returned as uint16
+                            r, g, b, _ := img.At(x + i, y + j).RGBA()
+
+                          sum_r += float64(r) * f.mat[i + 1][j + 1]
+                          sum_g += float64(g) * f.mat[i + 1][j + 1]
+                          sum_b += float64(b) * f.mat[i + 1][j + 1]
+                        }
+                    }
+
+                    _, _, _, alpha := img.At(x, y).RGBA();
+                    img.(draw.Image).Set(x, y, color.RGBA{uint8(uint64(sum_r) >> 8), uint8(uint64(sum_g) >> 8), uint8(uint64(sum_b) >> 8), uint8(alpha >> 24)})
+                }
             }
-          }
 
-          _, _, _, alpha := img.At(x, y).RGBA();
-          img.(draw.Image).Set(x, y, color.RGBA{uint8(uint64(sum_r) >> 8), uint8(uint64(sum_g) >> 8), uint8(uint64(sum_b) >> 8), uint8(alpha >> 24)})
-        }
-      }
-    } ()
-  }
+            done <- true;
+        } ()
+    }
+
+    for i := 0; i < n; i++ {
+        <-done
+    }
 }
 
 func min(a, b uint32) uint32 {
@@ -77,12 +86,15 @@ func resize(orig image.Image, ret image.Image) {
     height_ratio := float64(orig_bounds.Max.Y - orig_bounds.Min.Y) / float64(ret_bounds.Max.Y - ret_bounds.Min.Y)
     width_ratio := float64(orig_bounds.Max.X - orig_bounds.Min.X) / float64(ret_bounds.Max.X - ret_bounds.Min.X)
 
-    // n := 10
-    // for p := 0; p < n; p ++ {
-    //     go func() {
-    //         rank := p
+    n := 10
+    done := make(chan bool, n)
 
-            for y := ret_bounds.Min.Y /*+ rank*/; y <= ret_bounds.Max.Y; y ++/*+= n*/ {
+    for p := 0; p < n; p ++ {
+        aux_rank := p
+        go func() {
+            rank := aux_rank
+
+            for y := ret_bounds.Min.Y + rank; y <= ret_bounds.Max.Y; y += n {
                 for x := ret_bounds.Min.X; x <= ret_bounds.Max.X; x++ {
 
                      r11, g11, b11, a11 := orig.At(scale_index(x, width_ratio), scale_index(y, height_ratio)).RGBA()
@@ -108,8 +120,14 @@ func resize(orig image.Image, ret image.Image) {
                      ret.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
                 }
             }
-    //     } ()
-    // }
+
+            done <- true;
+        } ()
+    }
+
+    for i := 0; i < n; i++ {
+        <-done
+    }
 
 }
 
@@ -126,7 +144,7 @@ func main() {
 
   // apply_filter(card, image.Point {10, 10}, image.Point {100, 100}, f)
 
-  card := image.NewRGBA(image.Rect(0, 0, 1000, 400))
+  card := image.NewRGBA(image.Rect(0, 0, 1750, 400))
   resize(img, card)
 
   fmt.Println("done!")
