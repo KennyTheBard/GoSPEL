@@ -12,8 +12,8 @@
 - [ ] Extend filter appliance to support strength parameter
 
 # Refactoring
-- [ ] Move each group functions into a package and folder on its one
-- [ ] Ensure correct importing of auxiliary functions
+- [x] Move each group functions into a package and folder on its one
+- [x] Ensure correct importing of auxiliary functions
 
 # Testing
 - [ ] Write unit tests for filter appliance
