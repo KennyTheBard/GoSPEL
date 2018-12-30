@@ -9,7 +9,7 @@
 
 # Implementing
 - [ ] Extend rescaling to bicubic interpolation
-- [ ] Extend filter appliance to support strength parameter
+- [x] Extend filter appliance to support strength parameter
 
 # Refactoring
 - [x] Move each group functions into a package and folder on its one
