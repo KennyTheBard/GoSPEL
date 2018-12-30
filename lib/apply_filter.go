@@ -12,6 +12,8 @@ type Filter struct {
 
 func Apply_filter(img image.Image, start image.Point, end image.Point, f Filter, strength int) {
 
+    aux_img := image.Image(image.NewRGBA(image.Rect(img.Bounds().Min.X, img.Bounds().Min.Y, img.Bounds().Max.X, img.Bounds().Max.X)))
+
     for i := 0; i < strength; i++ {
         n := 10
         done := make(chan bool, n)
@@ -26,20 +28,21 @@ func Apply_filter(img image.Image, start image.Point, end image.Point, f Filter,
                         sum_r := float64(0)
                         sum_g := float64(0)
                         sum_b := float64(0)
+                        sum_a := float64(0)
 
-                        for i := -1; i <= 1; i++ {
-                            for j := -1; j <= 1; j++ {
+                        for i := - len(f.Mat) / 2; i <= len(f.Mat) / 2; i++ {
+                            for j := - len(f.Mat[i + len(f.Mat) / 2]) / 2; j <= len(f.Mat[i + len(f.Mat) / 2]) / 2; j++ {
                                 // values are returned as uint16
-                                r, g, b, _ := img.At(x + i, y + j).RGBA()
+                                r, g, b, a := img.At(x + i, y + j).RGBA()
 
-                                sum_r += float64(r) * f.Mat[i + 1][j + 1]
-                                sum_g += float64(g) * f.Mat[i + 1][j + 1]
-                                sum_b += float64(b) * f.Mat[i + 1][j + 1]
+                                sum_r += float64(r) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
+                                sum_g += float64(g) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
+                                sum_b += float64(b) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
+                                sum_a += float64(a) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
                             }
                         }
 
-                        _, _, _, alpha := img.At(x, y).RGBA();
-                        img.(draw.Image).Set(x, y, color.RGBA{uint8(uint64(sum_r) >> 8), uint8(uint64(sum_g) >> 8), uint8(uint64(sum_b) >> 8), uint8(alpha >> 8)})
+                        aux_img.(draw.Image).Set(x, y, color.RGBA{uint8(uint64(sum_r) >> 8), uint8(uint64(sum_g) >> 8), uint8(uint64(sum_b) >> 8), uint8(uint64(sum_a) >> 8)})
                     }
                 }
 
@@ -49,6 +52,9 @@ func Apply_filter(img image.Image, start image.Point, end image.Point, f Filter,
 
         for i := 0; i < n; i++ {
             <-done
+            if i == n - 1 {
+                aux_img, img = img, aux_img
+            }
         }
     }
 }
