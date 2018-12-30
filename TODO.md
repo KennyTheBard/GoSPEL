@@ -10,7 +10,8 @@
 # Implementing
 - [ ] Extend rescaling to bicubic interpolation
 - [x] Extend filter appliance to support strength parameter
-- [ ] Add border conditions to filter appliance
+- [x] Add border conditions to filter appliance
+- [x] Add support for any sizes of filters
 
 # Refactoring
 - [x] Move each group functions into a package and folder on its one
