@@ -22,3 +22,4 @@
 - [ ] Write unit tests for rescaling
 
 # Debugging
+- [ ] Solve black border for blur filter

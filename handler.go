@@ -22,7 +22,7 @@ func main() {
     card := image.NewRGBA(image.Rect(0, 0, 800, 800))
     lib.Rescale(img, card)
 
-    lib.Apply_filter(card, image.Point {0, 0}, image.Point {800, 800}, f, 100)
+    lib.Apply_filter(card, image.Point {150, 150}, image.Point {650, 650}, f, 5)
 
     fmt.Println("done!")
 
