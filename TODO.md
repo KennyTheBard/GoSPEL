@@ -5,7 +5,7 @@
 - [x] Add anti-aliasing support (can be achieved through a 2x2 blur)
 - [ ] Add layering support
 - [ ] Add rotation support
-- [ ] Add mirroring support
+- [x] Add mirroring support
 - [x] Add color modifiers support
 
 # Implementing
