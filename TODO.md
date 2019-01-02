@@ -2,10 +2,11 @@
 
 # Developing
 - [ ] Add gradient support
-- [ ] Add anti-aliasing support
+- [x] Add anti-aliasing support (can be achieved through a 2x2 blur)
 - [ ] Add layering support
 - [ ] Add rotation support
 - [ ] Add mirroring support
+- [x] Add color modifiers support
 
 # Implementing
 - [x] Extend rescaling to bicubic interpolation

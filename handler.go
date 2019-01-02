@@ -24,6 +24,8 @@ func main() {
 
     lib.Apply_filter(card, image.Point {150, 150}, image.Point {650, 650}, f, 5)
 
+    lib.Grayscale(card, 0.52, 0.32, 0.16)
+
     fmt.Println("done!")
 
     rez, _ := os.Create("new.jpg")
