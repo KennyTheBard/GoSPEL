@@ -25,9 +25,24 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []image.Color) image
     {
         n := len(ys) - 1
         curr := ys[0]
+        var prev int
 
         // for each block
-        for k = 0; k < n; k++ {
+        for k = 1; k <= n; k++ {
+            prev = curr
+            curr = ys[k]
+
+            r1, g1, b1, a1 := vals[k - 1].RGBA()
+            r2, g2, b2, a2 := vals[k].RGBA()
+
+            for y := prev + 1; y <= curr; y++ {
+                for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+                    proc := float64(y) / float64(curr - prev)
+                    r_fin, g_fin, b_fin, a_fin := Pixel_bilinear_interpolation(r1, g1, b1, a1, r2, g2, b2, a2, proc)
+                    
+                    img.(draw.Image).Set(x, y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
+                }
+            }
 
         }
     }
@@ -36,7 +51,7 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []image.Color) image
     {
         n := len(ys) - 1
         r, g, b, a := vals[n].RGBA()
-        for y := ys[n]; y <= bounds.Max.Y; y++ {
+        for y := ys[n] + 1; y <= bounds.Max.Y; y++ {
             for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                 img.(draw.Image).Set(x, y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
             }
@@ -50,7 +65,7 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []image.Color) image
         for y := prev + 1; y <= curr; y++ {
             r, g, b, a := img.At(x, y).RGBA()
 
-            r_fib, g_fin, b_fin, a_fin := Pixel_bilinear_interpolation()
+            r_fin, g_fin, b_fin, a_fin := Pixel_bilinear_interpolation()
 
             for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                 img.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
