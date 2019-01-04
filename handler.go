@@ -24,7 +24,7 @@ func main() {
 
     lib.Apply_filter(card, image.Point {150, 150}, image.Point {650, 650}, f, 5)
 
-    lib.Add_color(card, 0, 25, 0, 0)
+    lib.Add_color(img, 0, 25, 0, 150)
 
     card = lib.Mirror(card, lib.HORIZONTAL_MODE)
 

@@ -27,6 +27,10 @@
 - [ ] Write unit tests for filter appliance
 - [ ] Write unit tests for rescaling
 - [ ] Test cubic interpolation
+- [ ] Test linear gradient
 
 # Debugging
 - [ ] Solve black border for blur filter
+
+# Documentation
+- [ ] Write comments for every function
