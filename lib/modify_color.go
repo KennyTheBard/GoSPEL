@@ -5,20 +5,8 @@ import (
     "image/draw"
     "image/color"
     "math"
+    aux "./auxiliaries"
 )
-
-/**
-    Force the value val in [min, max].
-*/
-func Clamp(min, max uint32, val uint32) uint32 {
-    if val <= min {
-        return min
-    } else if val >= max {
-        return max
-    } else {
-        return val
-    }
-}
 
 func Modify_colors(img image.Image, mat [4][4]float64) {
     bounds := img.Bounds()
@@ -41,10 +29,10 @@ func Modify_colors(img image.Image, mat [4][4]float64) {
                      bf := float64(b)
                      af := float64(a)
 
-                     r_fin := Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[0][0] + gf * mat[0][1] + bf * mat[0][2] + af * mat[0][3] )))
-                     g_fin := Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[1][0] + gf * mat[1][1] + bf * mat[1][2] + af * mat[1][3] )))
-                     b_fin := Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[2][0] + gf * mat[2][1] + bf * mat[2][2] + af * mat[2][3] )))
-                     a_fin := Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[3][0] + gf * mat[3][1] + bf * mat[3][2] + af * mat[3][3] )))
+                     r_fin := aux.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[0][0] + gf * mat[0][1] + bf * mat[0][2] + af * mat[0][3] )))
+                     g_fin := aux.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[1][0] + gf * mat[1][1] + bf * mat[1][2] + af * mat[1][3] )))
+                     b_fin := aux.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[2][0] + gf * mat[2][1] + bf * mat[2][2] + af * mat[2][3] )))
+                     a_fin := aux.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[3][0] + gf * mat[3][1] + bf * mat[3][2] + af * mat[3][3] )))
 
                      img.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
                 }

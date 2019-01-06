@@ -20,9 +20,8 @@
 - [x] Move each group functions into a package and folder on its one
 - [x] Ensure correct importing of auxiliary functions
 - [ ] Refactor scaling to dynamically use interpolations
-- [ ] Reduce number of interpolations arguments through a structure
-- [ ] Move mirroring auxiliaries in a special directory
-- [ ] Rename ret image as trg image in rescale.go
+- [x] Reduce number of interpolations arguments through a structure
+- [x] Rename ret image as trg image in rescale.go
 
 # Testing
 - [ ] Write unit tests for filter appliance

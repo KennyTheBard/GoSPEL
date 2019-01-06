@@ -34,7 +34,7 @@ func Apply_filter(img image.Image, start image.Point, end image.Point, f Filter,
                         for i := - len(f.Mat) / 2; i <= len(f.Mat) / 2 + len(f.Mat) % 2 - 1; i++ {
                             for j := - len(f.Mat[i + len(f.Mat) / 2]) / 2; j <= len(f.Mat[i + len(f.Mat) / 2]) / 2 + len(f.Mat[i + len(f.Mat) / 2]) % 2 - 1; j++ {
                                 // values are returned as uint32
-                                r, g, b, a := aux.Safe_At(img, x + j, y + i)
+                                r, g, b, a := aux.Safe_Get_Color(img, x + j, y + i)
 
                                 sum_r += float64(r) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
                                 sum_g += float64(g) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]

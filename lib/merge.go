@@ -31,11 +31,14 @@ func Merge(trg, over image.Image, area image.Rectangle) (image.Image) {
                         r1, g1, b1, a1 := trg.At(x, y).RGBA()
                         r2, g2, b2, a2 := img.At(x, y).RGBA()
 
+                        px1 := aux.Pixel{r1, g1, b1, a1}
+                        px2 := aux.Pixel{r2, g2, b2, a2}
+
                         proc := float64(a2) / float64((256 << 8) - 1)
 
-                        r_fin, g_fin, b_fin, _ := aux.Pixel_linear_interpolation(r1, g1, b1, a1, r2, g2, b2, a2, 1 - proc)
+                        fin := aux.Pixel_linear_interpolation(px1, px2, 1 - proc)
 
-                        ret.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(255)})
+                        ret.(draw.Image).Set(x, y, color.RGBA{uint8(fin.R >> 8), uint8(fin.G >> 8), uint8(fin.B >> 8), uint8(255)})
 
                     } else {
                         r, g, b, a := trg.At(x, y).RGBA()
