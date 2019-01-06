@@ -4,7 +4,7 @@ import (
     "image"
     "image/color"
     "image/draw"
-    aux "./filter_auxiliaries"
+    aux "./auxiliaries"
 )
 
 type Filter struct {

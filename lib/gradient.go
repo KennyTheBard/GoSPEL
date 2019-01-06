@@ -4,7 +4,7 @@ import (
     "image"
     "image/draw"
     "image/color"
-    aux "./gradient_auxiliaries"
+    aux "./auxiliaries"
 )
 
 func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image.Image {
@@ -35,7 +35,7 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image
             for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                 proc := float64(y) / float64(curr - prev)
 
-                r_fin, g_fin, b_fin, a_fin := aux.Pixel_bilinear_interpolation(r1, g1, b1, a1, r2, g2, b2, a2, proc)
+                r_fin, g_fin, b_fin, a_fin := aux.Pixel_linear_interpolation(r1, g1, b1, a1, r2, g2, b2, a2, proc)
 
                 img.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
             }

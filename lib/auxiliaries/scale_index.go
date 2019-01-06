@@ -1,4 +1,4 @@
-package rescale_auxiliaries
+package auxiliaries
 
 import "math"
 

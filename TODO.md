@@ -1,9 +1,9 @@
 ### TODO List
 
 # Developing
-- [ ] Add gradient support
+- [x] Add gradient support
 - [x] Add anti-aliasing support (can be achieved through a 2x2 blur)
-- [ ] Add layering support
+- [x] Add layer merging support
 - [ ] Add rotation support
 - [x] Add mirroring support
 - [x] Add color modifiers support
@@ -22,12 +22,17 @@
 - [ ] Refactor scaling to dynamically use interpolations
 - [ ] Reduce number of interpolations arguments through a structure
 - [ ] Move mirroring auxiliaries in a special directory
+- [ ] Rename ret image as trg image in rescale.go
 
 # Testing
 - [ ] Write unit tests for filter appliance
 - [ ] Write unit tests for rescaling
+- [ ] Write unit tests for color modification
+- [ ] Write unit tests for gradient
+- [ ] Write unit tests for mirroring
+- [ ] Write unit tests for layer merging
 - [ ] Test cubic interpolation
-- [ ] Test linear gradient
+- [x] Test linear gradient
 
 # Debugging
 - [ ] Solve black border for blur filter

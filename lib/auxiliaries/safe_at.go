@@ -1,4 +1,4 @@
-package filter_auxiliaries
+package auxiliaries
 
 import (
     "image"

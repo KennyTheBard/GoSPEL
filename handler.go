@@ -5,6 +5,7 @@ import (
     "os"
     "image"
     "image/jpeg"
+    "image/color"
     lib "./lib"
 )
 
@@ -29,6 +30,10 @@ func main() {
     card = lib.Mirror(card, lib.HORIZONTAL_MODE)
 
     fmt.Println("done!")
+
+    grd := lib.Linear_gradient(image.Rect(0, 0, 800, 800), []int{0, 700}, []color.Color{color.RGBA{255, 255, 255, 255}, color.RGBA{255, 0, 0, 125}})
+
+    card = lib.Merge(card, grd, image.Rect(0, 0, 800, 800))
 
     rez, _ := os.Create("new.jpg")
     defer rez.Close()

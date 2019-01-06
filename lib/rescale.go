@@ -4,7 +4,7 @@ import (
     "image"
     "image/draw"
     "image/color"
-    aux "./rescale_auxiliaries"
+    aux "./auxiliaries"
 )
 
 func Rescale(orig image.Image, ret image.Image) {
