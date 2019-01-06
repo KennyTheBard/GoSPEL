@@ -7,14 +7,17 @@ import(
     aux "./auxiliaries"
 )
 
+/**
+    Merge the over image with the trg image
+    over the assigned area of the target image.
+*/
 func Merge(trg, over image.Image, area image.Rectangle) (image.Image) {
     // prepare the image to be returned
     trg_bounds := trg.Bounds()
     ret := image.Image(image.NewRGBA(trg_bounds))
 
     // prepare the over image to be merged with target image
-    img := image.Image(image.NewRGBA(area))
-    Rescale(over, img)
+    img := Rescale(over, area)
 
     n := 10
     done := make(chan bool, n)

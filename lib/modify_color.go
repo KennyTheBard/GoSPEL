@@ -8,6 +8,13 @@ import (
     aux "./auxiliaries"
 )
 
+/**
+    Modify each pixel of the image img with
+    the equation given on its coresponding line
+    in the mat 2D array. Can be used to amplify
+    or minimize color, or create a grayscale
+    with any channel ratio desired.
+*/
 func Modify_colors(img image.Image, mat [4][4]float64) {
     bounds := img.Bounds()
 

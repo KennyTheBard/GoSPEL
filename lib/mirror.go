@@ -13,10 +13,16 @@ const (
 
 type Reflection func (x, y int, bounds image.Rectangle) (int, int)
 
+/**
+    Returns the pixel mirrored with the given mirror function.
+*/
 func get_reflection(x, y int, bounds image.Rectangle, reflectionFunc Reflection) (int, int) {
     return reflectionFunc(x, y, bounds)
 }
 
+/**
+    Returns the image mirrored in the given mode.
+*/
 func Mirror(img image.Image, mode int) (image.Image) {
     bounds := img.Bounds()
     ret := image.Image(image.NewRGBA(image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X, bounds.Max.Y)))

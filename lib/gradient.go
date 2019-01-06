@@ -7,6 +7,12 @@ import (
     aux "./auxiliaries"
 )
 
+/**
+    Create an image with dimensions bounds
+    with a descending gradient build around
+    the values vals given for each point of
+    height in the ys array.
+*/
 func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image.Image {
     img := image.Image(image.NewRGBA(bounds))
 

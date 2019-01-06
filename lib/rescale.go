@@ -7,9 +7,12 @@ import (
     aux "./auxiliaries"
 )
 
-func Rescale(orig image.Image, trg image.Image) {
+/**
+    Rescale the given image to perfectly fit the given area.
+*/
+func Rescale(orig image.Image, trg_bounds image.Rectangle) (image.Image) {
     orig_bounds := orig.Bounds()
-    trg_bounds := trg.Bounds()
+    trg := image.Image(image.NewRGBA(trg_bounds))
 
     // ratio return to original
     height_ratio := float64(orig_bounds.Max.Y - orig_bounds.Min.Y) / float64(trg_bounds.Max.Y - trg_bounds.Min.Y)
@@ -50,4 +53,5 @@ func Rescale(orig image.Image, trg image.Image) {
         <-done
     }
 
+    return trg
 }

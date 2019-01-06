@@ -7,6 +7,9 @@
 - [ ] Add rotation support
 - [x] Add mirroring support
 - [x] Add color modifiers support
+- [ ] Procedure chaining system
+- [ ] Command handler
+- [ ] Add easy image copy
 
 # Implementing
 - [x] Extend rescaling to bicubic interpolation
@@ -19,7 +22,6 @@
 # Refactoring
 - [x] Move each group functions into a package and folder on its one
 - [x] Ensure correct importing of auxiliary functions
-- [ ] Refactor scaling to dynamically use interpolations
 - [x] Reduce number of interpolations arguments through a structure
 - [x] Rename ret image as trg image in rescale.go
 
@@ -37,4 +39,4 @@
 - [ ] Solve black border for blur filter
 
 # Documentation
-- [ ] Write comments for every function
+- [x] Write comments for every function

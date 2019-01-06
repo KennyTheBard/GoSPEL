@@ -11,6 +11,9 @@ type Filter struct {
   Mat [][]float64
 }
 
+/**
+    Apply the filter f on each pixel of the image img in the assigned area.
+*/
 func Apply_filter(img image.Image, start image.Point, end image.Point, f Filter, strength int) {
 
     aux_img := image.Image(image.NewRGBA(image.Rect(img.Bounds().Min.X, img.Bounds().Min.Y, img.Bounds().Max.X, img.Bounds().Max.X)))
