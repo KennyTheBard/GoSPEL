@@ -14,7 +14,7 @@
 - [x] Add border conditions to filter appliance
 - [x] Add support for any sizes of filters
 - [x] Add color adder
-- [ ] Replace the coloring functions with only one transformation with matrix
+- [x] Replace the coloring functions with only one transformation with matrix
 
 # Refactoring
 - [x] Move each group functions into a package and folder on its one
