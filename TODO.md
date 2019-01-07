@@ -4,7 +4,7 @@
 - [x] Add gradient support
 - [x] Add anti-aliasing support (can be achieved through a 2x2 blur)
 - [x] Add layer merging support
-- [ ] Add shearing support
+- [x] Add shearing support
 - [ ] Add rotation support
 - [x] Add mirroring support
 - [x] Add color modifiers support
