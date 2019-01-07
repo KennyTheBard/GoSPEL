@@ -3,7 +3,7 @@ package lib
 import (
     "image"
     "math"
-    "fmt"
+    // "fmt"
 )
 
 func Rotate(img image.Image, angle float64) image.Image {
@@ -15,9 +15,9 @@ func Rotate(img image.Image, angle float64) image.Image {
     xsf := -math.Tan(rad/2)
     ysf := math.Sin(rad)
 
-    fmt.Println("Grade =", -angle)
-    fmt.Println("xsf =", xsf)
-    fmt.Println("ysf =", ysf)
+    // fmt.Println("Grade =", -angle)
+    // fmt.Println("xsf =", xsf)
+    // fmt.Println("ysf =", ysf)
 
     // apply shearing
     ret := Shear(img, xsf, XSHEAR)
