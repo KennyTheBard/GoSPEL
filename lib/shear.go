@@ -6,6 +6,7 @@ import(
     "image/color"
     "math"
     interp "./interpolation"
+    aux "./auxiliaries"
 )
 
 const (
@@ -32,11 +33,11 @@ func xshear(img image.Image, shear float64) (image.Image) {
     bounds := img.Bounds()
 
     // calculate some shearing parameters
-    shear_factor := uint32(math.Round(shear * float64(bounds.Max.X - bounds.Min.X) * 2))
+    shear_factor := int(math.Round(shear * float64(bounds.Max.X - bounds.Min.X) * 2))
     height := bounds.Max.Y - bounds.Min.Y + 1
 
     // initialize the new image
-    new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X + int(shear_factor), bounds.Max.Y)
+    new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X + aux.Abs(shear_factor), bounds.Max.Y)
     ret := image.Image(image.NewRGBA(new_bounds))
     ret = Modify_opacity(ret, 0)
 
@@ -51,12 +52,12 @@ func xshear(img image.Image, shear float64) (image.Image) {
             for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
                 // calculate padding
                 proc := float64(y - bounds.Min.Y) / float64(height)
-                padding := int(interp.Linear_interpolation(0, shear_factor, proc))
+                padding := int(interp.Linear_interpolation(0, int32(shear_factor), proc))
 
                 for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                     r, g, b, a := img.At(x, y).RGBA()
 
-                    ret.(draw.Image).Set(x + padding, y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
+                    ret.(draw.Image).Set(x + padding - aux.Min(shear_factor, 0), y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
                 }
             }
 
@@ -79,11 +80,11 @@ func yshear(img image.Image, shear float64) (image.Image) {
     bounds := img.Bounds()
 
     // calculate some shearing parameters
-    shear_factor := uint32(math.Round(shear * float64(bounds.Max.Y - bounds.Min.Y) * 2))
+    shear_factor := int(math.Round(shear * float64(bounds.Max.Y - bounds.Min.Y) * 2))
     width := bounds.Max.X - bounds.Min.X + 1
 
     // initialize the new image
-    new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X, bounds.Max.Y + int(shear_factor))
+    new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X, bounds.Max.Y + aux.Abs(shear_factor))
     ret := image.Image(image.NewRGBA(new_bounds))
     ret = Modify_opacity(ret, 0)
 
@@ -91,7 +92,7 @@ func yshear(img image.Image, shear float64) (image.Image) {
     paddings := make([]int, width)
     for x := bounds.Min.X; x <= bounds.Max.X; x++ {
         proc := float64(x - bounds.Min.X) / float64(width)
-        paddings[x - bounds.Min.X] = int(interp.Linear_interpolation(0, shear_factor, proc))
+        paddings[x - bounds.Min.X] = int(interp.Linear_interpolation(0, int32(shear_factor), proc))
     }
 
     n := 10
@@ -106,7 +107,7 @@ func yshear(img image.Image, shear float64) (image.Image) {
                 for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                     r, g, b, a := img.At(x, y).RGBA()
 
-                    ret.(draw.Image).Set(x, y + paddings[x - bounds.Min.X], color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
+                    ret.(draw.Image).Set(x, y + paddings[x - bounds.Min.X] - aux.Min(shear_factor, 0), color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
                 }
             }
 

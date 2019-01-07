@@ -36,8 +36,8 @@ func main() {
 
     card = lib.Merge(card, grd, image.Rect(0, 0, 800, 800))
 
-    card = lib.Shear(card, 0.1, lib.XSHEAR)
-    card = lib.Shear(card, 0.1, lib.YSHEAR)
+    card = lib.Shear(card, -0.1, lib.XSHEAR)
+    card = lib.Shear(card, -0.1, lib.YSHEAR)
 
     rez, _ := os.Create("new.jpg")
     defer rez.Close()
