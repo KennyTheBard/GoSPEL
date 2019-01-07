@@ -34,8 +34,9 @@ func main() {
     //card = lib.Rotate(card, 45)
 
     //card = lib.Shear(card, 0.18, lib.XSHEAR)
-    card = lib.Shear(card, -0.18, lib.YSHEAR)
+    //card = lib.Shear(card, -0.18, lib.YSHEAR)
 
+    card = lib.Crop_image(card, image.Rect(-100, -100, 400, 400))
 
     fmt.Println("done!")
     rez, _ := os.Create("new.jpg")

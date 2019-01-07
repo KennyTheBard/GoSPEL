@@ -5,13 +5,13 @@
 - [x] Add anti-aliasing support (can be achieved through a 2x2 blur)
 - [x] Add layer merging support
 - [x] Add shearing support
-- [ ] Add rotation support
+- [x] Add rotation support
 - [x] Add mirroring support
 - [x] Add color modifiers support
 - [ ] Procedure chaining system
 - [ ] Command handler
 - [x] Add easy image copy
-- [ ] Add cropping support
+- [x] Add cropping support
 
 # Implementing
 - [x] Extend rescaling to bicubic interpolation
@@ -34,6 +34,9 @@
 - [ ] Write unit tests for gradient
 - [ ] Write unit tests for mirroring
 - [ ] Write unit tests for layer merging
+- [ ] Write unit tests for rotation
+- [ ] Write unit tests for shearing
+- [ ] Write unit tests for cropping
 - [ ] Test cubic interpolation
 - [x] Test linear gradient
 
