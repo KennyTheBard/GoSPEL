@@ -1,6 +1,6 @@
 package lib
 
-import(
+import (
     "image"
     "image/draw"
     "image/color"
@@ -10,7 +10,7 @@ import(
 /**
     Returns an image with the opacity ampified by
 */
-func Modify_opacity(img image.Image, alpha_proc float64) (image.Image) {
+func Scale_opacity(img image.Image, alpha_proc float64) (image.Image) {
     // prepare the image to be returned
     bounds := img.Bounds()
     ret := image.Image(image.NewRGBA(bounds))
@@ -42,5 +42,85 @@ func Modify_opacity(img image.Image, alpha_proc float64) (image.Image) {
     }
 
     return ret
+}
 
+func Select_opaque(img image.Image) image.Rectangle {
+    var min_x, max_x, min_y, max_y int
+    var found bool
+
+    bounds := img.Bounds()
+
+    // find minimum x with non-completly transparent property
+    found = false
+    for y := bounds.Min.Y; y <= bounds.Max.Y; y ++ {
+        for x := bounds.Min.X; x <= bounds.Max.X; x ++ {
+            _, _, _, a := img.At(x, y).RGBA()
+
+            if a > 0 {
+                min_y = y
+                found = true;
+                break
+            }
+        }
+
+        if found {
+            break
+        }
+    }
+
+    // find maximum x with non-completly transparent property
+    found = false
+    for y := bounds.Max.Y; y >= bounds.Min.Y; y -- {
+        for x := bounds.Min.X; x <= bounds.Max.X; x ++ {
+            _, _, _, a := img.At(x, y).RGBA()
+
+            if a > 0 {
+                max_y = y
+                found = true;
+                break
+            }
+        }
+
+        if found {
+            break
+        }
+    }
+
+    // find minimum y with non-completly transparent property
+    found = false
+    for x := bounds.Min.X; x <= bounds.Max.X; x ++ {
+        for y := bounds.Min.Y; y <= bounds.Max.Y; y ++ {
+            _, _, _, a := img.At(x, y).RGBA()
+
+            if a > 0 {
+                min_x = x
+                found = true;
+                break
+            }
+        }
+
+        if found {
+            break
+        }
+    }
+
+    // find maximum y with non-completly transparent property
+    found = false
+    for x := bounds.Max.X; x >= bounds.Min.X; x -- {
+        for y := bounds.Min.Y; y <= bounds.Max.Y; y ++ {
+            _, _, _, a := img.At(x, y).RGBA()
+
+            if a > 0 {
+                max_x = x
+                found = true;
+                break
+            }
+        }
+
+        if found {
+            break
+        }
+    }
+
+    return image.Rect(min_x, min_y, max_x, max_y)
 }

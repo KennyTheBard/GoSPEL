@@ -39,7 +39,7 @@ func xshear(img image.Image, shear float64) (image.Image) {
     // initialize the new image
     new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X + aux.Abs(shear_factor), bounds.Max.Y)
     ret := image.Image(image.NewRGBA(new_bounds))
-    ret = Modify_opacity(ret, 0)
+    ret = Scale_opacity(ret, 0)
 
     n := 10
     done := make(chan bool, n)
@@ -86,7 +86,7 @@ func yshear(img image.Image, shear float64) (image.Image) {
     // initialize the new image
     new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X, bounds.Max.Y + aux.Abs(shear_factor))
     ret := image.Image(image.NewRGBA(new_bounds))
-    ret = Modify_opacity(ret, 0)
+    ret = Scale_opacity(ret, 0)
 
     // calculate padding
     paddings := make([]int, width)

@@ -31,12 +31,7 @@ func main() {
 
     card = lib.Merge(card, grd, image.Rect(0, 0, 800, 800))
 
-    //card = lib.Rotate(card, 45)
-
-    //card = lib.Shear(card, 0.18, lib.XSHEAR)
-    //card = lib.Shear(card, -0.18, lib.YSHEAR)
-
-    card = lib.Crop_image(card, image.Rect(-100, -100, 400, 400))
+    card = lib.Rotate(card, 20)
 
     fmt.Println("done!")
     rez, _ := os.Create("new.jpg")

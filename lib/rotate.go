@@ -21,8 +21,13 @@ func Rotate(img image.Image, angle float64) image.Image {
 
     // apply shearing
     ret := Shear(img, xsf, XSHEAR)
+    ret = Crop_image(ret, Select_opaque(ret))
+
     ret = Shear(ret, ysf, YSHEAR)
+    ret = Crop_image(ret, Select_opaque(ret))
+
     ret = Shear(ret, xsf, XSHEAR)
+    ret = Crop_image(ret, Select_opaque(ret))
 
     return ret
 }
