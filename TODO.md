@@ -9,7 +9,7 @@
 - [x] Add color modifiers support
 - [ ] Procedure chaining system
 - [ ] Command handler
-- [ ] Add easy image copy
+- [x] Add easy image copy
 
 # Implementing
 - [x] Extend rescaling to bicubic interpolation
