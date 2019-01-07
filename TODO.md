@@ -11,6 +11,7 @@
 - [ ] Procedure chaining system
 - [ ] Command handler
 - [x] Add easy image copy
+- [ ] Add cropping support
 
 # Implementing
 - [x] Extend rescaling to bicubic interpolation
@@ -38,6 +39,7 @@
 
 # Debugging
 - [ ] Solve black border for blur filter
+- [ ] Solve the distortions of rotation algorithm
 
 # Documentation
 - [x] Write comments for every function

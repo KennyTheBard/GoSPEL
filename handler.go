@@ -27,18 +27,17 @@ func main() {
 
     lib.Modify_colors(card, [4][4]float64{{0.35, 0, 0, 0}, {0.35, 0, 0, 0}, {0.35, 0.35, 0.3, 0}, {0, 0, 0, 1}})
 
-    card = lib.Mirror(card, lib.HORIZONTAL_MODE)
-    card = lib.Mirror(card, lib.VERTICAL_MODE)
-
-    fmt.Println("done!")
-
     grd := lib.Linear_gradient(image.Rect(0, 0, 800, 800), []int{0, 700}, []color.Color{color.RGBA{255, 255, 255, 255}, color.RGBA{255, 0, 0, 125}})
 
     card = lib.Merge(card, grd, image.Rect(0, 0, 800, 800))
 
-    card = lib.Shear(card, -0.1, lib.XSHEAR)
-    card = lib.Shear(card, -0.1, lib.YSHEAR)
+    //card = lib.Rotate(card, 45)
 
+    //card = lib.Shear(card, 0.18, lib.XSHEAR)
+    card = lib.Shear(card, -0.18, lib.YSHEAR)
+
+
+    fmt.Println("done!")
     rez, _ := os.Create("new.jpg")
     defer rez.Close()
 
