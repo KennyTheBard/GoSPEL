@@ -1,6 +1,7 @@
 package lib
 
 import (
+    "fmt"
     "image"
     "image/color"
     "image/draw"
@@ -14,9 +15,11 @@ type Filter struct {
 /**
     Apply the filter f on each pixel of the image img in the assigned area.
 */
-func Apply_filter(img image.Image, start image.Point, end image.Point, f Filter, strength int) {
+func Apply_filter(img image.Image, area image.Rectangle, f Filter, strength int) {
 
-    aux_img := image.Image(image.NewRGBA(image.Rect(img.Bounds().Min.X, img.Bounds().Min.Y, img.Bounds().Max.X, img.Bounds().Max.X)))
+    trg := Copy_image(img)
+
+    fmt.Println(f.Mat)
 
     for i := 0; i < strength; i++ {
         n := 10
@@ -27,8 +30,8 @@ func Apply_filter(img image.Image, start image.Point, end image.Point, f Filter,
             go func() {
                 rank := aux_rank
 
-                for x := start.X + rank; x <= end.X; x += n {
-                    for y := start.Y; y <= end.Y; y++ {
+                for y := area.Min.Y + rank; y <= area.Max.Y; y += n {
+                    for x := area.Min.X; x <= area.Max.X; x++ {
                         sum_r := float64(0)
                         sum_g := float64(0)
                         sum_b := float64(0)
@@ -46,7 +49,7 @@ func Apply_filter(img image.Image, start image.Point, end image.Point, f Filter,
                             }
                         }
 
-                        aux_img.(draw.Image).Set(x, y, color.RGBA{uint8(uint64(sum_r) >> 8), uint8(uint64(sum_g) >> 8), uint8(uint64(sum_b) >> 8), uint8(uint64(sum_a) >> 8)})
+                        trg.(draw.Image).Set(x, y, color.RGBA{uint8(uint64(sum_r) >> 8), uint8(uint64(sum_g) >> 8), uint8(uint64(sum_b) >> 8), uint8(uint64(sum_a) >> 8)})
                     }
                 }
 
@@ -58,6 +61,6 @@ func Apply_filter(img image.Image, start image.Point, end image.Point, f Filter,
             <-done
         }
 
-        aux_img, img = img, aux_img
+        trg, img = img, trg
     }
 }

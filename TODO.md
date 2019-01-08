@@ -20,6 +20,7 @@
 - [x] Add support for any sizes of filters
 - [x] Add color adder
 - [x] Replace the coloring functions with only one transformation with matrix
+- [ ] Extend color modification to support target area
 
 ### Refactoring
 - [x] Move each group functions into a package and folder on its one
@@ -41,7 +42,7 @@
 - [x] Test linear gradient
 
 ### Debugging
-- [ ] Solve black border for blur filter
+- [x] Solve black border for blur filter
 - [ ] Solve the distortions of rotation algorithm
 
 ### Documentation
