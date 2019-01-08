@@ -7,6 +7,7 @@ import (
     "image"
     "image/jpeg"
     lib "./lib"
+    ut "./ut"
 )
 
 func main() {
@@ -23,7 +24,7 @@ func main() {
 
     elapsed := time.Since(start)
 
-    lib.Crop_ut("test.jpg", "crop_test")
+    ut.Test_crop("test.jpg", "test_results/crop_test")
 
     fmt.Printf("Done in %s!\n", elapsed)
 
