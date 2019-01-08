@@ -46,7 +46,7 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image
 
         for y := prev + 1; y <= curr; y++ {
             for x := bounds.Min.X; x <= bounds.Max.X; x++ {
-                proc := float64(y) / float64(curr - prev)
+                proc := float64(y - prev) / float64(curr - prev)
 
                 fin := aux.Pixel_linear_interpolation(px1, px2, proc)
 

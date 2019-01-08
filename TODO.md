@@ -49,6 +49,7 @@
 - [x] Solve black border for blur filter
 - [ ] Solve the distortions of rotation algorithm
 - [ ] Solve the error with PNG encoding
+- [ ] Solve the linear gradient bug
 
 ### Documentation
 - [x] Write comments for every function
