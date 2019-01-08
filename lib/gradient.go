@@ -1,6 +1,8 @@
 package lib
 
 import (
+    "fmt"
+    "math"
     "image"
     "image/draw"
     "image/color"
@@ -12,6 +14,9 @@ import (
     with a descending gradient build around
     the values vals given for each point of
     height in the ys array.
+
+    Points of height are expected to be given
+    in ascending order, from 0 to bounds.Max.Y.
 */
 func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image.Image {
     img := image.Image(image.NewRGBA(bounds))
@@ -62,4 +67,102 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image
     }
 
     return img;
+}
+
+
+/**
+    Returns the image with the dimensions width
+    and height with a descending gradient build
+    around the center of the image with the values
+    vals given for each point of height in the
+    ys array.
+
+    Points of height are expected to be given
+    in ascending order, from 0 to height / 2.
+*/
+func Circular_gradient(width, height int, ys []int, vals []color.Color) image.Image {
+    cx := width / 2
+    cy := height / 2
+    bounds := image.Rect(0, 0, width, height)
+    img := image.Image(image.NewRGBA(bounds))
+
+    n := 10
+    done := make(chan bool, n)
+
+    for p := 0; p < n; p ++ {
+        aux_rank := p
+        go func() {
+            rank := aux_rank
+
+            for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
+                for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+                    // determine the color interval
+                    dst := int(math.Round(dist(float64(x), float64(y), float64(cx), float64(cy))))
+                    k1, k2 := search_interval(ys, dst)
+
+                    if k1 == k2 {
+                        r, g, b, a := vals[k1].RGBA()
+                        img.(draw.Image).Set(x, y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
+                        continue
+                    }
+
+                    // prepare data for interpolation
+                    r1, g1, b1, a1 := vals[k1].RGBA()
+                    r2, g2, b2, a2 := vals[k2].RGBA()
+                    px1 := aux.Pixel{r1, g1, b1, a1}
+                    px2 := aux.Pixel{r2, g2, b2, a2}
+
+                    // interpolation & pixel writing
+                    proc := float64(dst - ys[k1]) / float64(ys[k2] - ys[k1])
+
+                    fin := aux.Pixel_linear_interpolation(px1, px2, proc)
+
+                    //fmt.Println(dst, "intre", ys[k1], "si", ys[k2], "iar proc este", proc, "iar fin.A este", fin.A)
+
+                    img.(draw.Image).Set(x, y, color.RGBA{uint8(fin.R >> 8), uint8(fin.G >> 8), uint8(fin.B >> 8), uint8(fin.A >> 8)})
+                }
+            }
+
+            done <- true;
+        } ()
+    }
+
+    for i := 0; i < n; i++ {
+        <-done
+    }
+
+    fmt.Println("done")
+
+    return img;
+}
+
+/**
+    Returns the indexes of the elements
+    closest to y in the ys array, or the
+    same index if tha array has only 1
+    element or y is contained in the array.
+
+    The elements of the array are expected
+    to be sorted in ascending order.
+*/
+func search_interval(ys []int, y int) (int, int) {
+    prev := 0
+
+    for i := 1; i < len(ys); i++ {
+
+        if ys[i] > y {
+            return prev, i
+        } else if ys[i] == y {
+            return i, i
+        }
+
+        prev = i
+    }
+
+
+    return prev, prev
+}
+
+func dist(x1, y1, x2, y2 float64) float64 {
+    return math.Sqrt(math.Pow(x1 - x2, 2) + math.Pow(y1 - y2, 2))
 }

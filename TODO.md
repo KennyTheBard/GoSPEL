@@ -23,6 +23,7 @@
 - [x] Extend color modification to support target area
 - [ ] Extend all target area dependent functions to use masks
 - [ ] Add oval gradients
+- [ ] Add safety measures in gradient functions
 
 ### Refactoring
 - [x] Move each group functions into a package and folder on its one
