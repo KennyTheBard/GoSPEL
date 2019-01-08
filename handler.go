@@ -6,12 +6,11 @@ import (
     "time"
     "image"
     "image/jpeg"
-    //"image/png"
     lib "./lib"
 )
 
 func main() {
-    img_file, _ := os.Open("logo.jpg")
+    img_file, _ := os.Open("test.jpg")
     defer img_file.Close()
     img, _, _ := image.Decode(img_file)
 
@@ -24,10 +23,13 @@ func main() {
 
     elapsed := time.Since(start)
 
+    lib.Crop_ut("test.jpg", "crop_test")
+
     fmt.Printf("Done in %s!\n", elapsed)
 
     rez, _ := os.Create("new.jpg")
     defer rez.Close()
 
     jpeg.Encode(rez, card, &jpeg.Options{jpeg.DefaultQuality})
+
 }
