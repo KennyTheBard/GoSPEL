@@ -39,7 +39,7 @@ func Merge(trg, over image.Image, area image.Rectangle) (image.Image) {
 
                         proc := float64(a2) / float64((256 << 8) - 1)
 
-                        fin := aux.Pixel_linear_interpolation(px1, px2, 1 - proc)
+                        fin := aux.Pixel_linear_interpolation(px1, px2, proc)
 
                         ret.(draw.Image).Set(x, y, color.RGBA{uint8(fin.R >> 8), uint8(fin.G >> 8), uint8(fin.B >> 8), uint8(255)})
 
