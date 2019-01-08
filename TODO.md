@@ -14,7 +14,7 @@
 - [x] Add cropping support
 
 ### Implementing
-- [x] Extend rescaling to bicubic interpolation
+- [x] Extend resizing to bicubic interpolation
 - [x] Extend filter appliance to support strength parameter
 - [x] Add border conditions to filter appliance
 - [x] Add support for any sizes of filters
@@ -22,7 +22,7 @@
 - [x] Replace the coloring functions with only one transformation with matrix
 - [x] Extend color modification to support target area
 - [ ] Extend all target area dependent functions to use masks
-- [ ] Add oval gradients
+- [x] Add oval gradients
 - [ ] Add safety measures in gradient functions
 
 ### Refactoring
@@ -33,7 +33,7 @@
 
 ### Testing
 - [ ] Write unit tests for filter appliance
-- [ ] Write unit tests for rescaling
+- [x] Write unit tests for resizing
 - [ ] Write unit tests for color modification
 - [ ] Write unit tests for gradient
 - [ ] Write unit tests for mirroring

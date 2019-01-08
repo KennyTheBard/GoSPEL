@@ -17,7 +17,7 @@ func Merge(trg, over image.Image, area image.Rectangle) (image.Image) {
     ret := image.Image(image.NewRGBA(trg_bounds))
 
     // prepare the over image to be merged with target image
-    img := Rescale(over, area)
+    img := Resize(over, area)
 
     n := 10
     done := make(chan bool, n)
