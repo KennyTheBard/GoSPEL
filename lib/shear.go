@@ -21,7 +21,7 @@ func Shear(img image.Image, shear float64, mode int) (image.Image) {
     case YSHEAR:
         return yshear(img, shear)
     default:
-        return Copy_image(img)
+        return Copy(img)
     }
 }
 

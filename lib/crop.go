@@ -9,7 +9,7 @@ import (
 /**
     Returns a copy of the required area of the given image.
 */
-func Crop_image(img image.Image, area image.Rectangle) (image.Image) {
+func Crop(img image.Image, area image.Rectangle) (image.Image) {
     // prepare the image to be returned
     bounds := img.Bounds()
     ret_bounds := image.Rect(0, 0, area.Max.X - area.Min.X, area.Max.Y - area.Min.Y)

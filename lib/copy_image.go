@@ -9,7 +9,7 @@ import(
 /**
     Returns a copy of the given image.
 */
-func Copy_image(img image.Image) (image.Image) {
+func Copy(img image.Image) (image.Image) {
     // prepare the image to be returned
     bounds := img.Bounds()
     ret := image.Image(image.NewRGBA(bounds))

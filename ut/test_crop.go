@@ -37,7 +37,7 @@ func crop_test_1(img image.Image, output string) {
     width := bounds.Max.X - bounds.Min.X
     height := bounds.Max.Y - bounds.Min.Y
 
-    ret := lib.Crop_image(img, image.Rect(bounds.Min.X + width / 4, bounds.Min.Y + height / 4, bounds.Max.X - width / 4, bounds.Max.Y - height / 4))
+    ret := lib.Crop(img, image.Rect(bounds.Min.X + width / 4, bounds.Min.Y + height / 4, bounds.Max.X - width / 4, bounds.Max.Y - height / 4))
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -49,7 +49,7 @@ func crop_test_2(img image.Image, output string) {
     width := bounds.Max.X - bounds.Min.X
     height := bounds.Max.Y - bounds.Min.Y
 
-    ret := lib.Crop_image(img, image.Rect(bounds.Min.X - width / 4, bounds.Min.Y - height / 4, bounds.Max.X - width / 4, bounds.Max.Y - height / 4))
+    ret := lib.Crop(img, image.Rect(bounds.Min.X - width / 4, bounds.Min.Y - height / 4, bounds.Max.X - width / 4, bounds.Max.Y - height / 4))
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -61,7 +61,7 @@ func crop_test_3(img image.Image, output string) {
     width := bounds.Max.X - bounds.Min.X
     height := bounds.Max.Y - bounds.Min.Y
 
-    ret := lib.Crop_image(img, image.Rect(bounds.Min.X + width / 4, bounds.Min.Y + height / 4, bounds.Max.X + width / 4, bounds.Max.Y + height / 4))
+    ret := lib.Crop(img, image.Rect(bounds.Min.X + width / 4, bounds.Min.Y + height / 4, bounds.Max.X + width / 4, bounds.Max.Y + height / 4))
 
     rez, _ := os.Create(output)
     defer rez.Close()

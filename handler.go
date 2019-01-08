@@ -18,7 +18,7 @@ func main() {
 
     start := time.Now()
 
-    card := lib.Copy_image(img)
+    card := lib.Copy(img)
     card = lib.Resize(card, image.Rect(0, 0, 800, 800))
     //lib.Apply_filter(card, image.Rect(200, 200, 600, 600), lib.Filter{ [][]float64{{1.0/9, 1.0/9, 1.0/9}, {1.0/9, 1.0/9, 1.0/9}, {1.0/9, 1.0/9, 1.0/9}} }, 50)
     lib.Modify_colors(card, image.Rect(200, 200, 600, 600), [4][5]float64{{-1, 0, 0, 0, (256 << 8) - 1}, {0, -1, 0, 0, (256 << 8) - 1}, {0, 0, -1, 0, (256 << 8) - 1}, {0, 0, 0, 1}})
