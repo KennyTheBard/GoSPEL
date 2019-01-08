@@ -21,6 +21,7 @@
 - [x] Add color adder
 - [x] Replace the coloring functions with only one transformation with matrix
 - [x] Extend color modification to support target area
+- [ ] Extend all target area dependent functions to use custom structure
 
 ### Refactoring
 - [x] Move each group functions into a package and folder on its one
