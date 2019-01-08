@@ -1,7 +1,6 @@
 package lib
 
 import (
-    "fmt"
     "math"
     "image"
     "image/draw"
@@ -80,10 +79,10 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image
     Points of height are expected to be given
     in ascending order, from 0 to height / 2.
 */
-func Circular_gradient(width, height int, ys []int, vals []color.Color) image.Image {
-    cx := width / 2
-    cy := height / 2
-    bounds := image.Rect(0, 0, width, height)
+func Circular_gradient(size int, ys []int, vals []color.Color) image.Image {
+    cx := size / 2
+    cy := size / 2
+    bounds := image.Rect(0, 0, size, size)
     img := image.Image(image.NewRGBA(bounds))
 
     n := 10
@@ -130,8 +129,6 @@ func Circular_gradient(width, height int, ys []int, vals []color.Color) image.Im
     for i := 0; i < n; i++ {
         <-done
     }
-
-    fmt.Println("done")
 
     return img;
 }

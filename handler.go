@@ -26,6 +26,8 @@ func main() {
     //card = lib.Merge(card, grd, image.Rect(0, 0, 400, 200))
     ut.Test_crop("test.jpg", "test_results/crop_test")
     ut.Test_resize("test.jpg", "test_results/resize_test")
+    ut.Test_mirror("test.jpg", "test_results/mirror_test")
+    ut.Test_copy("test.jpg", "test_results/copy_test")
 
     elapsed := time.Since(start)
 

@@ -36,7 +36,7 @@
 - [x] Write unit tests for resizing
 - [ ] Write unit tests for color modification
 - [ ] Write unit tests for gradient
-- [ ] Write unit tests for mirroring
+- [x] Write unit tests for mirroring
 - [ ] Write unit tests for layer merging
 - [ ] Write unit tests for rotation
 - [ ] Write unit tests for shearing
