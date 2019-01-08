@@ -1,7 +1,6 @@
 package lib
 
 import (
-    "fmt"
     "image"
     "image/color"
     "image/draw"
@@ -16,10 +15,7 @@ type Filter struct {
     Apply the filter f on each pixel of the image img in the assigned area.
 */
 func Apply_filter(img image.Image, area image.Rectangle, f Filter, strength int) {
-
     trg := Copy_image(img)
-
-    fmt.Println(f.Mat)
 
     for i := 0; i < strength; i++ {
         n := 10
