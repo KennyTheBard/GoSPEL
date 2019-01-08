@@ -5,7 +5,7 @@
 - [x] Add anti-aliasing support (can be achieved through a 2x2 blur)
 - [x] Add layer merging support
 - [x] Add shearing support
-- [x] Add rotation support
+- [ ] Add rotation support
 - [x] Add mirroring support
 - [x] Add color modifiers support
 - [ ] Procedure chaining system
@@ -21,7 +21,8 @@
 - [x] Add color adder
 - [x] Replace the coloring functions with only one transformation with matrix
 - [x] Extend color modification to support target area
-- [ ] Extend all target area dependent functions to use custom structure
+- [ ] Extend all target area dependent functions to use masks
+- [ ] Add oval gradients
 
 ### Refactoring
 - [x] Move each group functions into a package and folder on its one
@@ -38,7 +39,7 @@
 - [ ] Write unit tests for layer merging
 - [ ] Write unit tests for rotation
 - [ ] Write unit tests for shearing
-- [ ] Write unit tests for cropping
+- [x] Write unit tests for cropping
 - [ ] Write unit tests for opacity
 - [ ] Test cubic interpolation
 - [x] Test linear gradient
