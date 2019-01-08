@@ -20,7 +20,7 @@
 - [x] Add support for any sizes of filters
 - [x] Add color adder
 - [x] Replace the coloring functions with only one transformation with matrix
-- [ ] Extend color modification to support target area
+- [x] Extend color modification to support target area
 
 ### Refactoring
 - [x] Move each group functions into a package and folder on its one
@@ -38,12 +38,14 @@
 - [ ] Write unit tests for rotation
 - [ ] Write unit tests for shearing
 - [ ] Write unit tests for cropping
+- [ ] Write unit tests for opacity
 - [ ] Test cubic interpolation
 - [x] Test linear gradient
 
 ### Debugging
 - [x] Solve black border for blur filter
 - [ ] Solve the distortions of rotation algorithm
+- [ ] Solve the error with PNG encoding
 
 ### Documentation
 - [x] Write comments for every function
