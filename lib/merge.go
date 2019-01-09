@@ -17,7 +17,8 @@ func Merge(trg, over image.Image, area image.Rectangle) (image.Image) {
     ret := image.Image(image.NewRGBA(trg_bounds))
 
     // prepare the over image to be merged with target image
-    img := Resize(over, area)
+    img_bounds := image.Rect(0, 0, area.Max.X - area.Min.X, area.Max.Y - area.Min.Y)
+    img := Resize(over, img_bounds)
 
     n := 10
     done := make(chan bool, n)
@@ -30,9 +31,9 @@ func Merge(trg, over image.Image, area image.Rectangle) (image.Image) {
             for y := trg_bounds.Min.Y + rank; y <= trg_bounds.Max.Y; y += n {
                 for x := trg_bounds.Min.X; x <= trg_bounds.Max.X; x++ {
 
-                    if y >= area.Min.Y && y <= area.Max.Y && x >= area.Min.X && x <= area.Max.X {
+                    if aux.In_rectangle(image.Point{x, y}, area) {
                         r1, g1, b1, a1 := trg.At(x, y).RGBA()
-                        r2, g2, b2, a2 := img.At(x, y).RGBA()
+                        r2, g2, b2, a2 := img.At(x - area.Min.X, y - area.Min.Y).RGBA()
 
                         px1 := aux.Pixel{r1, g1, b1, a1}
                         px2 := aux.Pixel{r2, g2, b2, a2}

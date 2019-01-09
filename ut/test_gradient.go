@@ -16,7 +16,7 @@ func Test_gradient(input, output string) {
     aux, _, _ := image.Decode(img_file)
     img := image.Image(aux)
 
-    file_num := 0
+    file_num := 1
     var curr_output string
 
     curr_output = strings.Join([]string{output, "_", strconv.Itoa(file_num), ".jpg"}, "")

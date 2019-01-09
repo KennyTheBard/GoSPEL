@@ -24,6 +24,7 @@
 - [x] Extend all target area dependent functions to use masks
 - [x] Add oval gradients
 - [ ] Add safety measures in gradient functions
+- [ ] Add basic functionalities for one color images
 
 ### Refactoring
 - [x] Move each group functions into a package and folder on its one
@@ -32,14 +33,14 @@
 - [x] Rename ret image as trg image in rescale.go
 
 ### Testing
-- [ ] Write unit tests for filter appliance
+- [x] Write unit tests for filter appliance
 - [x] Write unit tests for resizing
-- [ ] Write unit tests for color modification
-- [ ] Write unit tests for gradient
+- [x] Write unit tests for color modification
+- [x] Write unit tests for gradient
 - [x] Write unit tests for mirroring
-- [ ] Write unit tests for layer merging
+- [x] Write unit tests for layer merging
 - [ ] Write unit tests for rotation
-- [ ] Write unit tests for shearing
+- [x] Write unit tests for shearing
 - [x] Write unit tests for cropping
 - [ ] Write unit tests for opacity
 - [ ] Test cubic interpolation
