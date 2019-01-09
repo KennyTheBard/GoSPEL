@@ -4,6 +4,7 @@ import (
     "image"
 )
 
+
 /**
     Returns the color of the pixel or the closest pixel's
     color if the desired pixel is outside of the image.
@@ -29,6 +30,7 @@ func Safe_Get_Color(img image.Image, x, y int) (uint32, uint32, uint32, uint32) 
 
     return img.At(x, y).RGBA()
 }
+
 
 /**
     Force the value val in [min, max].

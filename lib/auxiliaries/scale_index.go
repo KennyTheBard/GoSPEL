@@ -2,6 +2,7 @@ package auxiliaries
 
 import "math"
 
+
 /**
     Returns the index i scaled with ratio r.
 */

@@ -1,5 +1,9 @@
 package auxiliaries
 
+
+/**
+	Returns the absolute value of the input.
+*/
 func Abs(x int) int {
 	if x < 0 {
 		return -x
@@ -7,6 +11,10 @@ func Abs(x int) int {
 	return x
 }
 
+
+/**
+	Returns the minimum value between the 2 inputs.
+*/
 func Min(x, y int) int {
     if x < y {
         return x

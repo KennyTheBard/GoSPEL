@@ -4,9 +4,11 @@ import (
     interp "../interpolation"
 )
 
+
 type Pixel struct {
     R, G, B, A uint32
 }
+
 
 /**
     Interpolate the value of the one on the
@@ -20,6 +22,7 @@ func Pixel_linear_interpolation(px1, px2 Pixel, x float64) (Pixel) {
 
     return Pixel{r_aux, g_aux, b_aux, a_aux}
 }
+
 
 /**
     Interpolate the value of the one inside the
