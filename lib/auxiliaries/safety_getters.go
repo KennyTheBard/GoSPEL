@@ -44,3 +44,39 @@ func Clamp(min, max uint32, val uint32) uint32 {
         return val
     }
 }
+
+
+/**
+    Returns if a point is in the given rectangle.
+*/
+func In_rectangle(p image.Point, rect image.Rectangle) bool {
+    if p.X < rect.Min.X {
+        return false
+    }
+
+    if p.X > rect.Max.X {
+        return false
+    }
+
+    if p.Y < rect.Min.Y {
+        return false
+    }
+
+    if p.Y > rect.Max.Y {
+        return false
+    }
+
+    return true
+}
+
+
+/**
+    Returns if 2 rectangles are the same.
+*/
+func Equal_rectangles(r1, r2 image.Rectangle) bool {
+    if r1.Min.X == r2.Min.X && r1.Min.Y == r2.Min.Y && r1.Max.X == r2.Max.X && r1.Max.Y == r2.Max.Y {
+        return true
+    } else {
+        return false
+    }
+}

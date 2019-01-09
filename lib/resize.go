@@ -12,6 +12,13 @@ import (
 */
 func Resize(orig image.Image, trg_bounds image.Rectangle) (image.Image) {
     orig_bounds := orig.Bounds()
+
+    // early exit case
+    if orig_bounds.Min.X == trg_bounds.Min.X && orig_bounds.Min.Y == trg_bounds.Min.Y && orig_bounds.Max.X == trg_bounds.Max.X && orig_bounds.Max.Y == trg_bounds.Max.Y {
+        return Copy(orig)
+    }
+
+    // prepare the image to be returned
     trg := image.Image(image.NewRGBA(trg_bounds))
 
     // ratio return to original

@@ -11,6 +11,11 @@ import (
     Returns an image with the opacity ampified by
 */
 func Scale_opacity(img image.Image, alpha_proc float64) (image.Image) {
+    // early exit case
+    if alpha_proc == 1 {
+        return Copy(img)
+    }
+
     // prepare the image to be returned
     bounds := img.Bounds()
     ret := image.Image(image.NewRGBA(bounds))
@@ -44,7 +49,7 @@ func Scale_opacity(img image.Image, alpha_proc float64) (image.Image) {
     return ret
 }
 
-func Select_opaque(img image.Image) image.Rectangle {
+func Select_opaque(img image.Image) (image.Rectangle) {
     var min_x, max_x, min_y, max_y int
     var found bool
 

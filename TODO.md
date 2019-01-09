@@ -21,7 +21,7 @@
 - [x] Add color adder
 - [x] Replace the coloring functions with only one transformation with matrix
 - [x] Extend color modification to support target area
-- [ ] Extend all target area dependent functions to use masks
+- [x] Extend all target area dependent functions to use masks
 - [x] Add oval gradients
 - [ ] Add safety measures in gradient functions
 
@@ -49,7 +49,7 @@
 - [x] Solve black border for blur filter
 - [ ] Solve the distortions of rotation algorithm
 - [ ] Solve the error with PNG encoding
-- [ ] Solve the linear gradient bug
+- [x] Solve the linear gradient bug
 
 ### Documentation
 - [x] Write comments for every function

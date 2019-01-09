@@ -5,6 +5,7 @@ import (
     "image/color"
     "image/draw"
     aux "./auxiliaries"
+    interp "./interpolation"
 )
 
 type Filter struct {
@@ -14,8 +15,11 @@ type Filter struct {
 /**
     Apply the filter f on each pixel of the image img in the assigned area.
 */
-func Apply_filter(img image.Image, area image.Rectangle, f Filter, strength int) {
+func Apply_filter(img image.Image, mask image.Image, f Filter, strength int) (image.Image) {
+    bounds := img.Bounds()
     trg := Copy(img)
+    aux_img := Copy(img)
+    mask = Resize(mask, bounds)
 
     for i := 0; i < strength; i++ {
         n := 10
@@ -26,17 +30,18 @@ func Apply_filter(img image.Image, area image.Rectangle, f Filter, strength int)
             go func() {
                 rank := aux_rank
 
-                for y := area.Min.Y + rank; y <= area.Max.Y; y += n {
-                    for x := area.Min.X; x <= area.Max.X; x++ {
+                for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
+                    for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                         sum_r := float64(0)
                         sum_g := float64(0)
                         sum_b := float64(0)
                         sum_a := float64(0)
 
+                        // calculate the color after filter appliance
                         for i := - len(f.Mat) / 2; i <= len(f.Mat) / 2 + len(f.Mat) % 2 - 1; i++ {
                             for j := - len(f.Mat[i + len(f.Mat) / 2]) / 2; j <= len(f.Mat[i + len(f.Mat) / 2]) / 2 + len(f.Mat[i + len(f.Mat) / 2]) % 2 - 1; j++ {
                                 // values are returned as uint32
-                                r, g, b, a := aux.Safe_Get_Color(img, x + j, y + i)
+                                r, g, b, a := aux.Safe_Get_Color(aux_img, x + j, y + i)
 
                                 sum_r += float64(r) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
                                 sum_g += float64(g) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
@@ -45,7 +50,16 @@ func Apply_filter(img image.Image, area image.Rectangle, f Filter, strength int)
                             }
                         }
 
-                        trg.(draw.Image).Set(x, y, color.RGBA{uint8(uint64(sum_r) >> 8), uint8(uint64(sum_g) >> 8), uint8(uint64(sum_b) >> 8), uint8(uint64(sum_a) >> 8)})
+                        r_aux, g_aux, b_aux, a_aux := aux_img.At(x, y).RGBA()
+                        r_mask, g_mask, b_mask, a_mask := mask.At(x, y).RGBA()
+
+                        // calculate the color modification through mask
+                        fin_r := interp.Linear_interpolation(int32(r_aux), int32(sum_r), float64(r_mask) / float64((256 << 8) - 1))
+                        fin_g := interp.Linear_interpolation(int32(g_aux), int32(sum_g), float64(g_mask) / float64((256 << 8) - 1))
+                        fin_b := interp.Linear_interpolation(int32(b_aux), int32(sum_b), float64(b_mask) / float64((256 << 8) - 1))
+                        fin_a := interp.Linear_interpolation(int32(a_aux), int32(sum_a), float64(a_mask) / float64((256 << 8) - 1))
+
+                        trg.(draw.Image).Set(x, y, color.RGBA{uint8(fin_r >> 8), uint8(fin_g >> 8), uint8(fin_b >> 8), uint8(fin_a >> 8)})
                     }
                 }
 
@@ -57,6 +71,8 @@ func Apply_filter(img image.Image, area image.Rectangle, f Filter, strength int)
             <-done
         }
 
-        trg, img = img, trg
+        trg, aux_img = aux_img, trg
     }
+
+    return aux_img
 }
