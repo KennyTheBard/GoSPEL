@@ -5,7 +5,7 @@
 - [x] Add anti-aliasing support (can be achieved through a 2x2 blur)
 - [x] Add layer merging support
 - [x] Add shearing support
-- [ ] Add rotation support
+- [x] Add rotation support
 - [x] Add mirroring support
 - [x] Add color modifiers support
 - [ ] Procedure chaining system
@@ -25,6 +25,8 @@
 - [x] Add oval gradients
 - [ ] Add safety measures in gradient functions
 - [ ] Add basic functionalities for one color images
+- [ ] Add normalization tools for image coordinates
+- [ ] extend rotation to support angles higher than 90
 
 ### Refactoring
 - [x] Move each group functions into a package and folder on its one
