@@ -23,7 +23,7 @@
 - [x] Extend color modification to support target area
 - [x] Extend all target area dependent functions to use masks
 - [x] Add oval gradients
-- [ ] Add safety measures in gradient functions
+- [x] Add safety measures in gradient functions
 - [x] Add basic functionalities for one color images
 - [x] Add normalization tools for image coordinates
 - [x] Extend rotation to support angles higher than 90

@@ -4,7 +4,7 @@ import (
     "image"
     "image/draw"
     "image/color"
-    aux "./auxiliaries"
+    utils "./utils"
 )
 
 /**
@@ -36,17 +36,17 @@ func Resize(orig image.Image, trg_bounds image.Rectangle) (image.Image) {
             for y := trg_bounds.Min.Y + rank; y <= trg_bounds.Max.Y; y += n {
                 for x := trg_bounds.Min.X; x <= trg_bounds.Max.X; x++ {
 
-                     r11, g11, b11, a11 := orig.At(aux.Scale_index(x, width_ratio), aux.Scale_index(y, height_ratio)).RGBA()
-                     r12, g12, b12, a12 := orig.At(aux.Scale_index(x + 1, width_ratio), aux.Scale_index(y, height_ratio)).RGBA()
-                     r21, g21, b21, a21 := orig.At(aux.Scale_index(x, width_ratio), aux.Scale_index(y + 1, height_ratio)).RGBA()
-                     r22, g22, b22, a22 := orig.At(aux.Scale_index(x + 1, width_ratio), aux.Scale_index(y + 1, height_ratio)).RGBA()
+                     r11, g11, b11, a11 := orig.At(utils.Scale_index(x, width_ratio), utils.Scale_index(y, height_ratio)).RGBA()
+                     r12, g12, b12, a12 := orig.At(utils.Scale_index(x + 1, width_ratio), utils.Scale_index(y, height_ratio)).RGBA()
+                     r21, g21, b21, a21 := orig.At(utils.Scale_index(x, width_ratio), utils.Scale_index(y + 1, height_ratio)).RGBA()
+                     r22, g22, b22, a22 := orig.At(utils.Scale_index(x + 1, width_ratio), utils.Scale_index(y + 1, height_ratio)).RGBA()
 
-                     px11 := aux.Pixel{r11, g11, b11, a11}
-                     px12 := aux.Pixel{r12, g12, b12, a12}
-                     px21 := aux.Pixel{r21, g21, b21, a21}
-                     px22 := aux.Pixel{r22, g22, b22, a22}
+                     px11 := utils.Pixel{r11, g11, b11, a11}
+                     px12 := utils.Pixel{r12, g12, b12, a12}
+                     px21 := utils.Pixel{r21, g21, b21, a21}
+                     px22 := utils.Pixel{r22, g22, b22, a22}
 
-                     fin := aux.Pixel_bilinear_interpolation(px11, px12, px21, px22, 0.5, 0.5)
+                     fin := utils.Pixel_bilinear_interpolation(px11, px12, px21, px22, 0.5, 0.5)
 
                      trg.(draw.Image).Set(x, y, color.RGBA{uint8(fin.R >> 8), uint8(fin.G >> 8), uint8(fin.B >> 8), uint8(fin.A >> 8)})
                 }

@@ -4,7 +4,7 @@ import(
     "image"
     "image/draw"
     "image/color"
-    aux "./auxiliaries"
+    utils "./utils"
 )
 
 /**
@@ -31,16 +31,16 @@ func Merge(trg, over image.Image, area image.Rectangle) (image.Image) {
             for y := trg_bounds.Min.Y + rank; y <= trg_bounds.Max.Y; y += n {
                 for x := trg_bounds.Min.X; x <= trg_bounds.Max.X; x++ {
 
-                    if aux.In_rectangle(image.Point{x, y}, area) {
+                    if utils.In_rectangle(image.Point{x, y}, area) {
                         r1, g1, b1, a1 := trg.At(x, y).RGBA()
                         r2, g2, b2, a2 := img.At(x - area.Min.X, y - area.Min.Y).RGBA()
 
-                        px1 := aux.Pixel{r1, g1, b1, a1}
-                        px2 := aux.Pixel{r2, g2, b2, a2}
+                        px1 := utils.Pixel{r1, g1, b1, a1}
+                        px2 := utils.Pixel{r2, g2, b2, a2}
 
                         proc := float64(a2) / float64((256 << 8) - 1)
 
-                        fin := aux.Pixel_linear_interpolation(px1, px2, proc)
+                        fin := utils.Pixel_linear_interpolation(px1, px2, proc)
 
                         ret.(draw.Image).Set(x, y, color.RGBA{uint8(fin.R >> 8), uint8(fin.G >> 8), uint8(fin.B >> 8), uint8(255)})
 

@@ -4,7 +4,7 @@ import (
     "image"
     "image/draw"
     "image/color"
-    aux "./auxiliaries"
+    utils "./utils"
 )
 
 /**
@@ -14,7 +14,7 @@ func Crop(img image.Image, area image.Rectangle) (image.Image) {
     bounds := img.Bounds()
 
     // early exit case
-    if aux.Equal_rectangles(bounds, area) {
+    if utils.Equal_rectangles(bounds, area) {
         return Copy(img)
     }
 
@@ -32,7 +32,7 @@ func Crop(img image.Image, area image.Rectangle) (image.Image) {
 
             for y := area.Min.Y + rank; y <= area.Max.Y; y += n {
                 for x := area.Min.X; x <= area.Max.X; x++ {
-                    if aux.In_rectangle(image.Point{x, y}, bounds) {
+                    if utils.In_rectangle(image.Point{x, y}, bounds) {
                         r, g, b, a := img.At(x, y).RGBA()
 
                         ret.(draw.Image).Set(x - area.Min.X, y - area.Min.Y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})

@@ -6,7 +6,7 @@ import(
     "image/color"
     "math"
     interp "./interpolation"
-    aux "./auxiliaries"
+    utils "./utils"
 )
 
 const (
@@ -37,7 +37,7 @@ func xshear(img image.Image, shear float64) (image.Image) {
     height := bounds.Max.Y - bounds.Min.Y + 1
 
     // initialize the new image
-    new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X + aux.Abs(shear_factor), bounds.Max.Y)
+    new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X + utils.Abs(shear_factor), bounds.Max.Y)
     ret := image.Image(image.NewRGBA(new_bounds))
     ret = Scale_opacity(ret, 0)
 
@@ -57,7 +57,7 @@ func xshear(img image.Image, shear float64) (image.Image) {
                 for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                     r, g, b, a := img.At(x, y).RGBA()
 
-                    ret.(draw.Image).Set(x + padding - aux.Min(shear_factor, 0), y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
+                    ret.(draw.Image).Set(x + padding - utils.Min(shear_factor, 0), y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
                 }
             }
 
@@ -84,7 +84,7 @@ func yshear(img image.Image, shear float64) (image.Image) {
     width := bounds.Max.X - bounds.Min.X + 1
 
     // initialize the new image
-    new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X, bounds.Max.Y + aux.Abs(shear_factor))
+    new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X, bounds.Max.Y + utils.Abs(shear_factor))
     ret := image.Image(image.NewRGBA(new_bounds))
     ret = Scale_opacity(ret, 0)
 
@@ -107,7 +107,7 @@ func yshear(img image.Image, shear float64) (image.Image) {
                 for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                     r, g, b, a := img.At(x, y).RGBA()
 
-                    ret.(draw.Image).Set(x, y + paddings[x - bounds.Min.X] - aux.Min(shear_factor, 0), color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
+                    ret.(draw.Image).Set(x, y + paddings[x - bounds.Min.X] - utils.Min(shear_factor, 0), color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
                 }
             }
 

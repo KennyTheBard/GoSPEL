@@ -5,7 +5,7 @@ import (
     "image"
     "image/draw"
     "image/color"
-    aux "./auxiliaries"
+    utils "./utils"
 )
 
 /**
@@ -24,7 +24,7 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image
     }
 
     // sort the color points
-    aux.Sort_color_points(ys, vals)
+    utils.Sort_color_points(ys, vals)
 
     img := image.Image(image.NewRGBA(bounds))
 
@@ -49,14 +49,14 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image
         r1, g1, b1, a1 := vals[k - 1].RGBA()
         r2, g2, b2, a2 := vals[k].RGBA()
 
-        px1 := aux.Pixel{r1, g1, b1, a1}
-        px2 := aux.Pixel{r2, g2, b2, a2}
+        px1 := utils.Pixel{r1, g1, b1, a1}
+        px2 := utils.Pixel{r2, g2, b2, a2}
 
         for y := prev + 1; y <= curr; y++ {
             for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                 proc := float64(y - prev) / float64(curr - prev)
 
-                fin := aux.Pixel_linear_interpolation(px1, px2, proc)
+                fin := utils.Pixel_linear_interpolation(px1, px2, proc)
 
                 img.(draw.Image).Set(x, y, color.RGBA{uint8(fin.R >> 8), uint8(fin.G >> 8), uint8(fin.B >> 8), uint8(fin.A >> 8)})
             }
@@ -94,7 +94,7 @@ func Circular_gradient(size int, ys []int, vals []color.Color) image.Image {
     }
 
     // sort the color points
-    aux.Sort_color_points(ys, vals)
+    utils.Sort_color_points(ys, vals)
 
     cx := size / 2
     cy := size / 2
@@ -112,8 +112,8 @@ func Circular_gradient(size int, ys []int, vals []color.Color) image.Image {
             for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
                 for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                     // determine the color interval
-                    dst := int(math.Round(aux.Distance(float64(x), float64(y), float64(cx), float64(cy))))
-                    k1, k2 := aux.Search_interval(ys, dst)
+                    dst := int(math.Round(utils.Distance(float64(x), float64(y), float64(cx), float64(cy))))
+                    k1, k2 := utils.Search_interval(ys, dst)
 
                     if k1 == k2 {
                         r, g, b, a := vals[k1].RGBA()
@@ -124,13 +124,13 @@ func Circular_gradient(size int, ys []int, vals []color.Color) image.Image {
                     // prepare data for interpolation
                     r1, g1, b1, a1 := vals[k1].RGBA()
                     r2, g2, b2, a2 := vals[k2].RGBA()
-                    px1 := aux.Pixel{r1, g1, b1, a1}
-                    px2 := aux.Pixel{r2, g2, b2, a2}
+                    px1 := utils.Pixel{r1, g1, b1, a1}
+                    px2 := utils.Pixel{r2, g2, b2, a2}
 
                     // interpolation & pixel writing
                     proc := float64(dst - ys[k1]) / float64(ys[k2] - ys[k1])
 
-                    fin := aux.Pixel_linear_interpolation(px1, px2, proc)
+                    fin := utils.Pixel_linear_interpolation(px1, px2, proc)
 
                     //fmt.Println(dst, "intre", ys[k1], "si", ys[k2], "iar proc este", proc, "iar fin.A este", fin.A)
 
