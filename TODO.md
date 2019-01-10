@@ -24,9 +24,9 @@
 - [x] Extend all target area dependent functions to use masks
 - [x] Add oval gradients
 - [ ] Add safety measures in gradient functions
-- [ ] Add basic functionalities for one color images
-- [ ] Add normalization tools for image coordinates
-- [ ] extend rotation to support angles higher than 90
+- [x] Add basic functionalities for one color images
+- [x] Add normalization tools for image coordinates
+- [x] Extend rotation to support angles higher than 90
 
 ### Refactoring
 - [x] Move each group functions into a package and folder on its one
@@ -41,16 +41,16 @@
 - [x] Write unit tests for gradient
 - [x] Write unit tests for mirroring
 - [x] Write unit tests for layer merging
-- [ ] Write unit tests for rotation
+- [x] Write unit tests for rotation
 - [x] Write unit tests for shearing
 - [x] Write unit tests for cropping
-- [ ] Write unit tests for opacity
+- [x] Write unit tests for opacity
 - [ ] Test cubic interpolation
 - [x] Test linear gradient
 
 ### Debugging
 - [x] Solve black border for blur filter
-- [ ] Solve the distortions of rotation algorithm
+- [x] Solve the distortions of rotation algorithm
 - [ ] Solve the error with PNG encoding
 - [x] Solve the linear gradient bug
 

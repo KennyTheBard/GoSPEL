@@ -1,7 +1,6 @@
 package lib
 
 import (
-    "fmt"
     "math"
     "image"
     "image/draw"
@@ -10,13 +9,29 @@ import (
 )
 
 func Rotate(img image.Image, angle float64) image.Image {
-    bounds := img.Bounds()
+    // for angles outside of [0, 90]
+    scaled_image := img
+    scaled_angle := angle
+
+    for scaled_angle < 0 {
+        scaled_angle += 360
+    }
+    for scaled_angle > 90 {
+        scaled_image = Rotate(scaled_image, 90)
+        scaled_angle -= 90;
+    }
+    if scaled_angle == 0 {
+        return scaled_image
+    }
+
+
+    bounds := scaled_image.Bounds()
     width, height := Rectangle_size(bounds)
 
     // calculate angle in radians
-    rad := angle * math.Pi / 180
+    rad := scaled_angle * math.Pi / 180
 
-    aux_image := aux.Shift(img, image.Point{-width/2, -height/2})
+    aux_image := aux.Shift(scaled_image, aux.Calculate_shift_factor(scaled_image))
     bounds = aux_image.Bounds()
     width, height = Rectangle_size(bounds)
 
@@ -32,9 +47,6 @@ func Rotate(img image.Image, angle float64) image.Image {
 
     ret := image.Image(image.NewRGBA(ret_bounds))
 
-
-    fmt.Println(ret_bounds)
-
     n := 10
     done := make(chan bool, n)
 
@@ -48,10 +60,10 @@ func Rotate(img image.Image, angle float64) image.Image {
                     xx := x //+ ret_width / 2
                     yy := y //- int(float64(ret_height) * math.Cos(Angle2Rad(angle)) / 2)
 
-                    r11, g11, b11, a11 := Get_rotated_color(img, image.Point{xx, yy}, -angle).RGBA()
-                    r12, g12, b12, a12 := Get_rotated_color(img, image.Point{xx + 1, yy}, -angle).RGBA()
-                    r21, g21, b21, a21 := Get_rotated_color(img, image.Point{xx, yy + 1}, -angle).RGBA()
-                    r22, g22, b22, a22 := Get_rotated_color(img, image.Point{xx + 1, yy + 1}, -angle).RGBA()
+                    r11, g11, b11, a11 := Get_rotated_color(scaled_image, image.Point{xx, yy}, -scaled_angle).RGBA()
+                    r12, g12, b12, a12 := Get_rotated_color(scaled_image, image.Point{xx + 1, yy}, -scaled_angle).RGBA()
+                    r21, g21, b21, a21 := Get_rotated_color(scaled_image, image.Point{xx, yy + 1}, -scaled_angle).RGBA()
+                    r22, g22, b22, a22 := Get_rotated_color(scaled_image, image.Point{xx + 1, yy + 1}, -scaled_angle).RGBA()
 
                     px11 := aux.Pixel{r11, g11, b11, a11}
                     px12 := aux.Pixel{r12, g12, b12, a12}

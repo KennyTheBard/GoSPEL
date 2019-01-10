@@ -19,7 +19,6 @@ func Apply_filter(img image.Image, mask image.Image, f Filter, strength int) (im
     bounds := img.Bounds()
     trg := Copy(img)
     aux_img := Copy(img)
-    mask = Resize(mask, bounds)
 
     for i := 0; i < strength; i++ {
         n := 10

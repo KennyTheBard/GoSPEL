@@ -43,3 +43,7 @@ func Shift(img image.Image, shift_factor image.Point) (image.Image) {
     return ret
 
 }
+
+func Calculate_shift_factor(img image.Image) (image.Point) {
+    return image.Point{0 - img.Bounds().Min.X, 0 - img.Bounds().Min.Y}
+}

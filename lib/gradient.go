@@ -18,6 +18,14 @@ import (
     in ascending order, from 0 to bounds.Max.Y.
 */
 func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image.Image {
+    // early exit case
+    if len(ys) != len(vals) {
+        return Create_image(bounds, color.RGBA{0, 0, 0, 0})
+    }
+
+    // sort the color points
+    aux.Sort_color_points(ys, vals)
+
     img := image.Image(image.NewRGBA(bounds))
 
     // first block
@@ -80,6 +88,14 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) image
     in ascending order, from 0 to height / 2.
 */
 func Circular_gradient(size int, ys []int, vals []color.Color) image.Image {
+    // early exit case
+    if len(ys) != len(vals) {
+        return Create_image(image.Rect(0, 0, size, size), color.RGBA{0, 0, 0, 0})
+    }
+
+    // sort the color points
+    aux.Sort_color_points(ys, vals)
+
     cx := size / 2
     cy := size / 2
     bounds := image.Rect(0, 0, size, size)
