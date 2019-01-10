@@ -5,16 +5,16 @@ import (
     "os"
     "time"
     "image"
-    "image/jpeg"
-    "image/color"
+    // "image/color"
     lib "./lib"
+    utils "./lib/utils"
     //ut "./ut"
 )
 
 func main() {
-    img_file, _ := os.Open("humans.jpg")
+    img_file, _ := os.Open("logo.png")
     defer img_file.Close()
-    img, _, _ := image.Decode(img_file)
+    img, image_format, _ := image.Decode(img_file)
 
     start := time.Now()
 
@@ -34,18 +34,18 @@ func main() {
     // ut.Test_rotate("test.jpg", "test_results/rotate_test")
     // ut.Test_opacity("test.jpg", "test_results/opacity_test")
 
-    area := lib.Create_image(image.Rect(300, 0, 600, 675), color.RGBA{255, 255, 255, 0})
-    card = lib.Apply_filter(card, area, lib.Filter{ [][]float64{{1.0/16, 2.0/16, 1.0/16}, {2.0/16, 4.0/16, 2.0/16}, {1.0/16, 2.0/16, 1.0/16}} }, 10)
-    card = lib.Apply_filter(card, area, lib.Filter{ [][]float64{{-1, -1, -1}, {-1, 8, -1}, {-1, -1, -1}}}, 1)
+    // area := lib.Create_image(image.Rect(300, 0, 600, 675), color.RGBA{255, 255, 255, 0})
+    // card = lib.Apply_filter(card, area, lib.Filter{ [][]float64{{1.0/16, 2.0/16, 1.0/16}, {2.0/16, 4.0/16, 2.0/16}, {1.0/16, 2.0/16, 1.0/16}} }, 10)
+    // card = lib.Apply_filter(card, area, lib.Filter{ [][]float64{{-1, -1, -1}, {-1, 8, -1}, {-1, -1, -1}}}, 1)
+
+    card = lib.Modify_colors(card, card.Bounds(), [4][5]float64{{0, 1, 0, 0, 0}, {0, 0, 1, 0, 0}, {1, 0, 0, 0, 0}, {0, 0, 0, 1, 0}})
+
 
     elapsed := time.Since(start)
 
 
     fmt.Printf("Done in %s!\n", elapsed)
 
-    rez, _ := os.Create("new.jpg")
-    defer rez.Close()
-
-    jpeg.Encode(rez, card, &jpeg.Options{jpeg.DefaultQuality})
+    utils.Encode_image(card, "new", image_format)
 
 }

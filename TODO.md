@@ -27,12 +27,14 @@
 - [x] Add basic functionalities for one color images
 - [x] Add normalization tools for image coordinates
 - [x] Extend rotation to support angles higher than 90
+- [x] Add an encoding system format dependent
 
 ### Refactoring
 - [x] Move each group functions into a package and folder on its one
 - [x] Ensure correct importing of auxiliary functions
 - [x] Reduce number of interpolations arguments through a structure
 - [x] Rename ret image as trg image in rescale.go
+- [x] Rename lib/auxiliaries into lib/utils
 
 ### Testing
 - [x] Write unit tests for filter appliance
@@ -51,7 +53,7 @@
 ### Debugging
 - [x] Solve black border for blur filter
 - [x] Solve the distortions of rotation algorithm
-- [ ] Solve the error with PNG encoding
+- [x] Solve the error with PNG encoding
 - [x] Solve the linear gradient bug
 
 ### Documentation
