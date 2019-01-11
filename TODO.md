@@ -1,60 +1,26 @@
 # TODO List
 
 ### Developing
-- [x] Add gradient support
-- [x] Add anti-aliasing support (can be achieved through a 2x2 blur)
-- [x] Add layer merging support
-- [x] Add shearing support
-- [x] Add rotation support
-- [x] Add mirroring support
-- [x] Add color modifiers support
 - [ ] Procedure chaining system
 - [ ] Command handler
-- [x] Add easy image copy
-- [x] Add cropping support
+- [ ] Filter generators
+- [ ] Matrix generators
+- [ ] Rectangle generator
 
 ### Implementing
-- [x] Extend resizing to bicubic interpolation
-- [x] Extend filter appliance to support strength parameter
-- [x] Add border conditions to filter appliance
-- [x] Add support for any sizes of filters
-- [x] Add color adder
-- [x] Replace the coloring functions with only one transformation with matrix
-- [x] Extend color modification to support target area
-- [x] Extend all target area dependent functions to use masks
-- [x] Add oval gradients
-- [x] Add safety measures in gradient functions
-- [x] Add basic functionalities for one color images
-- [x] Add normalization tools for image coordinates
-- [x] Extend rotation to support angles higher than 90
-- [x] Add an encoding system format dependent
+- [ ] Implement variables database
+- [ ] Implement keyword recognition
+- [ ] Implement functionalities call
+- [ ] Implement execution pipeline
+- [ ] Implement execution tree
 
 ### Refactoring
-- [x] Move each group functions into a package and folder on its one
-- [x] Ensure correct importing of auxiliary functions
-- [x] Reduce number of interpolations arguments through a structure
-- [x] Rename ret image as trg image in rescale.go
-- [x] Rename lib/auxiliaries into lib/utils
+- [ ] Check for each function to return origin centered images
 
 ### Testing
-- [x] Write unit tests for filter appliance
-- [x] Write unit tests for resizing
-- [x] Write unit tests for color modification
-- [x] Write unit tests for gradient
-- [x] Write unit tests for mirroring
-- [x] Write unit tests for layer merging
-- [x] Write unit tests for rotation
-- [x] Write unit tests for shearing
-- [x] Write unit tests for cropping
-- [x] Write unit tests for opacity
 - [ ] Test cubic interpolation
-- [x] Test linear gradient
 
 ### Debugging
-- [x] Solve black border for blur filter
-- [x] Solve the distortions of rotation algorithm
-- [x] Solve the error with PNG encoding
-- [x] Solve the linear gradient bug
+
 
 ### Documentation
-- [x] Write comments for every function

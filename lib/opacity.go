@@ -49,7 +49,12 @@ func Scale_opacity(img image.Image, alpha_proc float64) (image.Image) {
     return ret
 }
 
-func Select_opaque(img image.Image) (image.Rectangle) {
+
+/**
+    Returns the area of the image that contains all
+pixels with alpha value greater than min_alpha.
+*/
+func Select_opaque(img image.Image, min_alpha uint32) (image.Rectangle) {
     var min_x, max_x, min_y, max_y int
     var found bool
 
@@ -61,7 +66,7 @@ func Select_opaque(img image.Image) (image.Rectangle) {
         for x := bounds.Min.X; x <= bounds.Max.X; x ++ {
             _, _, _, a := img.At(x, y).RGBA()
 
-            if a > 0 {
+            if a > min_alpha {
                 min_y = y
                 found = true;
                 break
@@ -79,7 +84,7 @@ func Select_opaque(img image.Image) (image.Rectangle) {
         for x := bounds.Min.X; x <= bounds.Max.X; x ++ {
             _, _, _, a := img.At(x, y).RGBA()
 
-            if a > 0 {
+            if a > min_alpha {
                 max_y = y
                 found = true;
                 break
@@ -97,7 +102,7 @@ func Select_opaque(img image.Image) (image.Rectangle) {
         for y := bounds.Min.Y; y <= bounds.Max.Y; y ++ {
             _, _, _, a := img.At(x, y).RGBA()
 
-            if a > 0 {
+            if a > min_alpha {
                 min_x = x
                 found = true;
                 break
@@ -115,7 +120,7 @@ func Select_opaque(img image.Image) (image.Rectangle) {
         for y := bounds.Min.Y; y <= bounds.Max.Y; y ++ {
             _, _, _, a := img.At(x, y).RGBA()
 
-            if a > 0 {
+            if a > min_alpha {
                 max_x = x
                 found = true;
                 break

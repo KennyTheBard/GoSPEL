@@ -8,6 +8,9 @@ import (
     utils "./utils"
 )
 
+/**
+    Returns the given image rotated with the given angle.
+*/
 func Rotate(img image.Image, angle float64) image.Image {
     // for angles outside of [0, 90]
     scaled_image := img
@@ -84,7 +87,7 @@ func Rotate(img image.Image, angle float64) image.Image {
         <-done
     }
 
-    ret = Crop(ret, Select_opaque(ret))
+    ret = Crop(ret, Select_opaque(ret, 0))
 
     return ret
 }
