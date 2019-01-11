@@ -15,7 +15,7 @@
 - [ ] Implement execution tree
 
 ### Refactoring
-- [ ] Check for each function to return origin centered images
+- [x] Check for each function to return origin centered images
 
 ### Testing
 - [ ] Test cubic interpolation

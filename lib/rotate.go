@@ -88,6 +88,6 @@ func Rotate(img image.Image, angle float64) image.Image {
     }
 
     ret = Crop(ret, Select_opaque(ret, 0))
-
+    ret = utils.Shift(ret, utils.Calculate_shift_factor(ret))
     return ret
 }

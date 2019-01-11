@@ -119,5 +119,6 @@ func yshear(img image.Image, shear float64) (image.Image) {
         <-done
     }
 
+    ret = utils.Shift(ret, utils.Calculate_shift_factor(ret))
     return ret
 }

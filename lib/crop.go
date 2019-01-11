@@ -49,5 +49,4 @@ func Crop(img image.Image, area image.Rectangle) (image.Image) {
     }
 
     return ret
-
 }
