@@ -1,0 +1,16 @@
+Kromatique CLI
+
+*) Support keywords
+ex : rotate, crop, copy, filter
+
+*) Support for variable declaration
+ex : var="somthing", $var
+
+*) Functionalities usage
+ex : merge $img1 $img2
+
+*) Chained execution
+ex : copy $img1; copy $img2; copy $img3
+
+*) Priority execution
+ex : apply-filter $img {filter blur} 20
