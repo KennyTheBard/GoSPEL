@@ -4,8 +4,8 @@
 - [ ] Procedure chaining system
 - [ ] Command handler
 - [ ] Filter generators
-- [ ] Matrix generators
-- [ ] Rectangle generator
+- [ ] Modifier generators
+- [x] Rectangle generator
 
 ### Implementing
 - [ ] Implement variables database
