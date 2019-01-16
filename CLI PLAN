@@ -14,3 +14,6 @@ ex : copy $img1; copy $img2; copy $img3
 
 *) Priority execution
 ex : apply-filter $img {filter blur} 20
+
+*) Message display
+ex display "The image number "+$x+" is ready!"
