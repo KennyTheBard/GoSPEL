@@ -9,6 +9,8 @@
 - [ ] Add pixel distortion support
 - [ ] Add chromatic distortion support
 - [ ] Add noise support
+- [ ] Develop text render system
+- [ ] Add pixel selection support
 
 ### Implementing
 - [ ] Implement variables database

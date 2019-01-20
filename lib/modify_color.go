@@ -9,6 +9,10 @@ import (
     interp "./interpolation"
 )
 
+type Modifier struct {
+  Mat [4][5]float64
+}
+
 /**
     Modify each pixel of the image img with
     the equation given on its coresponding line
@@ -16,7 +20,7 @@ import (
     or minimize color, or create a grayscale
     with any channel ratio desired.
 */
-func Modify_colors(img image.Image, mask image.Image, mat [4][5]float64) (image.Image){
+func Modify_colors(img image.Image, mask image.Image, m Modifier) (image.Image){
     bounds := img.Bounds()
     trg := Copy(img)
     mask = Resize(mask, bounds)
@@ -39,10 +43,10 @@ func Modify_colors(img image.Image, mask image.Image, mat [4][5]float64) (image.
                     af := float64(a)
 
                     // calculate the color after color modification
-                    r_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[0][0] + gf * mat[0][1] + bf * mat[0][2] + af * mat[0][3] + mat[0][4] )))
-                    g_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[1][0] + gf * mat[1][1] + bf * mat[1][2] + af * mat[1][3] + mat[1][4] )))
-                    b_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[2][0] + gf * mat[2][1] + bf * mat[2][2] + af * mat[2][3] + mat[2][4] )))
-                    a_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * mat[3][0] + gf * mat[3][1] + bf * mat[3][2] + af * mat[3][3] + mat[3][4] )))
+                    r_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[0][0] + gf * m.Mat[0][1] + bf * m.Mat[0][2] + af * m.Mat[0][3] + m.Mat[0][4] )))
+                    g_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[1][0] + gf * m.Mat[1][1] + bf * m.Mat[1][2] + af * m.Mat[1][3] + m.Mat[1][4] )))
+                    b_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[2][0] + gf * m.Mat[2][1] + bf * m.Mat[2][2] + af * m.Mat[2][3] + m.Mat[2][4] )))
+                    a_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[3][0] + gf * m.Mat[3][1] + bf * m.Mat[3][2] + af * m.Mat[3][3] + m.Mat[3][4] )))
 
                     r_aux, g_aux, b_aux, a_aux := img.At(x, y).RGBA()
                     r_mask, g_mask, b_mask, a_mask := mask.At(x, y).RGBA()
