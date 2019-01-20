@@ -3,8 +3,8 @@
 ### Developing
 - [ ] Procedure chaining system
 - [ ] Command handler
-- [ ] Filter generators
-- [ ] Modifier generators
+- [x] Filter generators
+- [x] Modifier generators
 - [x] Rectangle generator
 - [ ] Add pixel distortion support
 - [ ] Add chromatic distortion support
@@ -19,6 +19,7 @@
 - [ ] Implement execution pipeline
 - [ ] Implement execution tree
 - [ ] Implement axial blur
+- [ ] Implement median filter
 
 ### Refactoring
 - [x] Check for each function to return origin centered images
