@@ -39,10 +39,10 @@ func main() {
     // card = lib.Apply_filter(card, area, lib.Filter{ [][]float64{{1.0/16, 2.0/16, 1.0/16}, {2.0/16, 4.0/16, 2.0/16}, {1.0/16, 2.0/16, 1.0/16}} }, 10)
     // card = lib.Apply_filter(card, area, lib.Filter{ [][]float64{{-1, -1, -1}, {-1, 8, -1}, {-1, -1, -1}}}, 1)
 
-    //card = lib.Modify_colors(card, card.Bounds(), [4][5]float64{{0, 1, 0, 0, 0}, {0, 0, 1, 0, 0}, {1, 0, 0, 0, 0}, {0, 0, 0, 1, 0}})
-    f := filters.BoxBlur(10)
+    card = lib.Modify_colors(card, card.Bounds(), lib.Modifier{[4][4]float64{{0, 1, 0, 0}, {0, 0, 1, 0}, {1, 0, 0, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
+    /* f := */filters.BoxBlur(10)
 
-    card = lib.Apply_filter(card, card.Bounds(), f, 1)
+    //card = lib.Apply_filter(card, card.Bounds(), f, 1)
     elapsed := time.Since(start)
 
 
