@@ -17,10 +17,10 @@ import (
     Points of height are expected to be given
     in ascending order, from 0 to bounds.Max.Y.
 */
-func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) (image.Image) {
+func LinearGradient(bounds image.Rectangle, ys []int, vals []color.Color) (image.Image) {
     // early exit case
     if len(ys) != len(vals) {
-        return Create_image(bounds, color.RGBA{0, 0, 0, 0})
+        return CreateImage(bounds, color.RGBA{0, 0, 0, 0})
     }
 
     // sort the color points
@@ -87,10 +87,10 @@ func Linear_gradient(bounds image.Rectangle, ys []int, vals []color.Color) (imag
     Points of height are expected to be given
     in ascending order, from 0 to height / 2.
 */
-func Circular_gradient(size int, ys []int, vals []color.Color) (image.Image) {
+func CircularGradient(size int, ys []int, vals []color.Color) (image.Image) {
     // early exit case
     if len(ys) != len(vals) {
-        return Create_image(image.Rect(0, 0, size, size), color.RGBA{0, 0, 0, 0})
+        return CreateImage(image.Rect(0, 0, size, size), color.RGBA{0, 0, 0, 0})
     }
 
     // sort the color points

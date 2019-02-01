@@ -8,7 +8,7 @@ import "math"
     v2 - value in second point
     x - [-1, 2]
 */
-func Cubic_interpolation(p0, p1, p2, p3 int32, x float64) int32 {
+func CubicInterpolation(p0, p1, p2, p3 int32, x float64) int32 {
     p0f := float64(p0)
     p1f := float64(p1)
     p2f := float64(p2)

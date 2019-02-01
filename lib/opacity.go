@@ -10,7 +10,7 @@ import (
 /**
     Returns an image with the opacity ampified by
 */
-func Scale_opacity(img image.Image, alpha_proc float64) (image.Image) {
+func ScaleOpacity(img image.Image, alpha_proc float64) (image.Image) {
     // early exit case
     if alpha_proc == 1 {
         return Copy(img)
@@ -54,7 +54,7 @@ func Scale_opacity(img image.Image, alpha_proc float64) (image.Image) {
     Returns the area of the image that contains all
 pixels with alpha value greater than min_alpha.
 */
-func Select_opaque(img image.Image, min_alpha uint32) (image.Rectangle) {
+func SelectOpaque(img image.Image, min_alpha uint32) (image.Rectangle) {
     var min_x, max_x, min_y, max_y int
     var found bool
 

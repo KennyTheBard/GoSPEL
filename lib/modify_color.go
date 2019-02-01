@@ -21,7 +21,7 @@ type Modifier struct {
     or minimize color, or create a grayscale
     with any channel ratio desired.
 */
-func Modify_colors(img image.Image, mask image.Image, m Modifier) (image.Image){
+func ModifyColors(img image.Image, mask image.Image, m Modifier) (image.Image){
     bounds := img.Bounds()
     trg := Copy(img)
     mask = Resize(mask, bounds)
@@ -53,10 +53,10 @@ func Modify_colors(img image.Image, mask image.Image, m Modifier) (image.Image){
                     r_mask, g_mask, b_mask, a_mask := mask.At(x, y).RGBA()
 
                     // calculate the color modification through mask
-                    r_fin = uint32(interp.Linear_interpolation(int32(r_aux), int32(r_fin), float64(r_mask) / float64((256 << 8) - 1)))
-                    g_fin = uint32(interp.Linear_interpolation(int32(g_aux), int32(g_fin), float64(g_mask) / float64((256 << 8) - 1)))
-                    b_fin = uint32(interp.Linear_interpolation(int32(b_aux), int32(b_fin), float64(b_mask) / float64((256 << 8) - 1)))
-                    a_fin = uint32(interp.Linear_interpolation(int32(a_aux), int32(a_fin), float64(a_mask) / float64((256 << 8) - 1)))
+                    r_fin = uint32(interp.LinearInterpolation(int32(r_aux), int32(r_fin), float64(r_mask) / float64((256 << 8) - 1)))
+                    g_fin = uint32(interp.LinearInterpolation(int32(g_aux), int32(g_fin), float64(g_mask) / float64((256 << 8) - 1)))
+                    b_fin = uint32(interp.LinearInterpolation(int32(b_aux), int32(b_fin), float64(b_mask) / float64((256 << 8) - 1)))
+                    a_fin = uint32(interp.LinearInterpolation(int32(a_aux), int32(a_fin), float64(a_mask) / float64((256 << 8) - 1)))
 
                     trg.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
                 }

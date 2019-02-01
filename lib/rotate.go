@@ -34,7 +34,7 @@ func Rotate(img image.Image, angle float64) image.Image {
     // calculate angle in radians
     rad := scaled_angle * math.Pi / 180
 
-    aux_image := utils.Shift(scaled_image, utils.Calculate_shift_factor(scaled_image))
+    aux_image := Shift(scaled_image, utils.Calculate_shift_factor(scaled_image))
     bounds = aux_image.Bounds()
     width, height = utils.Rectangle_size(bounds)
 
@@ -87,7 +87,7 @@ func Rotate(img image.Image, angle float64) image.Image {
         <-done
     }
 
-    ret = Crop(ret, Select_opaque(ret, 0))
-    ret = utils.Shift(ret, utils.Calculate_shift_factor(ret))
+    ret = Crop(ret, SelectOpaque(ret, 0))
+    ret = Shift(ret, utils.Calculate_shift_factor(ret))
     return ret
 }

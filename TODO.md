@@ -8,7 +8,7 @@
 - [x] Rectangle generator
 - [ ] Add pixel distortion support
 - [ ] Add chromatic distortion support
-- [ ] Add noise support
+- [x] Add noise support
 - [ ] Develop text render system
 - [ ] Add pixel selection support
 
@@ -19,7 +19,7 @@
 - [ ] Implement execution pipeline
 - [ ] Implement execution tree
 - [ ] Implement axial blur
-- [ ] Implement median filter
+- [x] Implement median filter
 
 ### Refactoring
 - [x] Check for each function to return origin centered images

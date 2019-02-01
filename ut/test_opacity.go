@@ -30,9 +30,9 @@ func Test_opacity(input, output string) {
 }
 
 func opacity_test_1(img image.Image, output string) {
-    aux_img := lib.Scale_opacity(img, 0)
+    aux_img := lib.ScaleOpacity(img, 0)
     ret := lib.Merge(img, aux_img, img.Bounds())
-    ret = lib.Crop(ret, lib.Select_opaque(ret, 0))
+    ret = lib.Crop(ret, lib.SelectOpaque(ret, 0))
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -40,9 +40,9 @@ func opacity_test_1(img image.Image, output string) {
 }
 
 func opacity_test_2(img image.Image, output string) {
-    aux_img := lib.Create_image(image.Rect(0, 0, img.Bounds().Max.X * 2, img.Bounds().Max.Y * 2), color.RGBA{255, 0, 0, 0})
+    aux_img := lib.CreateImage(image.Rect(0, 0, img.Bounds().Max.X * 2, img.Bounds().Max.Y * 2), color.RGBA{255, 0, 0, 0})
     ret := lib.Merge(aux_img, img, img.Bounds())
-    ret = lib.Crop(ret, lib.Select_opaque(ret, 0))
+    ret = lib.Crop(ret, lib.SelectOpaque(ret, 0))
 
     rez, _ := os.Create(output)
     defer rez.Close()

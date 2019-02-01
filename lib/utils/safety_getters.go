@@ -62,7 +62,7 @@ func Uclamp(min, max, val uint32) uint32 {
 /**
     Returns if a point is in the given rectangle.
 */
-func In_rectangle(p image.Point, rect image.Rectangle) bool {
+func Inside_rectangle(p image.Point, rect image.Rectangle) bool {
     if p.X < rect.Min.X {
         return false
     }

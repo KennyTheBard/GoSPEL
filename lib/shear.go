@@ -39,7 +39,7 @@ func xshear(img image.Image, shear float64) (image.Image) {
     // initialize the new image
     new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X + utils.Abs(shear_factor), bounds.Max.Y)
     ret := image.Image(image.NewRGBA(new_bounds))
-    ret = Scale_opacity(ret, 0)
+    ret = ScaleOpacity(ret, 0)
 
     n := 10
     done := make(chan bool, n)
@@ -52,7 +52,7 @@ func xshear(img image.Image, shear float64) (image.Image) {
             for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
                 // calculate padding
                 proc := float64(y - bounds.Min.Y) / float64(height)
-                padding := int(interp.Linear_interpolation(0, int32(shear_factor), proc))
+                padding := int(interp.LinearInterpolation(0, int32(shear_factor), proc))
 
                 for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                     r, g, b, a := img.At(x, y).RGBA()
@@ -86,13 +86,13 @@ func yshear(img image.Image, shear float64) (image.Image) {
     // initialize the new image
     new_bounds := image.Rect(bounds.Min.X, bounds.Min.Y, bounds.Max.X, bounds.Max.Y + utils.Abs(shear_factor))
     ret := image.Image(image.NewRGBA(new_bounds))
-    ret = Scale_opacity(ret, 0)
+    ret = ScaleOpacity(ret, 0)
 
     // calculate padding
     paddings := make([]int, width)
     for x := bounds.Min.X; x <= bounds.Max.X; x++ {
         proc := float64(x - bounds.Min.X) / float64(width)
-        paddings[x - bounds.Min.X] = int(interp.Linear_interpolation(0, int32(shear_factor), proc))
+        paddings[x - bounds.Min.X] = int(interp.LinearInterpolation(0, int32(shear_factor), proc))
     }
 
     n := 10
@@ -119,6 +119,6 @@ func yshear(img image.Image, shear float64) (image.Image) {
         <-done
     }
 
-    ret = utils.Shift(ret, utils.Calculate_shift_factor(ret))
+    ret = Shift(ret, utils.Calculate_shift_factor(ret))
     return ret
 }

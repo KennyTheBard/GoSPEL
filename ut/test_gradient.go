@@ -45,7 +45,7 @@ func Test_gradient(input, output string) {
 }
 
 func linear_gradient_test_1(img image.Image, output string) {
-    grd := lib.Linear_gradient(img.Bounds(), []int{0, 200, 400, 600, 800}, []color.Color{color.RGBA{255, 255, 255, 128}, color.RGBA{255, 0, 0, 128}, color.RGBA{0, 255, 0, 128}, color.RGBA{0, 0, 255, 128}, color.RGBA{0, 0, 0, 128}})
+    grd := lib.LinearGradient(img.Bounds(), []int{0, 200, 400, 600, 800}, []color.Color{color.RGBA{255, 255, 255, 128}, color.RGBA{255, 0, 0, 128}, color.RGBA{0, 255, 0, 128}, color.RGBA{0, 0, 255, 128}, color.RGBA{0, 0, 0, 128}})
     ret := lib.Merge(img, grd, img.Bounds())
 
     rez, _ := os.Create(output)
@@ -54,7 +54,7 @@ func linear_gradient_test_1(img image.Image, output string) {
 }
 
 func linear_gradient_test_2(img image.Image, output string) {
-    grd := lib.Linear_gradient(img.Bounds(), []int{0, 400, 200, 600, 800}, []color.Color{color.RGBA{255, 255, 255, 128}, color.RGBA{0, 255, 0, 128}, color.RGBA{255, 0, 0, 128}, color.RGBA{0, 0, 255, 128}, color.RGBA{0, 0, 0, 128}})
+    grd := lib.LinearGradient(img.Bounds(), []int{0, 400, 200, 600, 800}, []color.Color{color.RGBA{255, 255, 255, 128}, color.RGBA{0, 255, 0, 128}, color.RGBA{255, 0, 0, 128}, color.RGBA{0, 0, 255, 128}, color.RGBA{0, 0, 0, 128}})
     ret := lib.Merge(img, grd, img.Bounds())
 
     rez, _ := os.Create(output)
@@ -63,7 +63,7 @@ func linear_gradient_test_2(img image.Image, output string) {
 }
 
 func linear_gradient_test_3(img image.Image, output string) {
-    grd := lib.Linear_gradient(img.Bounds(), []int{0, 200, 400, 600}, []color.Color{color.RGBA{255, 255, 255, 128}, color.RGBA{255, 0, 0, 128}, color.RGBA{0, 255, 0, 128}, color.RGBA{0, 0, 255, 128}, color.RGBA{0, 0, 0, 128}})
+    grd := lib.LinearGradient(img.Bounds(), []int{0, 200, 400, 600}, []color.Color{color.RGBA{255, 255, 255, 128}, color.RGBA{255, 0, 0, 128}, color.RGBA{0, 255, 0, 128}, color.RGBA{0, 0, 255, 128}, color.RGBA{0, 0, 0, 128}})
     ret := lib.Merge(img, grd, img.Bounds())
 
     rez, _ := os.Create(output)
@@ -73,7 +73,7 @@ func linear_gradient_test_3(img image.Image, output string) {
 
 
 func circular_gradient_test_1(img image.Image, output string) {
-    grd := lib.Circular_gradient(800, []int{0, 200, 800}, []color.Color{color.RGBA{255, 0, 255, 255}, color.RGBA{255, 0, 255, 125}, color.RGBA{0, 0, 0, 0}})
+    grd := lib.CircularGradient(800, []int{0, 200, 800}, []color.Color{color.RGBA{255, 0, 255, 255}, color.RGBA{255, 0, 255, 125}, color.RGBA{0, 0, 0, 0}})
     ret := lib.Merge(img, grd, img.Bounds())
 
     rez, _ := os.Create(output)
@@ -82,7 +82,7 @@ func circular_gradient_test_1(img image.Image, output string) {
 }
 
 func circular_gradient_test_2(img image.Image, output string) {
-    grd := lib.Circular_gradient(800, []int{0, 800, 200}, []color.Color{color.RGBA{255, 0, 255, 255}, color.RGBA{0, 0, 0, 0}, color.RGBA{255, 0, 255, 125}})
+    grd := lib.CircularGradient(800, []int{0, 800, 200}, []color.Color{color.RGBA{255, 0, 255, 255}, color.RGBA{0, 0, 0, 0}, color.RGBA{255, 0, 255, 125}})
     ret := lib.Merge(img, grd, img.Bounds())
 
     rez, _ := os.Create(output)
@@ -91,7 +91,7 @@ func circular_gradient_test_2(img image.Image, output string) {
 }
 
 func circular_gradient_test_3(img image.Image, output string) {
-    grd := lib.Circular_gradient(800, []int{0, 800}, []color.Color{color.RGBA{255, 0, 255, 255}, color.RGBA{255, 0, 255, 125}, color.RGBA{0, 0, 0, 0}})
+    grd := lib.CircularGradient(800, []int{0, 800}, []color.Color{color.RGBA{255, 0, 255, 255}, color.RGBA{255, 0, 255, 125}, color.RGBA{0, 0, 0, 0}})
     ret := lib.Merge(img, grd, img.Bounds())
 
     rez, _ := os.Create(output)
