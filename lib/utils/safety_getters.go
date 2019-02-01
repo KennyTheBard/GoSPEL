@@ -33,9 +33,22 @@ func Safe_Get_Color(img image.Image, x, y int) (uint32, uint32, uint32, uint32) 
 
 
 /**
-    Force the value val in [min, max].
+    Force the value val in [min, max] for int32.
 */
-func Clamp(min, max uint32, val uint32) uint32 {
+func Clamp(min, max, val int32) int32 {
+    if val <= min {
+        return min
+    } else if val >= max {
+        return max
+    } else {
+        return val
+    }
+}
+
+/**
+    Force the value val in [min, max] for uint32.
+*/
+func Uclamp(min, max, val uint32) uint32 {
     if val <= min {
         return min
     } else if val >= max {

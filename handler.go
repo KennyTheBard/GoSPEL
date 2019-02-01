@@ -5,7 +5,7 @@ import (
     "os"
     "time"
     "image"
-    // "image/color"
+    "image/color"
     lib "./lib"
     utils "./lib/utils"
     //ut "./ut"
@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-    img_file, _ := os.Open("test.jpg")
+    img_file, _ := os.Open("humans.jpg")
     defer img_file.Close()
     img, image_format, _ := image.Decode(img_file)
 
@@ -35,11 +35,13 @@ func main() {
     // ut.Test_rotate("test.jpg", "test_results/rotate_test")
     // ut.Test_opacity("test.jpg", "test_results/opacity_test")
 
-    // area := lib.Create_image(image.Rect(300, 0, 600, 675), color.RGBA{255, 255, 255, 0})
+    area := lib.Create_image(card.Bounds(), color.RGBA{255, 255, 255, 0})
     // card = lib.Apply_filter(card, area, lib.Filter{ [][]float64{{1.0/16, 2.0/16, 1.0/16}, {2.0/16, 4.0/16, 2.0/16}, {1.0/16, 2.0/16, 1.0/16}} }, 10)
     // card = lib.Apply_filter(card, area, lib.Filter{ [][]float64{{-1, -1, -1}, {-1, 8, -1}, {-1, -1, -1}}}, 1)
 
-    card = lib.Modify_colors(card, card.Bounds(), lib.Modifier{[4][4]float64{{0, 1, 0, 0}, {0, 0, 1, 0}, {1, 0, 0, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
+    //card = lib.Modify_colors(card, area, lib.Modifier{[4][4]float64{{0, 1, 0, 0}, {0, 0, 1, 0}, {1, 0, 0, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
+    card = lib.Noise(card, area, 100)
+    card = lib.Median(card, area, 3)
     /* f := */filters.BoxBlur(10)
 
     //card = lib.Apply_filter(card, card.Bounds(), f, 1)

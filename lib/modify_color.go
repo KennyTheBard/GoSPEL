@@ -44,10 +44,10 @@ func Modify_colors(img image.Image, mask image.Image, m Modifier) (image.Image){
                     af := float64(a)
 
                     // calculate the color after color modification
-                    r_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[0][0] + gf * m.Mat[0][1] + bf * m.Mat[0][2] + af * m.Mat[0][3] + m.Coef[0] )))
-                    g_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[1][0] + gf * m.Mat[1][1] + bf * m.Mat[1][2] + af * m.Mat[1][3] + m.Coef[1] )))
-                    b_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[2][0] + gf * m.Mat[2][1] + bf * m.Mat[2][2] + af * m.Mat[2][3] + m.Coef[2] )))
-                    a_fin := utils.Clamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[3][0] + gf * m.Mat[3][1] + bf * m.Mat[3][2] + af * m.Mat[3][3] + m.Coef[3] )))
+                    r_fin := utils.Uclamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[0][0] + gf * m.Mat[0][1] + bf * m.Mat[0][2] + af * m.Mat[0][3] + m.Coef[0] )))
+                    g_fin := utils.Uclamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[1][0] + gf * m.Mat[1][1] + bf * m.Mat[1][2] + af * m.Mat[1][3] + m.Coef[1] )))
+                    b_fin := utils.Uclamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[2][0] + gf * m.Mat[2][1] + bf * m.Mat[2][2] + af * m.Mat[2][3] + m.Coef[2] )))
+                    a_fin := utils.Uclamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[3][0] + gf * m.Mat[3][1] + bf * m.Mat[3][2] + af * m.Mat[3][3] + m.Coef[3] )))
 
                     r_aux, g_aux, b_aux, a_aux := img.At(x, y).RGBA()
                     r_mask, g_mask, b_mask, a_mask := mask.At(x, y).RGBA()
