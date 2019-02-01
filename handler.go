@@ -40,7 +40,7 @@ func main() {
     // card = lib.Apply_filter(card, area, lib.Filter{ [][]float64{{-1, -1, -1}, {-1, 8, -1}, {-1, -1, -1}}}, 1)
 
     //card = lib.Modify_colors(card, area, lib.Modifier{[4][4]float64{{0, 1, 0, 0}, {0, 0, 1, 0}, {1, 0, 0, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
-    card = lib.Noise(card, area, 100)
+    card = lib.Noise(card, area, lib.DIGITAL_NOISE, 100)
     card = lib.Median(card, area, 3)
     /* f := */filters.BoxBlur(10)
 
