@@ -23,7 +23,7 @@ type Modifier struct {
 */
 func ModifyColors(img image.Image, mask image.Image, m Modifier) (image.Image){
     bounds := img.Bounds()
-    trg := Copy(img)
+    ret := Copy(img)
     mask = Resize(mask, bounds)
 
     n := 10
@@ -58,7 +58,7 @@ func ModifyColors(img image.Image, mask image.Image, m Modifier) (image.Image){
                     b_fin = uint32(interp.LinearInterpolation(int32(b_aux), int32(b_fin), float64(b_mask) / float64((256 << 8) - 1)))
                     a_fin = uint32(interp.LinearInterpolation(int32(a_aux), int32(a_fin), float64(a_mask) / float64((256 << 8) - 1)))
 
-                    trg.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
+                    ret.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
                 }
             }
 
@@ -70,5 +70,5 @@ func ModifyColors(img image.Image, mask image.Image, m Modifier) (image.Image){
         <-done
     }
 
-    return trg
+    return ret
 }

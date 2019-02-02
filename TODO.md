@@ -11,6 +11,7 @@
 - [x] Add noise support
 - [ ] Develop text render system
 - [ ] Add pixel selection support
+- [x Add color selection support
 
 ### Implementing
 - [ ] Implement variables database
@@ -20,6 +21,7 @@
 - [ ] Implement execution tree
 - [ ] Implement axial blur
 - [x] Implement median filter
+- [ ] Implement fill selection
 
 ### Refactoring
 - [x] Check for each function to return origin centered images
