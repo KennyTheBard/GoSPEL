@@ -32,3 +32,29 @@ func Max(x, y int) int {
     }
     return y
 }
+
+/**
+    Force the value val in [min, max] for int32.
+*/
+func Clamp(min, max, val int32) int32 {
+    if val <= min {
+        return min
+    } else if val >= max {
+        return max
+    } else {
+        return val
+    }
+}
+
+/**
+    Force the value val in [min, max] for uint32.
+*/
+func Uclamp(min, max, val uint32) uint32 {
+    if val <= min {
+        return min
+    } else if val >= max {
+        return max
+    } else {
+        return val
+    }
+}

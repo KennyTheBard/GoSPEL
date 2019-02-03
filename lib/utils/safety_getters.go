@@ -33,33 +33,6 @@ func Safe_Get_Color(img image.Image, x, y int) (uint32, uint32, uint32, uint32) 
 
 
 /**
-    Force the value val in [min, max] for int32.
-*/
-func Clamp(min, max, val int32) int32 {
-    if val <= min {
-        return min
-    } else if val >= max {
-        return max
-    } else {
-        return val
-    }
-}
-
-/**
-    Force the value val in [min, max] for uint32.
-*/
-func Uclamp(min, max, val uint32) uint32 {
-    if val <= min {
-        return min
-    } else if val >= max {
-        return max
-    } else {
-        return val
-    }
-}
-
-
-/**
     Returns if a point is in the given rectangle.
 */
 func Inside_rectangle(p image.Point, rect image.Rectangle) bool {
@@ -92,4 +65,19 @@ func Equal_rectangles(r1, r2 image.Rectangle) bool {
     } else {
         return false
     }
+}
+
+/**
+    Clamps a float64 value.
+*/
+func Fclamp(min, max float64, val float64) float64 {
+    if val < min {
+        return min
+    }
+
+    if val > max {
+        return max
+    }
+
+    return val
 }

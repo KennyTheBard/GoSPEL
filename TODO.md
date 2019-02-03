@@ -13,6 +13,8 @@
 - [ ] Add pixel selection support
 - [x] Add color selection support
 - [x] Add HSV color format support
+- [ ] Replace masks with pixel streams (channels)
+- [ ] Rework for-in-for functions to accept streams of pixels
 
 ### Implementing
 - [ ] Implement variables database
@@ -23,6 +25,7 @@
 - [ ] Implement axial blur
 - [x] Implement median filter
 - [ ] Implement fill selection
+- [ ] Implement anchor point for rotation
 
 ### Refactoring
 - [x] Check for each function to return origin centered images

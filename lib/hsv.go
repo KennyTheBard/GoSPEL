@@ -2,9 +2,11 @@ package lib
 
 import (
     "math"
-    // "image"
-    // "image/draw"
-    // "image/color"
+    "image"
+    "image/draw"
+    "image/color"
+    utils "./utils"
+    interp "./interpolation"
 )
 
 func RGB2HSV(r, g, b uint32) (int32, float64, float64) {
@@ -120,7 +122,67 @@ func HSV2RGB(hue int32, saturation float64, value float64) (uint32, uint32, uint
     return r, g, b
 }
 
-// func AddHSV(pixel color.Color, hue int32, saturation float64, value float64) (color.Color) {
-//     r, g, b, _ = pixel.RGBA()
-//
-// }
+func pixelAddHSV(pixel color.Color, hue int32, saturation float64, value float64) (color.Color) {
+    r, g, b, a := pixel.RGBA()
+
+    h, s, v := RGB2HSV(r, g, b)
+
+    h += hue
+    s += saturation
+    v += value
+
+    for h < 0 {
+        h += 360
+    }
+    for h >= 360 {
+        h -= 360
+    }
+
+    s = utils.Fclamp(0, 1, s)
+    v = utils.Fclamp(0, 1, v)
+
+    r, g, b = HSV2RGB(h, s, v)
+
+    return color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)}
+}
+
+func AddHSV(img image.Image, mask image.Image, hue int32, saturation float64, value float64) (image.Image) {
+    bounds := img.Bounds()
+    ret := Copy(img)
+    mask = Resize(mask, bounds)
+
+    n := 10
+    done := make(chan bool, n)
+
+    for p := 0; p < n; p ++ {
+        aux_rank := p
+        go func() {
+            rank := aux_rank
+
+            for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
+                for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+                    r, g, b, a := pixelAddHSV(img.At(x, y), hue, saturation, value).RGBA()
+
+                    r_aux, g_aux, b_aux, a_aux := img.At(x, y).RGBA()
+                    r_mask, g_mask, b_mask, a_mask := mask.At(x, y).RGBA()
+
+                    // calculate the color modification through mask
+                    r_fin := uint32(interp.LinearInterpolation(int32(r_aux), int32(r), float64(r_mask) / float64((256 << 8) - 1)))
+                    g_fin := uint32(interp.LinearInterpolation(int32(g_aux), int32(g), float64(g_mask) / float64((256 << 8) - 1)))
+                    b_fin := uint32(interp.LinearInterpolation(int32(b_aux), int32(b), float64(b_mask) / float64((256 << 8) - 1)))
+                    a_fin := uint32(interp.LinearInterpolation(int32(a_aux), int32(a), float64(a_mask) / float64((256 << 8) - 1)))
+
+                    ret.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
+                }
+            }
+
+            done <- true;
+        } ()
+    }
+
+    for i := 0; i < n; i++ {
+        <-done
+    }
+
+    return ret
+}
