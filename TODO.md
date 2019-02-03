@@ -11,7 +11,8 @@
 - [x] Add noise support
 - [ ] Develop text render system
 - [ ] Add pixel selection support
-- [x Add color selection support
+- [x] Add color selection support
+- [x] Add HSV color format support
 
 ### Implementing
 - [ ] Implement variables database

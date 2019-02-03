@@ -34,6 +34,10 @@ func main() {
     //card = lib.ApplyFilter(card, card.Bounds(), f, 1)
     elapsed := time.Since(start)
 
+    fmt.Println(lib.RGB2HSV(134 << 8, 111 << 8, 80 << 8))
+    fmt.Println(lib.HSV2RGB(lib.RGB2HSV(134 << 8, 111 << 8, 80 << 8)))
+    fmt.Println(134 << 8, 111 << 8, 80 << 8)
+
 
     fmt.Printf("Done in %s!\n", elapsed)
 
