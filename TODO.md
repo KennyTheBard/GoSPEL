@@ -22,7 +22,7 @@
 - [ ] Implement functionalities call
 - [ ] Implement execution pipeline
 - [ ] Implement execution tree
-- [ ] Implement axial blur
+- [x] Implement axial blur
 - [x] Implement median filter
 - [ ] Implement fill selection
 - [ ] Implement anchor point for rotation

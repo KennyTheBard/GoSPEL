@@ -59,3 +59,35 @@ func BoxBlur(size int) (lib.Filter) {
 //     b := dev * math.Sqrt(2 * math.Pi)
 //     return e / b
 // }
+
+func AxialBlur(radius, mode int) (lib.Filter) {
+    size := radius * 2 + 1
+    var mat [][]float64
+
+    switch mode {
+    case lib.HORIZONTAL_MODE:
+        mat = make([][]float64, 1)
+        for i := range mat {
+            mat[i] = make([]float64, size)
+        }
+        break
+    case lib.VERTICAL_MODE:
+        mat = make([][]float64, size)
+        for i := range mat {
+            mat[i] = make([]float64, 1)
+        }
+        break
+    default:
+        mat = make([][]float64, 1)
+        mat[0] = make([]float64, 1)
+    }
+
+    coef := float64(size)
+    for i := range mat {
+        for j := range mat[i] {
+            mat[i][j] = 1.0 / coef
+        }
+    }
+
+    return lib.Filter{mat}
+}

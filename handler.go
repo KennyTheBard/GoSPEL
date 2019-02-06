@@ -5,7 +5,7 @@ import (
     "os"
     "time"
     "image"
-    "image/color"
+    //"image/color"
     lib "./lib"
     utils "./lib/utils"
     //ut "./ut"
@@ -23,16 +23,18 @@ func main() {
 
     // card = lib.Rotate(lib.Resize(card, image.Rect(0, 0, 800, 800)), 275)
 
-    card = lib.Resize(card, image.Rect(0, 0, 200, 200))
-    area := lib.CreateImage(card.Bounds(), color.RGBA{255, 255, 255, 0})
+    // card = lib.Resize(card, image.Rect(0, 0, 200, 200))
+    // area := lib.CreateImage(card.Bounds(), color.RGBA{255, 255, 255, 0})
     // area := lib.SelectColor(card, color.RGBA{255, 50, 50, 255}, 0.3)
     // card = lib.ModifyColors(card, area, lib.Modifier{[4][4]float64{{0, 1, 0, 0}, {0, 0, 1, 0}, {1, 0, 0, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
-    card = lib.AddHSV(card, area, 75, -0.3, -0.3)
+    //card = lib.AddHSV(card, area, 75, -0.3, -0.3)
     // card = lib.Noise(card, area, lib.SALT_AND_PEPPER, 100, 0.05)
     // card = lib.Median(card, area, 3)
-    /* f := */filters.BoxBlur(10)
+    f := filters.AxialBlur(25, 1)
+    // f := filters.BoxBlur(9)
 
-    //card = lib.ApplyFilter(card, card.Bounds(), f, 1)
+
+    card = lib.ApplyFilter(card, card.Bounds(), f, 1)
     elapsed := time.Since(start)
 
     fmt.Printf("Done in %s!\n", elapsed)
