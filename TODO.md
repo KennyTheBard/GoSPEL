@@ -15,6 +15,18 @@
 - [x] Add HSV color format support
 - [ ] Replace masks with pixel streams (channels)
 - [ ] Rework for-in-for functions to accept streams of pixels
+- [ ] Add color channel extraction
+- [ ] Add fairy tail effect (https://www.imgonline.com.ua/eng/fairy-tale-picture-effect.php)
+- [ ] Add charcoal drawing effect (https://www.imgonline.com.ua/eng/charcoal-drawing.php)
+- [ ] Add color number limitation
+- [ ] Add posterization (https://www.imgonline.com.ua/eng/posterization.php)
+- [ ] Add monochrome conversion (https://www.imgonline.com.ua/eng/monochrome-picture.php)
+- [ ] Add Bayer filter (https://www.imgonline.com.ua/eng/bayer-color-filter-effect.php)
+- [ ] Add engraving (https://www.imgonline.com.ua/eng/engraved-photo-effect.php)
+- [ ] Add 8-bit conversion (https://www.imgonline.com.ua/eng/8bit-picture.php)
+- [ ] Add Bokeh effect (https://www.imgonline.com.ua/eng/bokeh-effect.php)
+- [ ] Add Cartoon filter (https://www.imgonline.com.ua/eng/cartoon-picture.php)
+- [ ] Add Comic book filter (dot patterns)
 
 ### Implementing
 - [ ] Implement variables database
@@ -24,6 +36,11 @@
 - [ ] Implement execution tree
 - [x] Implement axial blur
 - [x] Implement median filter
+- [ ] Implement circular blur
+- [ ] Implement radial blur
+- [ ] Implement sepia modifier (https://www.imgonline.com.ua/eng/add-effect-sepia.php)
+- [ ] Add frame support (for overlay)
+- [ ] Add vintage frame
 - [ ] Implement fill selection
 - [ ] Implement anchor point for rotation
 
