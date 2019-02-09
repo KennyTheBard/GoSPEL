@@ -10,10 +10,11 @@ import (
     utils "./lib/utils"
     //ut "./ut"
     filters "./lib/generators/filters"
+    modifiers "./lib/generators/modifiers"
 )
 
 func main() {
-    img_file, _ := os.Open("test.jpg")
+    img_file, _ := os.Open("humans.jpg")
     defer img_file.Close()
     img, image_format, _ := image.Decode(img_file)
 
@@ -30,11 +31,12 @@ func main() {
     //card = lib.AddHSV(card, area, 75, -0.3, -0.3)
     // card = lib.Noise(card, area, lib.SALT_AND_PEPPER, 100, 0.05)
     // card = lib.Median(card, area, 3)
-    f := filters.AxialBlur(25, 1)
+    /* f := */filters.AxialBlur(25, 1)
     // f := filters.BoxBlur(9)
+    // card = lib.ApplyFilter(card, card.Bounds(), f, 1)
+    card = lib.ModifyColors(card, card.Bounds(), modifiers.ExctractColorChannel(modifiers.RED_CHANNEL))
 
 
-    card = lib.ApplyFilter(card, card.Bounds(), f, 1)
     elapsed := time.Since(start)
 
     fmt.Printf("Done in %s!\n", elapsed)

@@ -11,5 +11,5 @@ func Grayscale(red_ratio, green_ratio, blue_ratio float64) (lib.Modifier) {
     gr := green_ratio / total
     br := blue_ratio / total
 
-    return lib.Modifier([4][4]float64{[]float64{rr, gr, br, 0}, []float64{rr, gr, br, 0}, []float64{rr, gr, br, 0}, []float64{rr, gr, br, 0}}, [4]float{0, 0, 0, 0})
+    return lib.Modifier{[4][4]float64{[4]float64{rr, gr, br, 0}, [4]float64{rr, gr, br, 0}, [4]float64{rr, gr, br, 0}, [4]float64{rr, gr, br, 0}}, [4]float64{0, 0, 0, 0}}
 }
