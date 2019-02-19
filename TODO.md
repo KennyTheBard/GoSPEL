@@ -15,7 +15,7 @@
 - [x] Add HSV color format support
 - [ ] Replace masks with pixel streams (channels)
 - [ ] Rework for-in-for functions to accept streams of pixels
-- [ ] Add color channel extraction
+- [x] Add color channel extraction
 - [ ] Add fairy tail effect (https://www.imgonline.com.ua/eng/fairy-tale-picture-effect.php)
 - [ ] Add charcoal drawing effect (https://www.imgonline.com.ua/eng/charcoal-drawing.php)
 - [ ] Add color number limitation
