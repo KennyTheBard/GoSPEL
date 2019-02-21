@@ -43,6 +43,7 @@
 - [ ] Add vintage frame
 - [ ] Implement fill selection
 - [ ] Implement anchor point for rotation
+- [ ] Merge Distort and Mirror into Transform
 
 ### Refactoring
 - [x] Check for each function to return origin centered images

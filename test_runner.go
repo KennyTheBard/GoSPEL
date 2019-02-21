@@ -12,7 +12,7 @@ func main() {
 
     ut.Test_crop("test.jpg", "test_results/crop_test")
     ut.Test_resize("test.jpg", "test_results/resize_test")
-    ut.Test_mirror("test.jpg", "test_results/mirror_test")
+    ut.Test_transform("test.jpg", "test_results/mirror_test")
     ut.Test_copy("test.jpg", "test_results/copy_test")
     ut.Test_gradient("test.jpg", "test_results/gradient_test")
     ut.Test_shear("test.jpg", "test_results/shear_test")
