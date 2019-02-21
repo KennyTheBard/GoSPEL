@@ -1,7 +1,6 @@
 # TODO List
 
 ### Developing
-- [ ] Procedure chaining system
 - [ ] Command handler
 - [x] Filter generators
 - [x] Modifier generators
@@ -29,11 +28,8 @@
 - [ ] Add Comic book filter (dot patterns)
 
 ### Implementing
-- [ ] Implement variables database
 - [ ] Implement keyword recognition
 - [ ] Implement functionalities call
-- [ ] Implement execution pipeline
-- [ ] Implement execution tree
 - [x] Implement axial blur
 - [x] Implement median filter
 - [ ] Implement circular blur
@@ -44,6 +40,7 @@
 - [ ] Implement fill selection
 - [ ] Implement anchor point for rotation
 - [ ] Merge Distort and Mirror into Transform
+- [ ] Optimize all interpolations by using corner cases (alpha = 0 or alpha = 1)
 
 ### Refactoring
 - [x] Check for each function to return origin centered images
