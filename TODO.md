@@ -5,7 +5,7 @@
 - [x] Filter generators
 - [x] Modifier generators
 - [x] Rectangle generator
-- [ ] Add pixel distortion support
+- [x] Add pixel distortion support
 - [ ] Add chromatic distortion support
 - [x] Add noise support
 - [ ] Develop text render system
@@ -39,8 +39,9 @@
 - [ ] Add vintage frame
 - [ ] Implement fill selection
 - [ ] Implement anchor point for rotation
-- [ ] Merge Distort and Mirror into Transform
+- [x] Merge Distort and Mirror into Transform
 - [ ] Optimize all interpolations by using corner cases (alpha = 0 or alpha = 1)
+- [x] Added Swirl function generator
 
 ### Refactoring
 - [x] Check for each function to return origin centered images
