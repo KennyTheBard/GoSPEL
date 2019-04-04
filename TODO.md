@@ -48,7 +48,14 @@
 
 ### Testing
 - [ ] Test cubic interpolation
+- [ ] Unit tests for Median
+- [ ] Unit tests for Shift
+- [ ] Unit tests for Noise
+- [ ] Unit tests for HSV
+- [ ] Unit tests for Create Image
+- [ ] Unit tests for Select
 
 ### Debugging
+- [ ] The black border for the Swirl effect
 
 ### Documentation

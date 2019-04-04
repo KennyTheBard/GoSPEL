@@ -37,7 +37,7 @@ func main() {
     // card = lib.ApplyFilter(card, card.Bounds(), f, 1)
     // card = lib.ModifyColors(card, card.Bounds(), modifiers.ExctractColorChannel(modifiers.RED_CHANNEL))
 
-    card = lib.Transform(card, trans.SwirlFunc(-0.01))
+    card = lib.Transform(card, trans.SwirlFunc(-0.001))
 
     elapsed := time.Since(start)
 
