@@ -2,6 +2,12 @@ package main
 
 import "fmt"
 
+const LiteralMarking = '\''
+const OpenAtom = '('
+const CloseAtom = ')'
+const Separator = ' '
+
+
 func Tokenize(str string) ([]string) {
 	var tokens []string
 	prev := 0
@@ -9,26 +15,32 @@ func Tokenize(str string) ([]string) {
 	nested := false
 	literal := false
 
+	// early escape
 	if len(str) == 0 {
 		return tokens
 	}
 
-	if str[len(str) - 1:] != " " {
-		str += " "
+	// safety
+	if str[len(str) - 1:] != string(Separator) {
+		str += string(Separator)
 	}
 
 	for pos, ch := range str {
-		if ch == '\'' {
+		// flag the current slice as literal
+		if ch == LiteralMarking {
 			literal = !literal
 		}
 
 		if !literal {
-			if ch == '(' {
+			// atom opening
+			if ch == OpenAtom {
 				nest += 1
 				nested = true
-			} else if ch == ')' {
+			// atom closing
+			} else if ch == CloseAtom {
 				nest += -1
-			} else if ch == ' ' && nest == 0 {
+			// atom slicing
+			} else if ch == Separator && nest == 0 {
 				if nested {
 					tokens = append(tokens, str[prev + 1 : pos - 1])
 				} else {
