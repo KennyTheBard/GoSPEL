@@ -1,9 +1,9 @@
-# **Krom**
+# **Nikrom**
 ## The image processing language
 
 
 ### Syntax
-   The **Krom** programming language has a syntax strongly influenced on
+   The **Nikrom** programming language has a syntax strongly influenced on
 functional programming languages such as _Scheme_ and _Racket_. The code is
 structured as a tree of sentences, named **atoms**. One atom is able to contain
 other atoms.
@@ -17,14 +17,14 @@ absence will be replaced by default values.
 
 
 ### Runtime
-   Krom language is more of a feature of the bigger system, **Kromatique**. The
-system comes with an interpreter that can parse Krom source code files and
+   Nikrom language is more of a feature of the bigger system, **Kromatique**. The
+system comes with an interpreter that can parse Nikrom source code files and
 dynamically create an interpreter tree at runtime. Loading files and input
 parameters into the tree it's a simple matter.
 
 
 ### Source code
-   Krom code is writen into plain text files having file extension _.krom_,
+   Nikrom code is writen into plain text files having file extension _.krom_,
 which have to be parsed at runtime by the _Kromatique interpreter_.
     While in parsing phase, the atoms will be evaluated in depth, from the
 higher levels to the lower ones. In this phase, all syntax errors are reported.
