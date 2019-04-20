@@ -17,7 +17,10 @@ type Pair struct {
 }
 
 func print(s Void) {
-    fmt.Println(s)
+    fmt.Println(">>", reflect.TypeOf(s))
+	if reflect.TypeOf(s) == reflect.TypeOf(String{}) {
+		reflect.ValueOf(s).MethodByName("Print").Call(nil)
+	}
 }
 
 func (s String) Print() {
