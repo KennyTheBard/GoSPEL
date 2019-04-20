@@ -63,7 +63,7 @@ func Tokenize(str string) ([]string) {
 
 func main() {
 
-	str := "filter (load image.jpg) (gen_f grayscale ' :)')"
+	str := "filter (copy (load image.jpg)) (gen_f grayscale ' :)')"
 
 	tokens := Tokenize(str)
 	fmt.Println(tokens)

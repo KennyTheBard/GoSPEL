@@ -20,11 +20,11 @@ func print(s Void) {
     fmt.Println(s)
 }
 
-func (s *String) print() {
+func (s String) Print() {
     fmt.Println(s.s)
 }
 
-func (p *Pair) print() {
+func (p Pair) Print() {
     fmt.Println(p.k, ":", p.s)
 }
 
@@ -46,28 +46,50 @@ func callArguments(a Arguments) {
     fmt.Println(sum)
 }
 
+func (s String) FuncWithArgs(i int) {
+	fmt.Println(i)
+}
+
 func main() {
-    var v Void
-    print(v)
-    v = "hello world"
-    print(v)
-    print(1)
-    s := String{"this is a struct"}
-    print(s)
-    k := "this is a simple string"
-    print(k)
+	var v Void
+	print(v)
+	v = "hello world"
+	print(v)
+	print(1)
+	s := String{"this is a struct"}
+	print(s)
+	k := "this is a simple string"
+	print(k)
 
-    s.print()
-    p := Pair{&String{"value"}, 10}
-    p.print()
+	s.Print()
+	p := Pair{&String{"value"}, 10}
+	p.Print()
 
-    var arr []Void
-    for i := 1; i < 10; i++ {
-        arr = append(arr, i)
-    }
-    fmt.Println(arr)
+	var arr []Void
+	for i := 1; i < 10; i++ {
+		arr = append(arr, i)
+	}
+	fmt.Println(arr)
 
-    args := Arguments{arr}
-    fmt.Println(args)
-    callArguments(args)
+	args := Arguments{arr}
+	fmt.Println(args)
+	callArguments(args)
+
+	s = String{"this is a struct"}
+	s.Print()
+	// fmt.Println( reflect.TypeOf(String{}).Method(0) )
+	fmt.Println( reflect.TypeOf(String{}).Method(1) )
+	// fmt.Println( reflect.TypeOf(String{}).MethodByName("FuncWithArgs") )//.Type().In(0).Elem().Name()
+
+	// nu are nevoie de argumente in call deoarece se foloseste ValueOf
+	fmt.Println( reflect.ValueOf(s).Method(1).Call(nil))
+
+	// are nevoie de valori ina rgumente deoarece se foloseste TypeOf
+	i := 1
+	inArgs := []reflect.Value{reflect.ValueOf(s), reflect.ValueOf(i)}
+	fmt.Println( reflect.TypeOf(String{}).Method(0).Func.Call(inArgs))
+
+	// ambele returneaza [] deoarece nu au return type, dar printeaza
+	// din interiorul functiei
+
 }
