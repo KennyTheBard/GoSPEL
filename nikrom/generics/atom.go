@@ -11,7 +11,7 @@ type Void interface {}
  *	generic data types passed as arguments.
  */
 type Arguments struct {
-	args []Void
+	Args []Void
 }
 
 /**
@@ -24,15 +24,15 @@ type ImageProcessing func(Arguments) Void
  *	Structure used for source code parsing.
  */
 type Atom struct {
-	proc string
-	subatoms []Atoms
+	Proccess string
+	Subatoms []Atom
 }
 
 /**
  *	Evaluates the curret expression and calls a function on given
  *	arguments.
  */
-func (atom *Atom) Interpret() Void {
+func (atom Atom) Interpret() Void {
 	// TODO: move this function to another file
 	return nil
 }
