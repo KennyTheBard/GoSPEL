@@ -9,6 +9,10 @@ const OpenAtom = '('
 const CloseAtom = ')'
 const Separator = ' '
 
+/**
+ *	Break up the given string into tokens using
+ *	the provided set of rules.
+ */
 func Tokenize(str string) ([]string) {
 	var tokens []string
 	prev := 0
@@ -62,6 +66,11 @@ func Tokenize(str string) ([]string) {
 	return tokens
 }
 
+/**
+ *	Parse a command into an atom tree ready
+ *	to be interpreted. The leafs have only
+ *	values in process field.
+ */
 func BuildTree(str string) (generics.Atom) {
 	if len(str) == 0 {
 		aux := make([]generics.Atom, 0)

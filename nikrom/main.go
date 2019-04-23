@@ -8,7 +8,7 @@ import (
 
 func printTree(space string, tree generics.Atom) {
 	fmt.Println(space, tree.Proccess)
-	space = "---" + space
+	space = "~" + space
 	for _, branch := range tree.Subatoms {
 		printTree(space, branch)
 	}
@@ -18,6 +18,7 @@ func main() {
 
 	str := "filter (copy (load image.jpg)) (gen_f grayscale ' :)')"
 
+	fmt.Println(str)
 	tree := parser.BuildTree(str)
 	printTree(">", tree)
 
