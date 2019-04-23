@@ -5,6 +5,7 @@ package error
  *	Enum with posible error codes
  */
 const (
+    NoError = 0
     InvalidNumberOfArguments = 1 << iota
     InvalidArgumentType = 1 << iota
 )
@@ -19,4 +20,8 @@ type Error struct {
 
 func Error(code int, message string) (Error) {
     return Error{code, message}
+}
+
+func NoError() (Error) {
+    return Error{NoError, "No unusual behaviour"}
 }

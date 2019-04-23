@@ -17,5 +17,5 @@ func CopyHandle(args []generics.Void) (generics.Void, error.Error) {
         return (nil, error.Error(error.InvalidArgumentType, "Expected image.Image, received " + reflect.TypeOf(args[0]) + "!"))
     }
 
-    return lib.Copy(reflect.ValueOf(args[0]));
+    return (lib.Copy(reflect.ValueOf(args[0])), error.NoError())
 }
