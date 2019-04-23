@@ -24,7 +24,7 @@ type ImageProcessing func(Arguments) Void
  *	Structure used for source code parsing.
  */
 type Atom struct {
-	Proccess string
+	Process string
 	Subatoms []Atom
 }
 

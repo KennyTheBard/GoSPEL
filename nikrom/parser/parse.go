@@ -84,7 +84,7 @@ func BuildTree(str string) (generics.Atom) {
 
 	for i := 1; i < len(tokens); i++ {
 		aux := BuildTree(tokens[i])
-		if aux.Proccess != "" {
+		if aux.Process != "" {
 			curr.Subatoms[i - 1] = aux
 		}
 	}

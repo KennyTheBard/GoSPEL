@@ -7,7 +7,7 @@ import (
 )
 
 func printTree(space string, tree generics.Atom) {
-	fmt.Println(space, tree.Proccess)
+	fmt.Println(space, tree.Process)
 	space = "~" + space
 	for _, branch := range tree.Subatoms {
 		printTree(space, branch)
