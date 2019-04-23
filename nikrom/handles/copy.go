@@ -8,14 +8,14 @@ import (
     error "../error"
 )
 
-func CopyHandle(argc int, argv []generics.Void) (generics.Void, error.Error) {
-    if argc != 1 {
-        return (nil, error.Error(error.InvalidNumberOfArguments, "Expected 1, received " + argc + "!"))
+func CopyHandle(args []generics.Void) (generics.Void, error.Error) {
+    if len(args) != 1 {
+        return (nil, error.Error(error.InvalidNumberOfArguments, "Expected 1, received " + len(args) + "!"))
     }
 
-    if reflect.TypeOf(argv[1]) != reflect.TypeOf(image.Image{}) {
-        return (nil, error.Error(error.InvalidArgumentType, "Expected image.Image, received " + reflect.TypeOf(argv[1]) + "!"))
+    if reflect.TypeOf(args[0]) != reflect.TypeOf(image.Image{}) {
+        return (nil, error.Error(error.InvalidArgumentType, "Expected image.Image, received " + reflect.TypeOf(args[0]) + "!"))
     }
 
-    return (generics.Void) lib.Copy(reflect.ValueOf(argv[i]));
+    return lib.Copy(reflect.ValueOf(args[0]));
 }
