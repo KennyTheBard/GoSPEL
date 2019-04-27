@@ -4,12 +4,10 @@ package error
 /**
  *	Enum with posible error codes
  */
-const (
-    NoError = 0
-    InvalidNumberOfArguments = 1 << iota
-    InvalidArgumentType = 1 << iota
-    UnknownHandle = 1 << iota
-)
+const NoError = 0
+const InvalidNumberOfArguments = 1 << 0
+const InvalidArgumentType = 1 << 1
+const UnknownHandle = 1 << 2
 
 /**
  *	Encapsulates the data related to an error raised while running.

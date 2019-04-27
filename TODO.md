@@ -45,6 +45,7 @@
 
 ### Refactoring
 - [x] Check for each function to return origin centered images
+- [ ] Make all error code checks for Nikrom to use bitwise AND
 
 ### Testing
 - [ ] Test cubic interpolation
