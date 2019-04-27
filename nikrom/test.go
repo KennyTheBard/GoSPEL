@@ -53,7 +53,30 @@ func (s String) FuncWithArgs(i int) {
 	fmt.Println(i)
 }
 
-func assert()
+func assert(v Void) {
+    switch v.(type) {
+    case string:
+        fmt.Println("Plain old string")
+    case String:
+        fmt.Println("String stucture")
+    case int:
+        fmt.Println("Is a number")
+    default:
+        fmt.Println("I seriously don't know")
+    }
+
+    fmt.Println(v)
+}
+
+func badassert(v Void) {
+    a, b := v.(int)
+    fmt.Println(a, " ", b)
+}
+
+func goodassert(v Void) {
+    a, b := v.(String)
+    fmt.Println(a, " ", b)
+}
 
 func main() {
 	var v Void
@@ -101,4 +124,12 @@ func main() {
     fmt.Println(reflect.TypeOf(String{}).Name())
     fmt.Println(String{"hello"})
 
+    assert("hello")
+    assert(String{"hello"})
+    assert(1)
+    assert(true)
+    badassert(11)
+    badassert(String{"hello"})
+    goodassert(11)
+    goodassert(String{"hello"})
 }

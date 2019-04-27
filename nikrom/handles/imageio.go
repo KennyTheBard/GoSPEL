@@ -9,31 +9,54 @@ import (
 )
 
 func LoadHandle(args []generics.Void) (generics.Void, error.Error) {
-    if len(args) != 1 {
-        return (nil, error.Error(error.InvalidNumberOfArguments, "Expected 1, received " + len(args) + "!"))
+    var err error.Error
+
+    err = error.AssertNumberArgument(1, len(args))
+    if err.code != error.NoError {
+        return (nil, err)
     }
 
-    if reflect.TypeOf(args[0]) != reflect.TypeOf(string{}) {
-        return (nil, error.Error(error.InvalidArgumentType, "Expected argument 1 of type string, received " + reflect.TypeOf(args[0]) + "!"))
+    var check bool
+
+    _, check = args[0].(string)
+    err = error.AssertArgumentType(check, 1, "string", reflect.TypeOf(args[0]).Name())
+    if err.code != error.NoError {
+        return (nil, err)
     }
 
     return (lib.DecodeImage(reflect.ValueOf(args[0])), error.NoError())
 }
 
 func SaveHandle(args []generics.Void) (generics.Void, error.Error) {
-    if len(args) != 3 {
-        return (nil, error.Error(error.InvalidNumberOfArguments, "Expected 3, received " + len(args) + "!"))
+    var err error.Error
+
+    err = error.AssertNumberArgument(3, len(args))
+    if err.code != error.NoError {
+        return (nil, err)
     }
 
-    if reflect.TypeOf(args[0]) != reflect.TypeOf(image.Image{}) {
-        return (nil, error.Error(error.InvalidArgumentType, "Expected argument 1 of type image.Image, received " + reflect.TypeOf(args[0]) + "!"))
+    var check bool
+    pos := 0
+
+    _, check = args[pos].(image.Image)
+    err = error.AssertArgumentType(check, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
+    if err.code != error.NoError {
+        return (nil, err)
     }
-    if reflect.TypeOf(args[1]) != reflect.TypeOf(string{}) {
-        return (nil, error.Error(error.InvalidArgumentType, "Expected argument 2 of type string, received " + reflect.TypeOf(args[0]) + "!"))
+    pos += 1
+
+    _, check = args[pos].(string)
+    err = error.AssertArgumentType(check, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
+    if err.code != error.NoError {
+        return (nil, err)
     }
-    if reflect.TypeOf(args[2]) != reflect.TypeOf(string{}) {
-        return (nil, error.Error(error.InvalidArgumentType, "Expected argument 3 of type string, received " + reflect.TypeOf(args[0]) + "!"))
+
+    _, check = args[pos].(string)
+    err = error.AssertArgumentType(check, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
+    if err.code != error.NoError {
+        return (nil, err)
     }
+    pos += 1
 
     return (lib.EncodeImage(reflect.ValueOf(args[0])), error.NoError())
 }

@@ -1,9 +1,5 @@
 package error
 
-import (
-    "reflect"
-)
-
 func AssertNumberArgument(expected, received int) (Error) {
     if expected != received {
         return NumberArgumentsError(expected, received)
@@ -11,6 +7,9 @@ func AssertNumberArgument(expected, received int) (Error) {
     return NoError()
 }
 
-func AssertArgumentType(pos int, expected, received generics.Void) (Error) {
-    // TODO
+func AssertArgumentType(check bool, pos int, expected, received string) (Error) {
+    if check {
+        return ArgumentTypeError(pos, expected, received)
+    }
+    return NoError()
 }
