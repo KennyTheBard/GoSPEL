@@ -14,7 +14,7 @@ func CopyHandle(args []generics.Void) (generics.Void, error.Error) {
     }
 
     if reflect.TypeOf(args[0]) != reflect.TypeOf(image.Image{}) {
-        return (nil, error.Error(error.InvalidArgumentType, "Expected image.Image, received " + reflect.TypeOf(args[0]) + "!"))
+        return (nil, error.Error(error.InvalidArgumentType, "Expected argument 1 of type image.Image, received " + reflect.TypeOf(args[0]) + "!"))
     }
 
     return (lib.Copy(reflect.ValueOf(args[0])), error.NoError())
