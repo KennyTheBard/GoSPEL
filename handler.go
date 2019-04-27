@@ -2,12 +2,9 @@ package main
 
 import (
     "fmt"
-    "os"
     "time"
-    "image"
     //"image/color"
     lib "./lib"
-    utils "./lib/utils"
     //ut "./ut"
     // filters "./lib/generators/filters"
     // modifiers "./lib/generators/modifiers"
@@ -15,9 +12,7 @@ import (
 )
 
 func main() {
-    img_file, _ := os.Open("humans.jpg")
-    defer img_file.Close()
-    img, image_format, _ := image.Decode(img_file)
+    img := lib.DecodeImage("humans.jpg")
 
     start := time.Now()
 
@@ -43,5 +38,6 @@ func main() {
 
     fmt.Printf("Done in %s!\n", elapsed)
 
-    utils.Encode_image(card, "new", image_format)
+    lib.EncodeImage(card, "new", "png")
+
 }
