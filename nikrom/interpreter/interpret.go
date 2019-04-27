@@ -23,7 +23,9 @@ func Interpret(tree generics.Atom) (generics.Void, error.Error) {
     } else {
         (handle, err) := handles.GetHandle(tree.Process)
 		if err.code == error.NoError {
-			return handle(args)
+			return (handle(args), err)
+		} else {
+			return (nil, err)
 		}
     }
 }

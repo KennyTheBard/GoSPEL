@@ -8,6 +8,7 @@ const (
     NoError = 0
     InvalidNumberOfArguments = 1 << iota
     InvalidArgumentType = 1 << iota
+    UnknownHandle = 1 << iota
 )
 
 /**
