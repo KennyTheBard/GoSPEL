@@ -10,22 +10,29 @@ import (
  *	Interprets the given tree.
  */
 func Interpret(tree generics.Atom) (generics.Void, error.Error) {
-    args = make(generics.Void, len(tree.Subatoms))
-    for i, branch = range tree.Subatoms {
-        (args[i], err) = Interpret(branch)
-		if err.code != error.NoError {
-			return (nil, err)
+	var args []generics.Void
+
+    for _, branch := range tree.Subatoms {
+        arg, err := Interpret(branch)
+		if err.Code != error.NoError {
+			return nil, err
 		}
+		args = append(args, arg)
     }
 
     if len(args) == 0 {
-        return tree.Process
+        return tree.Process, error.CreateNoError()
     } else {
-        (handle, err) := handles.GetHandle(tree.Process)
-		if err.code == error.NoError {
-			return (handle(args), err)
+        handle, err := handles.GetHandle(tree.Process)
+		if err.Code != error.NoError {
+			return nil, err
 		} else {
-			return (nil, err)
+			ret, err := handle(args)
+			if err.Code != error.NoError {
+				return nil, err
+			} else {
+				return ret, err
+			}
 		}
     }
 }

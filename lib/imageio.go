@@ -16,7 +16,7 @@ func DecodeImage(path string) (image.Image) {
     return img
 }
 
-func EncodeImage(img image.Image, name, format string) {
+func EncodeImage(img image.Image, name, format string) bool {
     fout, _ := os.Create(strings.Join([]string{name, format}, "."))
     defer fout.Close()
 
@@ -28,4 +28,6 @@ func EncodeImage(img image.Image, name, format string) {
         jpeg.Encode(fout, img, &jpeg.Options{jpeg.DefaultQuality})
         break;
     }
+
+    return true
 }

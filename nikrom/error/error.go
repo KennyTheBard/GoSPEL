@@ -1,23 +1,25 @@
 package error
 
 import (
-    generics "../generics"
+    "strconv"
 )
 
-func Error(code int, message string) (Error) {
+func CreateError(code int, message string) (Error) {
     return Error{code, message}
 }
 
-func NoError() (Error) {
+func CreateNoError() (Error) {
     return Error{NoError, "No unusual behaviour"}
 }
 
 func NumberArgumentsError(expected, received int) (Error) {
-    return Error{error.InvalidNumberOfArguments, "Expected " + expected + \
-        ", received " + received + "!"}
+    return Error{InvalidNumberOfArguments, "Expected " +
+        strconv.Itoa(expected) + ", received " +
+        strconv.Itoa(received) + "!"}
 }
 
-func ArgumentTypeError(pos int, expected, received string) {
-    return Error{error.InvalidArgumentType, "Expected argument " + pos + \
-        " of type " + epected + ", received " + received + "!"}
+func ArgumentTypeError(pos int, expected, received string) (Error) {
+    return Error{InvalidArgumentType, "Expected argument " +
+        strconv.Itoa(pos) + " of type " + expected + ", received " +
+        received + "!"}
 }

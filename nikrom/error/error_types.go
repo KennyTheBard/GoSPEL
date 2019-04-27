@@ -1,6 +1,5 @@
 package error
 
-
 /**
  *	Enum with posible error codes
  */
@@ -13,6 +12,6 @@ const UnknownHandle = 1 << 2
  *	Encapsulates the data related to an error raised while running.
  */
 type Error struct {
-    code int
-    message string
+    Code int
+    Message string
 }

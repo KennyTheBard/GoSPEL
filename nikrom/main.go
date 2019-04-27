@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"./parser"
 	"./generics"
+	interpreter "./interpreter"
 )
 
 func printTree(space string, tree generics.Atom) {
@@ -16,11 +17,14 @@ func printTree(space string, tree generics.Atom) {
 
 func main() {
 
-	str := "filter (copy (load image.jpg)) (gen_f grayscale ' :)')"
+	str := "save (copy (load image.jpg)) result png"
 
 	fmt.Println(str)
 	tree := parser.BuildTree(str)
 	printTree(">", tree)
+
+	_, err := interpreter.Interpret(tree)
+	fmt.Println(err)
 
 	// for _, t := range tokens {
 	// 	fmt.Print(t)

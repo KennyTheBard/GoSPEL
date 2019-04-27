@@ -12,51 +12,55 @@ func LoadHandle(args []generics.Void) (generics.Void, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgument(1, len(args))
-    if err.code != error.NoError {
-        return (nil, err)
+    if err.Code != error.NoError {
+        return nil, err
     }
 
-    var check bool
+    var ok bool
 
-    _, check = args[0].(string)
-    err = error.AssertArgumentType(check, 1, "string", reflect.TypeOf(args[0]).Name())
-    if err.code != error.NoError {
-        return (nil, err)
+    _, ok = args[0].(string)
+    err = error.AssertArgumentType(!ok, 1, "string", reflect.TypeOf(args[0]).Name())
+    if err.Code != error.NoError {
+        return nil, err
     }
 
-    return (lib.DecodeImage(reflect.ValueOf(args[0])), error.NoError())
+    arg0, _ := args[0].(string)
+    return lib.DecodeImage(arg0), error.CreateNoError()
 }
 
 func SaveHandle(args []generics.Void) (generics.Void, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgument(3, len(args))
-    if err.code != error.NoError {
-        return (nil, err)
+    if err.Code != error.NoError {
+        return nil, err
     }
 
-    var check bool
+    var ok bool
     pos := 0
 
-    _, check = args[pos].(image.Image)
-    err = error.AssertArgumentType(check, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
-    if err.code != error.NoError {
-        return (nil, err)
+    _, ok = args[pos].(image.Image)
+    err = error.AssertArgumentType(!ok, pos + 1, "image.Image", reflect.TypeOf(args[pos]).Name())
+    if err.Code != error.NoError {
+        return nil, err
     }
     pos += 1
 
-    _, check = args[pos].(string)
-    err = error.AssertArgumentType(check, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
-    if err.code != error.NoError {
-        return (nil, err)
-    }
-
-    _, check = args[pos].(string)
-    err = error.AssertArgumentType(check, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
-    if err.code != error.NoError {
-        return (nil, err)
+    _, ok = args[pos].(string)
+    err = error.AssertArgumentType(!ok, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
+    if err.Code != error.NoError {
+        return nil, err
     }
     pos += 1
 
-    return (lib.EncodeImage(reflect.ValueOf(args[0])), error.NoError())
+    _, ok = args[pos].(string)
+    err = error.AssertArgumentType(!ok, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
+    if err.Code != error.NoError {
+        return nil, err
+    }
+
+    arg0, _ := args[0].(image.Image)
+    arg1, _ := args[1].(string)
+    arg2, _ := args[2].(string)
+    return lib.EncodeImage(arg0, arg1, arg2), error.CreateNoError()
 }
