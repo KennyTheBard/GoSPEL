@@ -53,6 +53,8 @@ func (s String) FuncWithArgs(i int) {
 	fmt.Println(i)
 }
 
+func assert()
+
 func main() {
 	var v Void
 	print(v)
@@ -94,5 +96,9 @@ func main() {
 
 	// ambele returneaza [] deoarece nu au return type, dar printeaza
 	// din interiorul functiei
+
+    fmt.Println(reflect.TypeOf(String{}))
+    fmt.Println(reflect.TypeOf(String{}).Name())
+    fmt.Println(String{"hello"})
 
 }
