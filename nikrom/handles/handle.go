@@ -1,4 +1,4 @@
-package handle
+package handles
 
 import (
     generics "../generics"
@@ -19,8 +19,14 @@ func GetHandle(process string) (handle, error.Error) {
         return CopyHandle, error.CreateNoError()
     case "load":
         return LoadHandle, error.CreateNoError()
-    case"save":
+    case "save":
         return SaveHandle, error.CreateNoError()
+    case "point":
+        return PointHandle, error.CreateNoError()
+    case "rect":
+        return RectangleHandle, error.CreateNoError()
+    case "resize":
+        return ResizeHandle, error.CreateNoError()
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown handle name \"" + process + "\"!")

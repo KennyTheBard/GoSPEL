@@ -16,14 +16,15 @@ func printTree(space string, tree generics.Atom) {
 }
 
 func main() {
-
-	str := "save (copy (load image.jpg)) result png"
-
+	str := "save (resize (load image.jpg) (rect (point 0 0) (point 1000 1000))) result png"
 	fmt.Println(str)
+
 	tree := parser.BuildTree(str)
+
 	printTree(">", tree)
 
 	_, err := interpreter.Interpret(tree)
+
 	fmt.Println(err)
 
 	// for _, t := range tokens {
