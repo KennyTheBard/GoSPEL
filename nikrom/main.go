@@ -21,21 +21,9 @@ func main() {
 
 	tree := parser.BuildTree(str)
 
-	printTree(">", tree)
+	// printTree(">", tree)
 
 	_, err := interpreter.Interpret(tree)
 
 	fmt.Println(err)
-
-	// for _, t := range tokens {
-	// 	fmt.Print(t)
-	// 	fmt.Print(" -> ")
-	// 	fmt.Println()
-	//
-	// 	aux := Tokenize(t)
-	// 	for _, a := range aux {
-	// 		fmt.Println("\t", a)
-	// 	}
-	// 	fmt.Println()
-	// }
 }

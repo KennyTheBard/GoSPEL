@@ -18,6 +18,12 @@ func NumberArgumentsError(expected, received int) (Error) {
         strconv.Itoa(received) + "!"}
 }
 
+func NumberArgumentsErrorAtLeast(expected, received int) (Error) {
+    return Error{InvalidNumberOfArguments, "Expected at least " +
+        strconv.Itoa(expected) + ", received " +
+        strconv.Itoa(received) + "!"}
+}
+
 func ArgumentTypeError(pos int, expected, received string) (Error) {
     return Error{InvalidArgumentType, "Expected argument " +
         strconv.Itoa(pos) + " of type " + expected + ", received " +
