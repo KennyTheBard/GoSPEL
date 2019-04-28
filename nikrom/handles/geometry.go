@@ -20,14 +20,16 @@ func PointHandle(args []generics.Void) (generics.Void, error.Error) {
     pos := 0
 
     _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
+    err = error.AssertArgumentType(!ok, pos + 1, "string",
+        reflect.TypeOf(args[pos]).Name())
     if err.Code != error.NoError {
         return nil, err
     }
     pos += 1
 
     _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
+    err = error.AssertArgumentType(!ok, pos + 1, "string",
+        reflect.TypeOf(args[pos]).Name())
     if err.Code != error.NoError {
         return nil, err
     }
@@ -51,14 +53,16 @@ func RectangleHandle(args []generics.Void) (generics.Void, error.Error) {
     pos := 0
 
     _, ok = args[pos].(image.Point)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Point", reflect.TypeOf(args[pos]).Name())
+    err = error.AssertArgumentType(!ok, pos + 1, "image.Point",
+        reflect.TypeOf(args[pos]).Name())
     if err.Code != error.NoError {
         return nil, err
     }
     pos += 1
 
     _, ok = args[pos].(image.Point)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Point", reflect.TypeOf(args[pos]).Name())
+    err = error.AssertArgumentType(!ok, pos + 1, "image.Point",
+        reflect.TypeOf(args[pos]).Name())
     if err.Code != error.NoError {
         return nil, err
     }

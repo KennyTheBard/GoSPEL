@@ -16,7 +16,7 @@ func printTree(space string, tree generics.Atom) {
 }
 
 func main() {
-	str := "save (resize (load image.jpg) (rect (point 0 0) (point 1000 1000))) result png"
+	str := "save (rotate (resize (load image.jpg) (rect (point 0 0) (point 1000 1000))) 90) result png"
 	fmt.Println(str)
 
 	tree := parser.BuildTree(str)

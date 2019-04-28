@@ -17,9 +17,11 @@ func LoadHandle(args []generics.Void) (generics.Void, error.Error) {
     }
 
     var ok bool
+    pos := 0
 
-    _, ok = args[0].(string)
-    err = error.AssertArgumentType(!ok, 1, "string", reflect.TypeOf(args[0]).Name())
+    _, ok = args[pos].(string)
+    err = error.AssertArgumentType(!ok, pos + 1, "string",
+        reflect.TypeOf(args[pos]).Name())
     if err.Code != error.NoError {
         return nil, err
     }
@@ -40,21 +42,24 @@ func SaveHandle(args []generics.Void) (generics.Void, error.Error) {
     pos := 0
 
     _, ok = args[pos].(image.Image)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Image", reflect.TypeOf(args[pos]).Name())
+    err = error.AssertArgumentType(!ok, pos + 1, "image.Image",
+        reflect.TypeOf(args[pos]).Name())
     if err.Code != error.NoError {
         return nil, err
     }
     pos += 1
 
     _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
+    err = error.AssertArgumentType(!ok, pos + 1, "string",
+        reflect.TypeOf(args[pos]).Name())
     if err.Code != error.NoError {
         return nil, err
     }
     pos += 1
 
     _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string", reflect.TypeOf(args[pos]).Name())
+    err = error.AssertArgumentType(!ok, pos + 1, "string",
+        reflect.TypeOf(args[pos]).Name())
     if err.Code != error.NoError {
         return nil, err
     }

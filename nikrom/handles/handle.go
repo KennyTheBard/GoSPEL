@@ -27,6 +27,8 @@ func GetHandle(process string) (handle, error.Error) {
         return RectangleHandle, error.CreateNoError()
     case "resize":
         return ResizeHandle, error.CreateNoError()
+    case "rotate":
+        return RotateHandle, error.CreateNoError()
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown handle name \"" + process + "\"!")

@@ -20,7 +20,8 @@ func CopyHandle(args []generics.Void) (generics.Void, error.Error) {
     pos := 0
 
     _, ok = args[pos].(image.Image)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Image", reflect.TypeOf(args[pos]).Name())
+    err = error.AssertArgumentType(!ok, pos + 1, "image.Image",
+        reflect.TypeOf(args[pos]).Name())
     if err.Code != error.NoError {
         return nil, err
     }
