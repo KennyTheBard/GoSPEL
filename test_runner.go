@@ -17,8 +17,8 @@ func main() {
     ut.Test_gradient("test.jpg", "test_results/gradient_test")
     ut.Test_shear("test.jpg", "test_results/shear_test")
     ut.Test_merge("test.jpg", "test_results/merge_test")
-    ut.Test_apply_filter("humans.jpg", "test_results/apply_filter_test")
-    ut.Test_modify_colors("humans.jpg", "test_results/modify_colors_test")
+    ut.Test_apply_filter("test.jpg", "test_results/apply_filter_test")
+    ut.Test_modify_colors("test.jpg", "test_results/modify_colors_test")
     ut.Test_rotate("test.jpg", "test_results/rotate_test")
     ut.Test_opacity("test.jpg", "test_results/opacity_test")
 
