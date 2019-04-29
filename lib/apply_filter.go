@@ -12,7 +12,7 @@ type Filter struct {
 }
 
 /**
-    Apply the filter f on each pixel of the image img in the assigned area.
+    Apply the filter f on each pixel of the image img.
 */
 func ApplyFilter(img image.Image, f Filter) (image.Image) {
     bounds := img.Bounds()

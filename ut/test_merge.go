@@ -41,7 +41,7 @@ func Test_merge(input, output string) {
 
 func merge_test_1(img image.Image, output string) {
     grd := lib.CircularGradient(800, []int{0, 200, 800}, []color.Color{color.RGBA{255, 0, 255, 255}, color.RGBA{255, 0, 255, 125}, color.RGBA{0, 0, 0, 0}})
-    ret := lib.Merge(img, grd, img.Bounds())
+    ret := lib.Merge(img, grd, img.Bounds().Min)
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -50,7 +50,7 @@ func merge_test_1(img image.Image, output string) {
 
 func merge_test_2(img image.Image, output string) {
     grd := lib.LinearGradient(image.Rect(0, 0, 200, 200), []int{0, 200, 800}, []color.Color{color.RGBA{255, 0, 255, 255}, color.RGBA{255, 0, 255, 125}, color.RGBA{0, 0, 0, 0}})
-    ret := lib.Merge(img, grd, img.Bounds())
+    ret := lib.Merge(img, grd, img.Bounds().Min)
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -58,7 +58,7 @@ func merge_test_2(img image.Image, output string) {
 }
 
 func merge_test_3(img image.Image, output string) {
-    ret := lib.Merge(img, img, image.Rect(100, 100, 300, 300))
+    ret := lib.Merge(img, img, image.Rect(100, 100, 300, 300).Min)
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -66,7 +66,7 @@ func merge_test_3(img image.Image, output string) {
 }
 
 func merge_test_4(img image.Image, output string) {
-    ret := lib.Merge(img, img, image.Rect(-100, -100, 100, 100))
+    ret := lib.Merge(img, img, image.Rect(-100, -100, 100, 100).Min)
 
     rez, _ := os.Create(output)
     defer rez.Close()
