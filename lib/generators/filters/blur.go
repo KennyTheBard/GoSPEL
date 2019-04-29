@@ -5,6 +5,11 @@ import (
     lib "../.."
 )
 
+const (
+    HORIZONTAL_MODE = 0
+    VERTICAL_MODE = 1
+)
+
 func BoxBlur(size int) (lib.Filter) {
     mat := make([][]float64, size)
     for i := range mat {
@@ -65,13 +70,13 @@ func AxialBlur(radius, mode int) (lib.Filter) {
     var mat [][]float64
 
     switch mode {
-    case lib.HORIZONTAL_MODE:
+    case HORIZONTAL_MODE:
         mat = make([][]float64, 1)
         for i := range mat {
             mat[i] = make([]float64, size)
         }
         break
-    case lib.VERTICAL_MODE:
+    case VERTICAL_MODE:
         mat = make([][]float64, size)
         for i := range mat {
             mat[i] = make([]float64, 1)

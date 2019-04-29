@@ -5,7 +5,6 @@ import (
     "image/color"
     "image/draw"
     utils "./utils"
-    interp "./interpolation"
 )
 
 type Filter struct {
@@ -15,10 +14,9 @@ type Filter struct {
 /**
     Apply the filter f on each pixel of the image img in the assigned area.
 */
-func ApplyFilter(img image.Image, mask image.Image, f Filter) (image.Image) {
+func ApplyFilter(img image.Image, f Filter) (image.Image) {
     bounds := img.Bounds()
-    trg := Copy(img)
-    aux_img := Copy(img)
+    trg := CreateImage(bounds, color.RGBA{0, 0, 0, 0})
 
     n := 10
     done := make(chan bool, n)
@@ -39,7 +37,7 @@ func ApplyFilter(img image.Image, mask image.Image, f Filter) (image.Image) {
                     for i := - len(f.Mat) / 2; i <= len(f.Mat) / 2 + len(f.Mat) % 2 - 1; i++ {
                         for j := - len(f.Mat[i + len(f.Mat) / 2]) / 2; j <= len(f.Mat[i + len(f.Mat) / 2]) / 2 + len(f.Mat[i + len(f.Mat) / 2]) % 2 - 1; j++ {
                             // values are returned as uint32
-                            r, g, b, a := utils.Safe_Get_Color(aux_img, x + j, y + i)
+                            r, g, b, a := utils.Safe_Get_Color(img, x + j, y + i)
 
                             sum_r += float64(r) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
                             sum_g += float64(g) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
@@ -48,14 +46,10 @@ func ApplyFilter(img image.Image, mask image.Image, f Filter) (image.Image) {
                         }
                     }
 
-                    r_aux, g_aux, b_aux, a_aux := aux_img.At(x, y).RGBA()
-                    r_mask, g_mask, b_mask, a_mask := mask.At(x, y).RGBA()
-
-                    // calculate the color modification through mask
-                    fin_r := interp.LinearInterpolation(int32(r_aux), int32(sum_r), float64(r_mask) / float64((256 << 8) - 1))
-                    fin_g := interp.LinearInterpolation(int32(g_aux), int32(sum_g), float64(g_mask) / float64((256 << 8) - 1))
-                    fin_b := interp.LinearInterpolation(int32(b_aux), int32(sum_b), float64(b_mask) / float64((256 << 8) - 1))
-                    fin_a := interp.LinearInterpolation(int32(a_aux), int32(sum_a), float64(a_mask) / float64((256 << 8) - 1))
+                    fin_r := int32(sum_r)
+                    fin_g := int32(sum_g)
+                    fin_b := int32(sum_b)
+                    fin_a := int32(sum_a)
 
                     trg.(draw.Image).Set(x, y, color.RGBA{uint8(fin_r >> 8), uint8(fin_g >> 8), uint8(fin_b >> 8), uint8(fin_a >> 8)})
                 }

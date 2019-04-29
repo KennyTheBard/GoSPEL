@@ -6,8 +6,8 @@ import (
     "strconv"
     "image"
     "image/jpeg"
-    "image/color"
     lib "../lib"
+    gen "../lib/generators/filters"
 )
 
 func Test_apply_filter(input, output string) {
@@ -30,14 +30,14 @@ func Test_apply_filter(input, output string) {
     curr_output = strings.Join([]string{output, "_", strconv.Itoa(file_num), ".jpg"}, "")
     file_num ++
     apply_filter_test_3(img, curr_output)
+
+    curr_output = strings.Join([]string{output, "_", strconv.Itoa(file_num), ".jpg"}, "")
+    file_num ++
+    apply_filter_test_4(img, curr_output)
 }
 
 func apply_filter_test_1(img image.Image, output string) {
-    bounds := img.Bounds()
-
-    grd := lib.CircularGradient(800, []int{0, 200, 400}, []color.Color{ color.RGBA{0, 0, 0, 0}, color.RGBA{128, 0, 128, 128}, color.RGBA{255, 128, 0, 255}})
-    grd = lib.Resize(grd, bounds)
-    ret := lib.ApplyFilter(img, grd, lib.Filter{ [][]float64{{1.0/9, 1.0/9, 1.0/9}, {1.0/9, 1.0/9, 1.0/9}, {1.0/9, 1.0/9, 1.0/9}} })
+    ret := lib.ApplyFilter(img, lib.Filter{ [][]float64{{1.0/9, 1.0/9, 1.0/9}, {1.0/9, 1.0/9, 1.0/9}, {1.0/9, 1.0/9, 1.0/9}} })
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -45,11 +45,7 @@ func apply_filter_test_1(img image.Image, output string) {
 }
 
 func apply_filter_test_2(img image.Image, output string) {
-    bounds := img.Bounds()
-
-    grd := lib.CircularGradient(800, []int{0, 200, 400}, []color.Color{ color.RGBA{0, 0, 0, 0}, color.RGBA{128, 0, 128, 128}, color.RGBA{255, 128, 0, 255}})
-    grd = lib.Resize(grd, bounds)
-    ret := lib.ApplyFilter(img, grd, lib.Filter{ [][]float64{{1.0/16, 2.0/16, 1.0/16}, {2.0/16, 4.0/16, 2.0/16}, {1.0/16, 2.0/16, 1.0/16}} })
+    ret := lib.ApplyFilter(img, lib.Filter{ [][]float64{{1.0/16, 2.0/16, 1.0/16}, {2.0/16, 4.0/16, 2.0/16}, {1.0/16, 2.0/16, 1.0/16}} })
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -57,11 +53,15 @@ func apply_filter_test_2(img image.Image, output string) {
 }
 
 func apply_filter_test_3(img image.Image, output string) {
-    bounds := img.Bounds()
+    ret := lib.ApplyFilter(img, lib.Filter{ [][]float64{{1, 0, -1}, {0, 0, 0}, {-1, 0, 1}} })
 
-    grd := lib.CircularGradient(800, []int{0, 200, 400}, []color.Color{ color.RGBA{0, 0, 0, 0}, color.RGBA{128, 0, 128, 128}, color.RGBA{255, 128, 0, 255}})
-    grd = lib.Resize(grd, bounds)
-    ret := lib.ApplyFilter(img, grd, lib.Filter{ [][]float64{{1, 0, -1}, {0, 0, 0}, {-1, 0, 1}} })
+    rez, _ := os.Create(output)
+    defer rez.Close()
+    jpeg.Encode(rez, ret, &jpeg.Options{jpeg.DefaultQuality})
+}
+
+func apply_filter_test_4(img image.Image, output string) {
+    ret := lib.ApplyFilter(img, gen.BoxBlur(7))
 
     rez, _ := os.Create(output)
     defer rez.Close()
