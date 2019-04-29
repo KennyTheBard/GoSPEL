@@ -28,7 +28,7 @@
 - [ ] Add Comic book filter (dot patterns)
 - [x] Write the command parser
 - [x] Write the interpreter tree
-- [ ] Write a standardization function to convert script format to command format
+- [x] Write a standardization function to convert script format to command format
 
 ### Implementing
 - [ ] Implement keyword recognition
@@ -45,6 +45,7 @@
 - [x] Merge Distort and Mirror into Transform
 - [ ] Optimize all interpolations by using corner cases (alpha = 0 or alpha = 1)
 - [x] Added Swirl function generator
+- [ ] Treat literal atoms as one word
 
 ### Refactoring
 - [x] Check for each function to return origin centered images

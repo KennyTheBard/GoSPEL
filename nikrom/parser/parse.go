@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"strings"
 	generics "../generics"
 )
 
@@ -8,6 +9,56 @@ const LiteralMarking = '\''
 const OpenAtom = '('
 const CloseAtom = ')'
 const Separator = ' '
+
+const Whitespaces = " \t\n"
+
+/**
+ *	Reduce the number of whitespaces in order to simplify the parsing process
+ */
+func Standardize(str string) (string) {
+	whitespace := false
+	literal := false
+	ret := ""
+
+	for _, ch := range str {
+		// flag the current slice as literal
+		if ch == LiteralMarking {
+			literal = !literal
+		}
+
+		if !literal {
+			// when fiding a non-whitespace character
+			if strings.IndexByte(Whitespaces, byte(ch)) == -1 {
+
+				// insert a separator before any OpenAtom
+				if ch == OpenAtom && !whitespace {
+					ret += string(Separator)
+				}
+
+				// insert a separater at the end of any whitespace
+				// slice if it doesn't end in a CloseAtom
+				if whitespace && ch != CloseAtom {
+					ret += string(Separator)
+				}
+
+				// close whitespace slice and write the character
+				whitespace = false
+				ret += string(ch)
+
+			// while in a whitespace slice
+			} else {
+				whitespace = true
+			}
+		}
+	}
+
+	// remove starting whitespaces
+	if len(ret) > 0 && ret[0] == Separator {
+		ret = ret[1:]
+	}
+
+	return ret
+}
 
 /**
  *	Break up the given string into tokens using
@@ -77,7 +128,8 @@ func BuildTree(str string) (generics.Atom) {
 		return generics.Atom{"", aux}
 	}
 
-	tokens := Tokenize(str)
+	cmd := Standardize(str)
+	tokens := Tokenize(cmd)
 
 	suba := make([]generics.Atom, len(tokens) - 1)
 	curr := generics.Atom{tokens[0], suba}
