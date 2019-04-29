@@ -33,6 +33,8 @@ func GetHandle(process string) (handle, error.Error) {
         return GeneratorHandle, error.CreateNoError()
     case "sizeof":
         return SizeofHandle, error.CreateNoError()
+    case "filter":
+        return ApplyFilterHandle, error.CreateNoError()
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown handle name \"" + process + "\"!")

@@ -1,14 +1,12 @@
 package handles
 
 import (
-    "image"
     "reflect"
-    lib "../../lib"
     generics "../generics"
     error "../error"
 )
 
-func GeneratorHandle(args []genercis.Void) (generics.Void, error.Error) {
+func GeneratorHandle(args []generics.Void) (generics.Void, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgumentAtLeast(2, len(args))
@@ -31,20 +29,23 @@ func GeneratorHandle(args []genercis.Void) (generics.Void, error.Error) {
     var handler handle
     switch arg0 {
     case "filter":
-        handler, _ = FilterHandle([]generics.Void{args[1]})
+        handler, err = FilterHandle([]generics.Void{args[1]})
     case "modif":
-        handler, _ = ModifierHandle([]generics.Void{args[1]})
+        handler, err = ModifierHandle([]generics.Void{args[1]})
     case "transf":
-        handler, _ = TransformationHandle([]generics.Void{args[1]})
+        handler, err = TransformationHandle([]generics.Void{args[1]})
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown sub-handle name \"" + arg0 + "\"!")
     }
 
-    return handler([]generics.Void{args[2:]})
+    if err.Code != error.NoError {
+        return nil, err
+    }
+    return handler(args[2:])
 }
 
-func FilterHandle(args []generics.Void) (generics.Void, error.Error) {
+func FilterHandle(args []generics.Void) (handle, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgument(1, len(args))
@@ -64,21 +65,18 @@ func FilterHandle(args []generics.Void) (generics.Void, error.Error) {
 
     arg0, _ := args[0].(string)
 
-    var handler handle
     switch arg0 {
     case "blur":
-        // TODO
-    case "custom":
-        // TODO
+        return BoxBlurHandle, error.CreateNoError()
+    // case "custom":
+    //     // TODO
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown filter name \"" + arg0 + "\"!")
     }
-
-    return handle, error.CreateNoError()
 }
 
-func ModifierHandle(args []generics.Void) (generics.Void, error.Error) {
+func ModifierHandle(args []generics.Void) (handle, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgument(1, len(args))
@@ -98,21 +96,18 @@ func ModifierHandle(args []generics.Void) (generics.Void, error.Error) {
 
     arg0, _ := args[0].(string)
 
-    var handler handle
     switch arg0 {
-    case "grayscale":
-        // TODO
-    case "custom":
-        // TODO
+    // case "grayscale":
+    //     // TODO
+    // case "custom":
+    //     // TODO
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown modifier name \"" + arg0 + "\"!")
     }
-
-    return handle, error.CreateNoError()
 }
 
-func TransformationHandle(args []generics.Void) (generics.Void, error.Error) {
+func TransformationHandle(args []generics.Void) (handle, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgument(1, len(args))
@@ -132,16 +127,13 @@ func TransformationHandle(args []generics.Void) (generics.Void, error.Error) {
 
     arg0, _ := args[0].(string)
 
-    var handler handle
     switch arg0 {
-    case "mirror":
-        // TODO
-    case "custom":
-        // TODO
+    // case "mirror":
+    //     // TODO
+    // case "custom":
+    //     // TODO
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown transformation name \"" + arg0 + "\"!")
     }
-
-    return handle, error.CreateNoError()
 }

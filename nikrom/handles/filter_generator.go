@@ -1,17 +1,17 @@
 package handles
 
 import (
-    "image"
+    "strconv"
     "reflect"
-    lib "../../lib"
+    filters "../../lib/generators/filters"
     generics "../generics"
     error "../error"
 )
 
-func ApplyFilterHandle(args []generics.Void) (generics.Void, error.Error) {
+func BoxBlurHandle(args []generics.Void) (generics.Void, error.Error) {
     var err error.Error
 
-    err = err = error.AssertNumberArgument(3, len(args))
+    err = error.AssertNumberArgument(1, len(args))
     if err.Code != error.NoError {
         return nil, err
     }
@@ -25,8 +25,8 @@ func ApplyFilterHandle(args []generics.Void) (generics.Void, error.Error) {
     if err.Code != error.NoError {
         return nil, err
     }
-    pos += 1
-    // TODO finish!!
 
-    arg0, _ := args[0].(string)
+    aux0, _ := args[0].(string)
+    arg0, _ := strconv.Atoi(aux0)
+    return filters.BoxBlur(arg0), error.CreateNoError()
 }

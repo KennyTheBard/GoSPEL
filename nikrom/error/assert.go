@@ -8,8 +8,8 @@ func AssertNumberArgument(expected, received int) (Error) {
 }
 
 func AssertNumberArgumentAtLeast(expected, received int) (Error) {
-    if expected <= received {
-        return NumberArgumentsError(expected, received)
+    if expected > received {
+        return NumberArgumentsErrorAtLeast(expected, received)
     }
     return CreateNoError()
 }
