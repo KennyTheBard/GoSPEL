@@ -51,6 +51,7 @@
 - [x] Check for each function to return origin centered images
 - [ ] Make all error code checks for Nikrom to use bitwise AND
 - [ ] Replace the current error system with one that would be able to hold multiple errors and the throwing command
+- [ ] Make all rectangle and point operations to have sub-handles in their respective handle
 
 ### Testing
 - [ ] Test cubic interpolation
