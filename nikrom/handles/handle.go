@@ -37,6 +37,8 @@ func GetHandle(process string) (handle, error.Error) {
         return ApplyFilterHandle, error.CreateNoError()
     case "merge":
         return MergeHandle, error.CreateNoError()
+    case "crop":
+        return CropHandle, error.CreateNoError()
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown handle name \"" + process + "\"!")
