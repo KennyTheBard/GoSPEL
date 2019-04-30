@@ -1,5 +1,5 @@
-<img src="https://raw.githubusercontent.com/KennyTheBard/Kromatique/master/logo.png" width="128">
 # Kromatique
+<img src="https://raw.githubusercontent.com/KennyTheBard/Kromatique/master/logo.png" width="128">
 
 Kromatique is an image processing program build against the standard
 libraries of the Go language. It is designed to offer fast and efficient
