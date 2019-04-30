@@ -29,6 +29,8 @@
 - [x] Write the command parser
 - [x] Write the interpreter tree
 - [x] Write a standardization function to convert script format to command format
+- [ ] Design a data structure to optimize keyword recognition
+- [ ] Encapsulate all keywords and related handles into a map (keyword, handle)
 
 ### Implementing
 - [x] Implement keyword recognition
@@ -49,6 +51,7 @@
 - [ ] Execute script from file
 - [ ] Implement let/define handle
 - [ ] Implement control structures
+- [ ] Implement keyword approximation
 
 ### Refactoring
 - [x] Check for each function to return origin centered images
