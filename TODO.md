@@ -31,8 +31,8 @@
 - [x] Write a standardization function to convert script format to command format
 
 ### Implementing
-- [ ] Implement keyword recognition
-- [ ] Implement functionalities call
+- [x] Implement keyword recognition
+- [x] Implement functionalities call
 - [x] Implement axial blur
 - [x] Implement median filter
 - [ ] Implement circular blur
@@ -43,15 +43,18 @@
 - [ ] Implement fill selection
 - [ ] Implement anchor point for rotation
 - [x] Merge Distort and Mirror into Transform
-- [ ] Optimize all interpolations by using corner cases (alpha = 0 or alpha = 1)
+- [ ] Optimize all interpolations by using corner cases (alpha = 0 or alpha = 1) or remove interpolations
 - [x] Added Swirl function generator
 - [ ] Treat literal atoms as one word
+- [ ] Execute script from file
+- [ ] Implement let/define handle
+- [ ] Implement control structures
 
 ### Refactoring
 - [x] Check for each function to return origin centered images
 - [ ] Make all error code checks for Nikrom to use bitwise AND
 - [ ] Replace the current error system with one that would be able to hold multiple errors and the throwing command
-- [ ] Make all rectangle and point operations to have sub-handles in their respective handle OR make overloaded handles (add point point and add rectangle point)
+- [x] Make all rectangle and point operations to have sub-handles in their respective handle OR make overloaded handles (add point point and add rectangle point)
 
 ### Testing
 - [ ] Test cubic interpolation
