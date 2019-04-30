@@ -6,7 +6,6 @@ import (
     "image/color"
     "math"
     utils "./utils"
-    interp "./interpolation"
 )
 
 type Modifier struct {
@@ -21,10 +20,9 @@ type Modifier struct {
     or minimize color, or create a grayscale
     with any channel ratio desired.
 */
-func ModifyColors(img image.Image, mask image.Image, m Modifier) (image.Image){
+func ModifyColors(img image.Image, m Modifier) (image.Image){
     bounds := img.Bounds()
     ret := Copy(img)
-    mask = Resize(mask, bounds)
 
     n := 10
     done := make(chan bool, n)
@@ -48,15 +46,6 @@ func ModifyColors(img image.Image, mask image.Image, m Modifier) (image.Image){
                     g_fin := utils.Uclamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[1][0] + gf * m.Mat[1][1] + bf * m.Mat[1][2] + af * m.Mat[1][3] + m.Coef[1] )))
                     b_fin := utils.Uclamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[2][0] + gf * m.Mat[2][1] + bf * m.Mat[2][2] + af * m.Mat[2][3] + m.Coef[2] )))
                     a_fin := utils.Uclamp(0, (256 << 8) - 1, uint32(math.Floor(rf * m.Mat[3][0] + gf * m.Mat[3][1] + bf * m.Mat[3][2] + af * m.Mat[3][3] + m.Coef[3] )))
-
-                    r_aux, g_aux, b_aux, a_aux := img.At(x, y).RGBA()
-                    r_mask, g_mask, b_mask, a_mask := mask.At(x, y).RGBA()
-
-                    // calculate the color modification through mask
-                    r_fin = uint32(interp.LinearInterpolation(int32(r_aux), int32(r_fin), float64(r_mask) / float64((256 << 8) - 1)))
-                    g_fin = uint32(interp.LinearInterpolation(int32(g_aux), int32(g_fin), float64(g_mask) / float64((256 << 8) - 1)))
-                    b_fin = uint32(interp.LinearInterpolation(int32(b_aux), int32(b_fin), float64(b_mask) / float64((256 << 8) - 1)))
-                    a_fin = uint32(interp.LinearInterpolation(int32(a_aux), int32(a_fin), float64(a_mask) / float64((256 << 8) - 1)))
 
                     ret.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
                 }

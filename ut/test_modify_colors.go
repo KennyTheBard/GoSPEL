@@ -6,7 +6,6 @@ import (
     "strconv"
     "image"
     "image/jpeg"
-    "image/color"
     lib "../lib"
 )
 
@@ -37,11 +36,7 @@ func Test_modify_colors(input, output string) {
 }
 
 func modify_colors_test_1(img image.Image, output string) {
-    bounds := img.Bounds()
-
-    grd := lib.CircularGradient(800, []int{0, 200, 400}, []color.Color{ color.RGBA{0, 0, 0, 0}, color.RGBA{128, 0, 128, 128}, color.RGBA{255, 128, 0, 255}})
-    grd = lib.Resize(grd, bounds)
-    ret := lib.ModifyColors(img, grd, lib.Modifier{[4][4]float64{{-1, 0, 0, 0}, {0, -1, 0, 0}, {0, 0, -1, 0}, {0, 0, 0, 1}}, [4]float64{(256 << 8) - 1, (256 << 8) - 1, (256 << 8) - 1, (256 << 8) - 1}})
+    ret := lib.ModifyColors(img, lib.Modifier{[4][4]float64{{-1, 0, 0, 0}, {0, -1, 0, 0}, {0, 0, -1, 0}, {0, 0, 0, 1}}, [4]float64{(256 << 8) - 1, (256 << 8) - 1, (256 << 8) - 1, (256 << 8) - 1}})
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -49,11 +44,7 @@ func modify_colors_test_1(img image.Image, output string) {
 }
 
 func modify_colors_test_2(img image.Image, output string) {
-    bounds := img.Bounds()
-
-    grd := lib.CircularGradient(800, []int{0, 200, 400}, []color.Color{ color.RGBA{0, 0, 0, 0}, color.RGBA{255, 255, 255, 128}, color.RGBA{255, 255, 255, 255}})
-    grd = lib.Resize(grd, bounds)
-    ret := lib.ModifyColors(img, grd, lib.Modifier{[4][4]float64{{0.35, 0.35, 0.35, 0}, {0.35, 0.35, 0.35, 0}, {0.35, 0.35, 0.35, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
+    ret := lib.ModifyColors(img, lib.Modifier{[4][4]float64{{0.35, 0.35, 0.35, 0}, {0.35, 0.35, 0.35, 0}, {0.35, 0.35, 0.35, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -61,11 +52,7 @@ func modify_colors_test_2(img image.Image, output string) {
 }
 
 func modify_colors_test_3(img image.Image, output string) {
-    bounds := img.Bounds()
-
-    grd := lib.CircularGradient(800, []int{0, 200, 400}, []color.Color{ color.RGBA{0, 0, 0, 0}, color.RGBA{128, 0, 128, 128}, color.RGBA{255, 128, 0, 255}})
-    grd = lib.Resize(grd, bounds)
-    ret := lib.ModifyColors(img, grd, lib.Modifier{[4][4]float64{{0, 1, 0, 0}, {0, 0, 1, 0}, {1, 0, 0, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
+    ret := lib.ModifyColors(img, lib.Modifier{[4][4]float64{{0, 1, 0, 0}, {0, 0, 1, 0}, {1, 0, 0, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
 
     rez, _ := os.Create(output)
     defer rez.Close()
@@ -73,11 +60,7 @@ func modify_colors_test_3(img image.Image, output string) {
 }
 
 func modify_colors_test_4(img image.Image, output string) {
-    bounds := img.Bounds()
-
-    grd := lib.CircularGradient(800, []int{0, 200, 400}, []color.Color{ color.RGBA{0, 0, 0, 0}, color.RGBA{128, 0, 128, 128}, color.RGBA{255, 128, 0, 255}})
-    grd = lib.Resize(grd, bounds)
-    ret := lib.ModifyColors(img, grd, lib.Modifier{[4][4]float64{{0.2, 0.2, 0.2, 0}, {0, 1, 0, 0}, {0.2, 0.2, 0.2, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
+    ret := lib.ModifyColors(img, lib.Modifier{[4][4]float64{{0, 0.2, 0.2, 0}, {0, 1, 0, 0}, {0.2, 0.2, 0, 0}, {0, 0, 0, 1}}, [4]float64{0, 0, 0, 0}})
 
     rez, _ := os.Create(output)
     defer rez.Close()
