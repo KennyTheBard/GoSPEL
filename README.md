@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ![alt text](https://raw.githubusercontent.com/KennyTheBard/Kromatique/master/logo.png =250x250)
+=======
+![alt text](https://raw.githubusercontent.com/KennyTheBard/Kromatique/master/logo.png)
+>>>>>>> 2725020b6a8246f038f8c5506810d67956065bae
 # Kromatique
 
 Kromatique is an image processing program build against the standard
