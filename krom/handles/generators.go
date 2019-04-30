@@ -68,8 +68,8 @@ func FilterHandle(args []generics.Void) (handle, error.Error) {
     switch arg0 {
     case "blur":
         return BoxBlurHandle, error.CreateNoError()
-    // case "custom":
-    //     // TODO
+    case "custom":
+        return CustomFilterHandle, error.CreateNoError()
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown filter name \"" + arg0 + "\"!")
