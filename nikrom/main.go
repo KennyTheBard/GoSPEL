@@ -20,17 +20,19 @@ func main() {
 				(merge
 					(crop
 						(load image.jpg)
-						(rect
-							(point 0 0)
-							(point 300 300)))
+						(rect new
+							(point new 0 0)
+							(point new 300 300)))
 					(filter
 						(rotate
 							(resize
 								(load image.jpg)
-								(rect (point 0 0) (point 1000 1000)))
+								(rect new
+									(point new 0 0)
+									(point new 1000 1000)))
 							90)
 						(gen filter blur 7))
-				(point 150 0))
+				(point new 150 0))
 				result
 				png`
 	fmt.Println(str)

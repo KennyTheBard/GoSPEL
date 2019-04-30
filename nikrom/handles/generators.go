@@ -36,7 +36,7 @@ func GeneratorHandle(args []generics.Void) (generics.Void, error.Error) {
         handler, err = TransformationHandle([]generics.Void{args[1]})
     default:
         return nil, error.CreateError(error.UnknownHandle,
-            "Unknown sub-handle name \"" + arg0 + "\"!")
+            "Unknown sub-handle namefor generators \"" + arg0 + "\"!")
     }
 
     if err.Code != error.NoError {
