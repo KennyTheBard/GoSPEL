@@ -6,21 +6,58 @@ import (
     ut "./ut"
 )
 
+type Test func(string, string)
+
+func run_test(t Test, fin, dir_out, fout string, done chan<- string) {
+    t(fin, dir_out + fout)
+    done <- fout
+}
+
 func main() {
+
+    tests := []Test{
+        ut.Test_crop,
+        ut.Test_resize,
+        ut.Test_transform,
+        ut.Test_copy,
+        ut.Test_gradient,
+        ut.Test_shear,
+        ut.Test_merge,
+        ut.Test_apply_filter,
+        ut.Test_modify_colors,
+        ut.Test_rotate,
+        ut.Test_opacity}
+    fin := "test.jpg"
+    dir_out := "test_results/"
+    fout := []string{
+        "crop_test",
+        "resize_test",
+        "mirror_test",
+        "copy_test",
+        "gradient_test",
+        "shear_test",
+        "merge_test",
+        "apply_filter_test",
+        "modify_colors_test",
+        "rotate_test",
+        "opacity_test"}
+
+    if len(tests) != len(fout) {
+        fmt.Println("Number of tests does not coincide with number of output file names")
+    }
+
+    done := make(chan string, len(tests))
 
     start := time.Now()
 
-    ut.Test_crop("test.jpg", "test_results/crop_test")
-    ut.Test_resize("test.jpg", "test_results/resize_test")
-    ut.Test_transform("test.jpg", "test_results/mirror_test")
-    ut.Test_copy("test.jpg", "test_results/copy_test")
-    ut.Test_gradient("test.jpg", "test_results/gradient_test")
-    ut.Test_shear("test.jpg", "test_results/shear_test")
-    ut.Test_merge("test.jpg", "test_results/merge_test")
-    ut.Test_apply_filter("test.jpg", "test_results/apply_filter_test")
-    ut.Test_modify_colors("test.jpg", "test_results/modify_colors_test")
-    ut.Test_rotate("test.jpg", "test_results/rotate_test")
-    ut.Test_opacity("test.jpg", "test_results/opacity_test")
+    for i := 0; i < len(tests); i ++ {
+        go run_test(tests[i], fin, dir_out, fout[i], done)
+    }
+
+    for i := 0; i < len(tests); i++ {
+        str := <-done
+        fmt.Println(str, "is done!")
+    }
 
     elapsed := time.Since(start)
 
