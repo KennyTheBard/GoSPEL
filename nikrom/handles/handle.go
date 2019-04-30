@@ -35,6 +35,8 @@ func GetHandle(process string) (handle, error.Error) {
         return SizeofHandle, error.CreateNoError()
     case "filter":
         return ApplyFilterHandle, error.CreateNoError()
+    case "modify":
+        return ModifyColorsHandle, error.CreateNoError()
     case "merge":
         return MergeHandle, error.CreateNoError()
     case "crop":

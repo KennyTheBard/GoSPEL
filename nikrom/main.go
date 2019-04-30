@@ -17,22 +17,24 @@ func printTree(space string, tree generics.Atom) {
 
 func main() {
 	str := `save
-				(merge
-					(crop
-						(load image.jpg)
-						(rect new
-							(point new 0 0)
-							(point new 300 300)))
-					(filter
-						(rotate
-							(resize
-								(load image.jpg)
-								(rect new
-									(point new 0 0)
-									(point new 1000 1000)))
-							90)
-						(gen filter blur 7))
-				(point new 150 0))
+				(modify
+					(merge
+						(crop
+							(load image.jpg)
+							(rect new
+								(point new 0 0)
+								(point new 300 300)))
+						(filter
+							(rotate
+								(resize
+									(load image.jpg)
+									(rect new
+										(point new 0 0)
+										(point new 1000 1000)))
+								90)
+							(gen filter blur 7))
+						(point new 150 0))
+					(gen modif grayscale 0.33 0.33 0.33))
 				result
 				png`
 	fmt.Println(str)

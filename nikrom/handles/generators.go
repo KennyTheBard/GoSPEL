@@ -97,8 +97,8 @@ func ModifierHandle(args []generics.Void) (handle, error.Error) {
     arg0, _ := args[0].(string)
 
     switch arg0 {
-    // case "grayscale":
-    //     // TODO
+    case "grayscale":
+        return GrayscaleHandle, error.CreateNoError()
     // case "custom":
     //     // TODO
     default:
