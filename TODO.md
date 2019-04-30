@@ -72,3 +72,4 @@
 - [ ] The black border for the Swirl effect
 
 ### Documentation
+- [ ] Add comments to every handle
