@@ -1,11 +1,11 @@
 # Kromatique
 <img src="https://raw.githubusercontent.com/KennyTheBard/Kromatique/master/logo.png" width="128">
 
-## **Krom**
+# **Krom**
 ### The image processing language
 
 
-### Syntax
+## Syntax
    The **Krom** programming language has a syntax strongly influenced on
 functional programming languages such as _Scheme_ and _Racket_. The code is
 structured as a tree of sentences, named **atoms**. One atom is able to contain
@@ -19,14 +19,14 @@ important numerical values. Most of the parameters are optional, as their
 absence will be replaced by default values.
 
 
-### Runtime
+## Runtime
    Krom language is more of a feature of the bigger system, **Kromatique**. The
 system comes with an interpreter that can parse Krom source code files and
 dynamically create an interpreter tree at runtime. Loading files and input
 parameters into the tree it's a simple matter.
 
 
-### Source code
+## Source code
    Krom code is writen into plain text files having file extension _.krom_,
 which have to be parsed at runtime by the _Kromatique interpreter_.
     While in parsing phase, the atoms will be evaluated in depth, from the
@@ -39,7 +39,7 @@ levels to the upper ones. In this phase, predicates call their respective
 image processing functions from the _Kromatique library_.
 
 
-### Example
+## Example
 `kromatique old_style.krom`
 
    This line will call the Kromatique interpreter to run the code:
