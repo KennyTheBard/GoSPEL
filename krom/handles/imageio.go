@@ -27,6 +27,10 @@ func LoadHandle(args []generics.Void) (generics.Void, error.Error) {
     }
 
     arg0, _ := args[0].(string)
+    img := lib.DecodeImage(arg0)
+    if img == nil {
+        return nil, error.CreateError(error.FailedOpenFile, "Could not open \"" + arg0 + "\"")
+    }
     return lib.DecodeImage(arg0), error.CreateNoError()
 }
 

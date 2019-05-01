@@ -8,11 +8,17 @@ import (
     "image/png"
 )
 
-func DecodeImage(path string) (image.Image) {
-    file, _ := os.Open(path)
+func DecodeImage(path string) (image.Image, ) {
+    file, err_open := os.Open(path)
+    if err_open != nil {
+        return nil
+    }
     defer file.Close()
 
-    img, _, _ := image.Decode(file)
+    img, _, err_decode := image.Decode(file)
+    if err_decode != nil {
+        return nil
+    }
     return img
 }
 
