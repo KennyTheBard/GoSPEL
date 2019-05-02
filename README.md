@@ -1,6 +1,13 @@
 # Kromatique
 <img src="https://raw.githubusercontent.com/KennyTheBard/Kromatique/master/logo.png" width="128">
 
+    **Kromatique** is a image processing program that uses an internal library
+and a proprietary scripting language in order to empower its users to have
+as much control as possible over the processes applied to their images. In
+all its grace, this software could be reduced at best to a self-sufficient
+interpreter designed to work with images without forcing its user to get dirty
+with low level details.
+
 # **Krom**
 ### The image processing language
 
