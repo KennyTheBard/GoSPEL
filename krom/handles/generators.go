@@ -99,8 +99,8 @@ func ModifierHandle(args []generics.Void) (handle, error.Error) {
     switch arg0 {
     case "grayscale":
         return GrayscaleHandle, error.CreateNoError()
-    // case "custom":
-    //     // TODO
+    case "custom":
+        return CustomModifierHandle, error.CreateNoError()
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown modifier name \"" + arg0 + "\"!")

@@ -11,7 +11,7 @@ save
 			(filter
 				(rotate
 					(resize
-						(load wrong_name.jpg)
+						(load test.jpg)
 						(rect new
 							(point new 0 0)
 							(point new 1000 1000)
@@ -31,7 +31,12 @@ save
 			)
 			(point new 150 0)
 		)
-		(gen modif grayscale 0.33 0.33 0.33)
+		(gen modif custom
+			0.33 0.33 0.33 0 0
+			0.33 0.33 0.33 0 0
+			0.33 0.33 0.33 0 0
+			0    0    0    1 0
+		)
 	)
 	result
 	png
