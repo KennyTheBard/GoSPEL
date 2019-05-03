@@ -58,8 +58,8 @@ func Rotate(img image.Image, angle float64) image.Image {
         go func() {
             rank := aux_rank
 
-            for y := ret_bounds.Min.Y + rank; y <= ret_bounds.Max.Y; y += n {
-                for x := ret_bounds.Min.X; x <= ret_bounds.Max.X; x++ {
+            for y := ret_bounds.Min.Y + rank; y < ret_bounds.Max.Y; y += n {
+                for x := ret_bounds.Min.X; x < ret_bounds.Max.X; x++ {
                     xx := x //+ ret_width / 2
                     yy := y //- int(float64(ret_height) * math.Cos(Angle2Rad(angle)) / 2)
 

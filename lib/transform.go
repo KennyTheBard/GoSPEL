@@ -21,8 +21,8 @@ func Transform(img image.Image, transform TransformFunction) (image.Image) {
         go func() {
             rank := aux_rank
 
-            for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
-                for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+            for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
+                for x := bounds.Min.X; x < bounds.Max.X; x++ {
                     new_x, new_y := transform(x, y, bounds)
 
                     r, g, b, a := utils.Safe_Get_Color(img, new_x, new_y)

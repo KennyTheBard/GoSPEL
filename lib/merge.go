@@ -42,8 +42,8 @@ func Merge(trg, over image.Image, anchor image.Point) (image.Image) {
             start_x := MAX(trg_bounds.Min.X, over_bounds.Min.X + anchor.X)
             end_x := MIN(trg_bounds.Max.X, over_bounds.Max.X + anchor.X)
 
-            for y := start_y + rank; y <= end_y; y += n {
-                for x := start_x; x <= end_x; x ++ {
+            for y := start_y + rank; y < end_y; y += n {
+                for x := start_x; x < end_x; x ++ {
                     r1, g1, b1, a1 := trg.At(x, y).RGBA()
                     r2, g2, b2, a2 := over.At(x - anchor.X, y - anchor.Y).RGBA()
 

@@ -1,42 +1,21 @@
 save
 	(modify
-		(merge
-			(crop
-				(load test.jpg)
-				(rect new
-					(point new 0 0)
-					(point new 300 300)
-				)
-			)
-			(filter
-				(rotate
-					(resize
-						(load test.jpg)
-						(rect new
-							(point new 0 0)
-							(point new 1000 1000)
-						)
+			(save
+				(resize
+					(load test.jpg)
+					(rect new
+						(point new 0 0)
+						(point new 10 10)
 					)
-					90
 				)
-				(gen filter custom 7
-					0.02 0.02 0.02 0.02 0.02 0.02 0.02
-					0.02 0.02 0.02 0.02 0.02 0.02 0.02
-					0.02 0.02 0.02 0.02 0.02 0.02 0.02
-					0.02 0.02 0.02 0.02 0.02 0.02 0.02
-					0.02 0.02 0.02 0.02 0.02 0.02 0.02
-					0.02 0.02 0.02 0.02 0.02 0.02 0.02
-					0.02 0.02 0.02 0.02 0.02 0.02 0.02
-				)
-			)
-			(point new 150 0)
-		)
+				result1
+				png)
 		(gen modif custom
-			0.33 0.33 0.33 0 0
-			0.33 0.33 0.33 0 0
-			0.33 0.33 0.33 0 0
-			0    0    0    1 0
+			-1  0   0   0   65535
+			0   -1  0   0   65535
+			0   0   -1  0   65535
+			0   0   0   1   0
 		)
 	)
-	result
+	result2
 	png

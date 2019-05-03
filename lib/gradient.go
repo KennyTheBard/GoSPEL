@@ -31,7 +31,7 @@ func LinearGradient(bounds image.Rectangle, ys []int, vals []color.Color) (image
     // first block
     r, g, b, a := vals[0].RGBA()
     for y := bounds.Min.Y; y <= ys[0]; y++ {
-        for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+        for x := bounds.Min.X; x < bounds.Max.X; x++ {
             img.(draw.Image).Set(x, y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
         }
     }
@@ -53,7 +53,7 @@ func LinearGradient(bounds image.Rectangle, ys []int, vals []color.Color) (image
         px2 := utils.Pixel{r2, g2, b2, a2}
 
         for y := prev + 1; y <= curr; y++ {
-            for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+            for x := bounds.Min.X; x < bounds.Max.X; x++ {
                 proc := float64(y - prev) / float64(curr - prev)
 
                 fin := utils.Pixel_linear_interpolation(px1, px2, proc)
@@ -67,8 +67,8 @@ func LinearGradient(bounds image.Rectangle, ys []int, vals []color.Color) (image
 
     // last block
     r, g, b, a = vals[n].RGBA()
-    for y := ys[n] + 1; y <= bounds.Max.Y; y++ {
-        for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+    for y := ys[n] + 1; y < bounds.Max.Y; y++ {
+        for x := bounds.Min.X; x < bounds.Max.X; x++ {
             img.(draw.Image).Set(x, y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
         }
     }
@@ -109,8 +109,8 @@ func CircularGradient(size int, ys []int, vals []color.Color) (image.Image) {
         go func() {
             rank := aux_rank
 
-            for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
-                for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+            for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
+                for x := bounds.Min.X; x < bounds.Max.X; x++ {
                     // determine the color interval
                     dst := int(math.Round(utils.Distance(float64(x), float64(y), float64(cx), float64(cy))))
                     k1, k2 := utils.Search_interval(ys, dst)

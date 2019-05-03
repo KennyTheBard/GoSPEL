@@ -30,8 +30,8 @@ func Crop(img image.Image, area image.Rectangle) (image.Image) {
         go func() {
             rank := aux_rank
 
-            for y := area.Min.Y + rank; y <= area.Max.Y; y += n {
-                for x := area.Min.X; x <= area.Max.X; x++ {
+            for y := area.Min.Y + rank; y < area.Max.Y; y += n {
+                for x := area.Min.X; x < area.Max.X; x++ {
                     if utils.Inside_rectangle(image.Point{x, y}, bounds) {
                         r, g, b, a := img.At(x, y).RGBA()
 

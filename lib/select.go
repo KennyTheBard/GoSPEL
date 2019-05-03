@@ -21,8 +21,8 @@ func SelectColor(img image.Image, ref color.Color, threshold float64) (image.Ima
         go func() {
             rank := aux_rank
 
-            for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
-                for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+            for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
+                for x := bounds.Min.X; x < bounds.Max.X; x++ {
                     r, g, b, _ := img.At(x, y).RGBA()
 
                     if float64(utils.Abs(int(r) - int(r_ref)) + utils.Abs(int(g) - int(g_ref)) + utils.Abs(int(b) - int(b_ref))) / float64((3 * 255) << 8)<= threshold {

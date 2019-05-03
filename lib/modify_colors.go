@@ -32,8 +32,8 @@ func ModifyColors(img image.Image, m Modifier) (image.Image){
         go func() {
             rank := aux_rank
 
-            for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
-                for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+            for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
+                for x := bounds.Min.X; x < bounds.Max.X; x++ {
                     r, g, b, a := img.At(x, y).RGBA()
 
                     rf := float64(r)

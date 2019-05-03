@@ -85,8 +85,8 @@ func Noise(img image.Image, mask image.Image, mode, strength int, chance float64
             seed := rand.NewSource(time.Now().UnixNano() + int64(rank))
             rand_gen := rand.New(seed)
 
-            for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
-                for x := bounds.Min.X; x <= bounds.Max.X; x ++ {
+            for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
+                for x := bounds.Min.X; x < bounds.Max.X; x ++ {
                     r, g, b, a := get_noise(img.At(x, y), rand_gen, chance, noiseFunc)
 
                     r_aux, g_aux, b_aux, a_aux := ret.At(x, y).RGBA()

@@ -33,8 +33,8 @@ func Resize(orig image.Image, trg_bounds image.Rectangle) (image.Image) {
         go func() {
             rank := aux_rank
 
-            for y := trg_bounds.Min.Y + rank; y <= trg_bounds.Max.Y; y += n {
-                for x := trg_bounds.Min.X; x <= trg_bounds.Max.X; x++ {
+            for y := trg_bounds.Min.Y + rank; y < trg_bounds.Max.Y; y += n {
+                for x := trg_bounds.Min.X; x < trg_bounds.Max.X; x++ {
 
                      r11, g11, b11, a11 := orig.At(utils.Scale_index(x, width_ratio), utils.Scale_index(y, height_ratio)).RGBA()
                      r12, g12, b12, a12 := orig.At(utils.Scale_index(x + 1, width_ratio), utils.Scale_index(y, height_ratio)).RGBA()

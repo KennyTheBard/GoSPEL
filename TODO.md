@@ -52,6 +52,7 @@
 - [ ] Implement let/define handle
 - [ ] Implement control structures
 - [ ] Implement keyword approximation
+- [ ] Add support for comments
 
 ### Refactoring
 - [x] Check for each function to return origin centered images

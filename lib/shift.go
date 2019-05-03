@@ -24,8 +24,8 @@ func Shift(img image.Image, offset image.Point) (image.Image) {
         go func() {
             rank := aux_rank
 
-            for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
-                for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+            for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
+                for x := bounds.Min.X; x < bounds.Max.X; x++ {
                     r, g, b, a := img.At(x, y).RGBA()
 
                     ret.(draw.Image).Set(x + offset.X, y + offset.Y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})

@@ -159,8 +159,8 @@ func AddHSV(img image.Image, mask image.Image, hue int32, saturation float64, va
         go func() {
             rank := aux_rank
 
-            for y := bounds.Min.Y + rank; y <= bounds.Max.Y; y += n {
-                for x := bounds.Min.X; x <= bounds.Max.X; x++ {
+            for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
+                for x := bounds.Min.X; x < bounds.Max.X; x++ {
                     r, g, b, a := pixelAddHSV(img.At(x, y), hue, saturation, value).RGBA()
 
                     r_aux, g_aux, b_aux, a_aux := img.At(x, y).RGBA()
