@@ -58,6 +58,7 @@
 - [ ] Make all error code checks for Nikrom to use bitwise AND
 - [ ] Replace the current error system with one that would be able to hold multiple errors and the throwing command
 - [x] Make all rectangle and point operations to have sub-handles in their respective handle OR make overloaded handles (add point point and add rectangle point)
+- [ ] Refactor shear operations as a transformation
 
 ### Testing
 - [ ] Test cubic interpolation

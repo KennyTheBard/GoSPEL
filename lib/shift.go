@@ -8,12 +8,12 @@ import(
 
 /**
     Returns a copy of the given image with the bounds
-    shifted with shift_factor.
+    shifted with offset.
 */
-func Shift(img image.Image, shift_factor image.Point) (image.Image) {
+func Shift(img image.Image, offset image.Point) (image.Image) {
     // prepare the image to be returned
     bounds := img.Bounds()
-    new_bounds := image.Rect(bounds.Min.X + shift_factor.X, bounds.Min.Y + shift_factor.Y, bounds.Max.X + shift_factor.X, bounds.Max.Y + shift_factor.Y)
+    new_bounds := image.Rect(bounds.Min.X + offset.X, bounds.Min.Y + offset.Y, bounds.Max.X + offset.X, bounds.Max.Y + offset.Y)
     ret := image.Image(image.NewRGBA(new_bounds))
 
     n := 10
@@ -28,7 +28,7 @@ func Shift(img image.Image, shift_factor image.Point) (image.Image) {
                 for x := bounds.Min.X; x <= bounds.Max.X; x++ {
                     r, g, b, a := img.At(x, y).RGBA()
 
-                    ret.(draw.Image).Set(x + shift_factor.X, y + shift_factor.Y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
+                    ret.(draw.Image).Set(x + offset.X, y + offset.Y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
                 }
             }
 
