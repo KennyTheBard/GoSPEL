@@ -1,19 +1,27 @@
-package intepreter
+package krom
 
 import (
-	generics "../generics"
-    handles "../handles"
-	error "../error"
+	error "./error"
+	handles "./handles"
+	generics "./generics"
 )
+
+/**
+ *	Structure used for source code parsing.
+ */
+type Atom struct {
+	Process string
+	Subatoms []Atom
+}
 
 /**
  *	Interprets the given tree.
  */
-func Interpret(tree generics.Atom) (generics.Void, error.Error) {
+func (tree Atom) Interpret() (generics.Void, error.Error) {
 	var args []generics.Void
 
     for _, branch := range tree.Subatoms {
-        arg, err := Interpret(branch)
+        arg, err := branch.Interpret()
 		if err.Code != error.NoError {
 			return nil, err
 		}

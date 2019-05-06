@@ -19,20 +19,3 @@ type Arguments struct {
  *	provided by the program.
  */
 type ImageProcessing func(Arguments) Void
-
-/**
- *	Structure used for source code parsing.
- */
-type Atom struct {
-	Process string
-	Subatoms []Atom
-}
-
-/**
- *	Evaluates the curret expression and calls a function on given
- *	arguments.
- */
-func (atom Atom) Interpret() Void {
-	// TODO: move this function to another file
-	return nil
-}

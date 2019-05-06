@@ -1,8 +1,7 @@
-package parser
+package krom
 
 import (
 	"strings"
-	generics "../generics"
 )
 
 const LiteralMarking = '\''
@@ -122,17 +121,17 @@ func Tokenize(str string) ([]string) {
  *	to be interpreted. The leafs have only
  *	values in process field.
  */
-func BuildTree(str string) (generics.Atom) {
+func BuildTree(str string) (Atom) {
 	if len(str) == 0 {
-		aux := make([]generics.Atom, 0)
-		return generics.Atom{"", aux}
+		aux := make([]Atom, 0)
+		return Atom{"", aux}
 	}
 
 	cmd := Standardize(str)
 	tokens := Tokenize(cmd)
 
-	suba := make([]generics.Atom, len(tokens) - 1)
-	curr := generics.Atom{tokens[0], suba}
+	suba := make([]Atom, len(tokens) - 1)
+	curr := Atom{tokens[0], suba}
 
 	for i := 1; i < len(tokens); i++ {
 		aux := BuildTree(tokens[i])

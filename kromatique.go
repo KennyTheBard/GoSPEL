@@ -4,12 +4,10 @@ import (
     "os"
     "fmt"
     "io/ioutil"
-    parser "./krom/parser"
-    interpreter "./krom/interpreter"
-    generics "./krom/generics"
+    krom "./krom"
 )
 
-func printTree(space string, tree generics.Atom) {
+func printTree(space string, tree krom.Atom) {
 	fmt.Println(space, tree.Process)
 	space = "~" + space
 	for _, branch := range tree.Subatoms {
@@ -31,9 +29,9 @@ func main() {
         bs, _ := ioutil.ReadAll(file)
         script := string(bs)
 
-        tree := parser.BuildTree(script)
+        tree := krom.BuildTree(script)
         // printTree(">", tree)
-        _, err := interpreter.Interpret(tree)
+        _, err := tree.Interpret()
     	fmt.Println(err)
     }
 }

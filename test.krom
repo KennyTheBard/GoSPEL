@@ -1,18 +1,7 @@
 save
-	(modify
-		(resize
-			(load test.jpg)
-			(rect new
-				(point new 0 0)
-				(point new 300 300)
-			)
-		)
-		(gen modif custom
-			-1  0   0   0   65535
-			0   -1  0   0   65535
-			0   0   -1  0   65535
-			0   0   0   1   0
-		)
+	(filter
+		(load test.jpg)
+		(gen filter blur 7)
 	)
 	result
 	png
