@@ -46,5 +46,4 @@ func (tree Atom) Interpret() (generics.Void, error.Error) {
 	} else {
 		return ret, err
 	}
-
 }
