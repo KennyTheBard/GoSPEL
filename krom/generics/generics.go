@@ -1,5 +1,9 @@
 package generics
 
+import (
+    error "../error"
+)
+
 /**
  *	A general interface to be passed up in the Interpreter Tree
  *	and given as arguments to internal functions.
@@ -19,3 +23,8 @@ type Arguments struct {
  *	provided by the program.
  */
 type ImageProcessing func(Arguments) Void
+
+
+type InterpreterTree interface {
+    Interpret() (Void, error.Error)
+}

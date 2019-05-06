@@ -2,6 +2,7 @@ package krom
 
 import (
 	"strings"
+	generics "./generics"
 )
 
 const LiteralMarking = '\''
@@ -123,14 +124,14 @@ func Tokenize(str string) ([]string) {
  */
 func BuildTree(str string) (Atom) {
 	if len(str) == 0 {
-		aux := make([]Atom, 0)
+		aux := make([]generics.InterpreterTree, 0)
 		return Atom{"", aux}
 	}
 
 	cmd := Standardize(str)
 	tokens := Tokenize(cmd)
 
-	suba := make([]Atom, len(tokens) - 1)
+	suba := make([]generics.InterpreterTree, len(tokens) - 1)
 	curr := Atom{tokens[0], suba}
 
 	for i := 1; i < len(tokens); i++ {
