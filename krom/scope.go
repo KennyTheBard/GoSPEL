@@ -34,9 +34,12 @@ func (s Scope) Extend(key string, value generics.Void) generics.Namespace {
     return aux
 }
 
+<<<<<<< HEAD
 /**
  *  Returns the value for the given key.
  */
+=======
+>>>>>>> e0b2bc5ba9fddeda87a179bfba8b78fa861fe556
 func (s Scope) Get(key string) generics.Void {
     if value, ok := s.Args[key]; ok {
         return value
