@@ -29,4 +29,5 @@ type InterpreterTree interface {
 type Namespace interface {
     Clone() Namespace
     Extend(string, Void) Namespace
+    Get(string) Void
 }

@@ -29,3 +29,8 @@ func ArgumentTypeError(pos int, expected, received string) (Error) {
         strconv.Itoa(pos) + " of type " + expected + ", received " +
         received + "!"}
 }
+
+func UndeclaredIdentifierError(identifier string) (Error) {
+    return Error{UndeclaredIdentifier, "The " +
+        identifier + " identifier is undeclared in the current scope!"}
+}
