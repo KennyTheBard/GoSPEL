@@ -11,20 +11,22 @@ import (
 type Void interface {}
 
 /**
- *	Takes place of optional arguments and provides support for
- *	generic data types passed as arguments.
- */
-type Arguments struct {
-	Args []Void
-}
-
-/**
  *	Serves as template for all image processing functions
  *	provided by the program.
  */
 type ImageProcessing func(Arguments) Void
 
-
+/**
+ *	Interface for elements of an interpreter tree.
+ */
 type InterpreterTree interface {
-    Interpret() (Void, error.Error)
+    Interpret(Namespace) (Void, error.Error)
+}
+
+/**
+ *  Interface for quick cloning of namespaces.
+ */
+type Namespace interface {
+    Clone() Namespace
+    Extend(string, Void) Namespace
 }

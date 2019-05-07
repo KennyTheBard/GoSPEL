@@ -17,7 +17,7 @@ type Atom struct {
 /**
  *	Interprets the given tree starting with arguments.
  */
-func (tree Atom) Interpret() (generics.Void, error.Error) {
+func (tree Atom) Interpret(generics.Namespace) (generics.Void, error.Error) {
 	// check if this is a leaf
 	if len(tree.Subatoms) == 0 {
         return tree.Process, error.CreateNoError()
