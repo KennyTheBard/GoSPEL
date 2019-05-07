@@ -14,7 +14,7 @@ type Atom struct {
 }
 
 /**
- *	Interprets the given tree starting with arguments.
+ *	Interprets the tree.
  */
 func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.Error) {
 	// check if this is a leaf
@@ -23,7 +23,7 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
     }
 
 	// obtain the right handle
-	handle, err := GetHandle(tree.Process)
+	handle, evaluation, err := GetHandle(tree.Process)
 	if err.Code != error.NoError {
 		return nil, err
 	}
@@ -32,29 +32,19 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
 	var args []generics.Void
     for _, branch := range tree.Subatoms {
 		// replace the variable name with value from the current scope
-		if name, err := isVariable(branch); err.Code == error.NoError && name != ""{
+		if name, err := isVariable(branch); err.Code == error.NoError && name != "" {
 			value := namespace.Get(name)
 
 			if value != nil {
 				args = append(args, value)
 			}
 		} else {
-			// interpret subtrees
-			arg, err := branch.Interpret(namespace.Clone())
-			if err.Code != error.NoError {
-				return nil, err
-			}
-			args = append(args, arg)
+			args = append(args, branch.(generics.Void))
 		}
     }
 
-	// call the handle with the arguments
-	ret, err := handle(args)
-	if err.Code != error.NoError {
-		return nil, err
-	} else {
-		return ret, err
-	}
+	// evaluate the interpretation atom
+	return evaluation(namespace, handle, args)
 }
 
 func isVariable(elem generics.Void) (string, error.Error) {
