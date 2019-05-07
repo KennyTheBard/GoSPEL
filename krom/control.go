@@ -2,7 +2,6 @@ package krom
 
 import (
 	error "./error"
-	handles "./handles"
 	generics "./generics"
 )
 
@@ -24,13 +23,18 @@ func (tree Control) Interpret() (generics.Void, error.Error) {
     }
 
     // obtain the right handle
-    handle, err := handles.GetHandle(tree.Process)
+    handle, err := GetHandle(tree.Process)
     if err.Code != error.NoError {
         return nil, err
     }
 
+	var args []generics.Void
+    for _, branch := range tree.Subatoms {
+		args = append(args, branch)
+    }
+
     // call the handle to interpret the arguments
-    ret, err := handle(tree.Subatoms)
+    ret, err := handle(args)
     if err.Code != error.NoError {
         return nil, err
     } else {

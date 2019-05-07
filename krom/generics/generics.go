@@ -11,6 +11,14 @@ import (
 type Void interface {}
 
 /**
+ *	Takes place of optional arguments and provides support for
+ *	generic data types passed as arguments.
+ */
+type Arguments struct {
+	Args []Void
+}
+
+/**
  *	Serves as template for all image processing functions
  *	provided by the program.
  */
@@ -31,3 +39,8 @@ type Namespace interface {
     Extend(string, Void) Namespace
     Get(string) Void
 }
+
+/**
+ *  Declare a type for all handles.
+ */
+type Handle func([]Void) (Void, error.Error)

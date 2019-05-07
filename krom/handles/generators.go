@@ -26,7 +26,7 @@ func GeneratorHandle(args []generics.Void) (generics.Void, error.Error) {
 
     arg0, _ := args[0].(string)
 
-    var handler handle
+    var handler generics.Handle
     switch arg0 {
     case "filter":
         handler, err = FilterHandle([]generics.Void{args[1]})
@@ -45,7 +45,7 @@ func GeneratorHandle(args []generics.Void) (generics.Void, error.Error) {
     return handler(args[2:])
 }
 
-func FilterHandle(args []generics.Void) (handle, error.Error) {
+func FilterHandle(args []generics.Void) (generics.Handle, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgument(1, len(args))
@@ -76,7 +76,7 @@ func FilterHandle(args []generics.Void) (handle, error.Error) {
     }
 }
 
-func ModifierHandle(args []generics.Void) (handle, error.Error) {
+func ModifierHandle(args []generics.Void) (generics.Handle, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgument(1, len(args))
@@ -107,7 +107,7 @@ func ModifierHandle(args []generics.Void) (handle, error.Error) {
     }
 }
 
-func TransformationHandle(args []generics.Void) (handle, error.Error) {
+func TransformationHandle(args []generics.Void) (generics.Handle, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgument(1, len(args))
