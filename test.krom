@@ -1,3 +1,33 @@
-print
-	    'almost done'
-	(load test.jpg)
+save
+	(filter
+		(modify
+			(print
+				'Now we only have to modify a few things'
+				(crop
+					(resize
+						(try
+							(load invalid.jpg)
+							(load test.jpg)
+						)
+						(rect new
+							(point new 0 0)
+							(point new 1000 1000)
+						)
+					)
+					(rect new
+						(point new 150 150)
+						(point new 850 850)
+					)
+				)
+			)
+			(gen modif custom
+				1 		0 		0 		0 		0
+				0.33 	0.33 	0.33 	0 		0
+				0.33 	0.33 	0.33 	0 		0
+				0		0		0		1		0
+			)
+		)
+		(gen filter blur 10)
+	)
+	result
+	jpeg

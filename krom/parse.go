@@ -1,6 +1,7 @@
 package krom
 
 import (
+	"fmt"
 	"strings"
 	generics "./generics"
 )
@@ -93,6 +94,9 @@ func Tokenize(str string) ([]string) {
 		// flag the current slice as literal
 		if ch == LiteralMarking {
 			literal = !literal
+			// if literal {
+			// 	tokens = append(tokens, str[prev: pos])
+			// }
 		}
 
 		if !literal {
@@ -114,11 +118,12 @@ func Tokenize(str string) ([]string) {
 				nested = false
 				prev = pos + 1
 			}
-		} else {
-			if ch == LiteralMarking {
-				prev = pos
-			}
 		}
+		// else {
+		// 	if ch == LiteralMarking {
+		// 		prev = pos
+		// 	}
+		// }
 
 	}
 
@@ -141,7 +146,13 @@ func BuildTree(str string) (Atom) {
 	}
 
 	cmd := Standardize(str)
+	fmt.Println("cmd: ", cmd)
 	tokens := Tokenize(cmd)
+	fmt.Println("tokens: ")
+	for _, tok := range tokens {
+		fmt.Print(tok)
+		fmt.Println(", ")
+	}
 
 	suba := make([]generics.InterpreterTree, len(tokens) - 1)
 	curr := Atom{tokens[0], suba}

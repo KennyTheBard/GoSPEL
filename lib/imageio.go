@@ -29,10 +29,10 @@ func EncodeImage(img image.Image, name, format string) (image.Image) {
     switch format {
     case "png":
         png.Encode(fout, img)
-        break;
     case "jpeg":
+        fallthrough
+    case "jpg":
         jpeg.Encode(fout, img, &jpeg.Options{jpeg.DefaultQuality})
-        break;
     }
 
     return img

@@ -62,6 +62,7 @@
 - [ ] Refactor shear operations as a transformation
 - [x] Remove most of the error code checks from krom package
 - [ ] Rework all handles to use type insertion only once for each variable
+- [ ] Replace file formats with constants in order to check them in the handle
 
 ### Testing
 - [ ] Test cubic interpolation
