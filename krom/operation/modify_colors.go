@@ -1,4 +1,4 @@
-package handles
+package operation
 
 import (
     "image"
@@ -8,10 +8,10 @@ import (
     error "../error"
 )
 
-func CopyHandle(args []generics.Void) (generics.Void, error.Error) {
+func ModifyColorsHandle(args []generics.Void) (generics.Void, error.Error) {
     var err error.Error
 
-    err = error.AssertNumberArgument(1, len(args))
+    err = error.AssertNumberArgument(2, len(args))
     if err.Code != error.NoError {
         return nil, err
     }
@@ -25,7 +25,16 @@ func CopyHandle(args []generics.Void) (generics.Void, error.Error) {
     if err.Code != error.NoError {
         return nil, err
     }
+    pos += 1
+
+    _, ok = args[pos].(lib.Modifier)
+    err = error.AssertArgumentType(!ok, pos + 1, "Modifier",
+        reflect.TypeOf(args[pos]).Name())
+    if err.Code != error.NoError {
+        return nil, err
+    }
 
     arg0, _ := args[0].(image.Image)
-    return lib.Copy(arg0), error.CreateNoError()
+    arg1, _ := args[1].(lib.Modifier)
+    return lib.ModifyColors(arg0, arg1), error.CreateNoError()
 }

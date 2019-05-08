@@ -1,4 +1,4 @@
-package handles
+package operations
 
 import (
     "image"

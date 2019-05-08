@@ -1,4 +1,4 @@
-package handles
+package operation
 
 import (
     "image"
@@ -8,7 +8,7 @@ import (
     error "../error"
 )
 
-func ApplyFilterHandle(args []generics.Void) (generics.Void, error.Error) {
+func ResizeHandle(args []generics.Void) (generics.Void, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgument(2, len(args))
@@ -27,14 +27,14 @@ func ApplyFilterHandle(args []generics.Void) (generics.Void, error.Error) {
     }
     pos += 1
 
-    _, ok = args[pos].(lib.Filter)
-    err = error.AssertArgumentType(!ok, pos + 1, "Filter",
+    _, ok = args[pos].(image.Rectangle)
+    err = error.AssertArgumentType(!ok, pos + 1, "image.Rectangle",
         reflect.TypeOf(args[pos]).Name())
     if err.Code != error.NoError {
         return nil, err
     }
 
     arg0, _ := args[0].(image.Image)
-    arg1, _ := args[1].(lib.Filter)
-    return lib.ApplyFilter(arg0, arg1), error.CreateNoError()
+    arg1, _ := args[1].(image.Rectangle)
+    return lib.Resize(arg0, arg1), error.CreateNoError()
 }

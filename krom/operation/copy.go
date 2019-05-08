@@ -1,4 +1,4 @@
-package handles
+package operation
 
 import (
     "image"
@@ -8,10 +8,10 @@ import (
     error "../error"
 )
 
-func ResizeHandle(args []generics.Void) (generics.Void, error.Error) {
+func CopyHandle(args []generics.Void) (generics.Void, error.Error) {
     var err error.Error
 
-    err = error.AssertNumberArgument(2, len(args))
+    err = error.AssertNumberArgument(1, len(args))
     if err.Code != error.NoError {
         return nil, err
     }
@@ -25,16 +25,7 @@ func ResizeHandle(args []generics.Void) (generics.Void, error.Error) {
     if err.Code != error.NoError {
         return nil, err
     }
-    pos += 1
-
-    _, ok = args[pos].(image.Rectangle)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Rectangle",
-        reflect.TypeOf(args[pos]).Name())
-    if err.Code != error.NoError {
-        return nil, err
-    }
 
     arg0, _ := args[0].(image.Image)
-    arg1, _ := args[1].(image.Rectangle)
-    return lib.Resize(arg0, arg1), error.CreateNoError()
+    return lib.Copy(arg0), error.CreateNoError()
 }
