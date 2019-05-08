@@ -30,7 +30,7 @@ func main() {
         script := string(bs)
 
         tree := krom.BuildTree(script)
-        printTree(">", tree)
+        // printTree(">", tree)
         _, err := tree.Interpret(krom.NewScope())
     	fmt.Println(err)
     }

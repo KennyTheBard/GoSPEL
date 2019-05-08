@@ -1,7 +1,7 @@
 package krom
 
 import (
-	"fmt"
+	// "fmt"
 	"strings"
 	generics "./generics"
 )
@@ -146,13 +146,13 @@ func BuildTree(str string) (Atom) {
 	}
 
 	cmd := Standardize(str)
-	fmt.Println("cmd: ", cmd)
+	// fmt.Println("cmd: ", cmd)
 	tokens := Tokenize(cmd)
-	fmt.Println("tokens: ")
-	for _, tok := range tokens {
-		fmt.Print(tok)
-		fmt.Println(", ")
-	}
+	// fmt.Println("tokens: ")
+	// for _, tok := range tokens {
+	// 	fmt.Print(tok)
+	// 	fmt.Println(", ")
+	// }
 
 	suba := make([]generics.InterpreterTree, len(tokens) - 1)
 	curr := Atom{tokens[0], suba}
