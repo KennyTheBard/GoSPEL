@@ -24,6 +24,12 @@ func Standardize(str string) (string) {
 		// flag the current slice as literal
 		if ch == LiteralMarking {
 			literal = !literal
+			if literal {
+				ret += string(Separator)
+			} else {
+				ret += string(ch)
+				continue
+			}
 		}
 
 		if !literal {
@@ -49,6 +55,8 @@ func Standardize(str string) (string) {
 			} else {
 				whitespace = true
 			}
+		} else {
+			ret += string(ch)
 		}
 	}
 
@@ -105,6 +113,10 @@ func Tokenize(str string) ([]string) {
 
 				nested = false
 				prev = pos + 1
+			}
+		} else {
+			if ch == LiteralMarking {
+				prev = pos
 			}
 		}
 

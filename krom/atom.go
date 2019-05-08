@@ -19,7 +19,11 @@ type Atom struct {
 func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.Error) {
 	// check if this is a leaf
 	if len(tree.Subatoms) == 0 {
-        return tree.Process, error.CreateNoError()
+				if tree.Process[0] == LiteralMarking {
+					return tree.Process[1:len(tree.Process) - 1], error.CreateNoError()
+				} else {
+					return tree.Process, error.CreateNoError()
+				}
     }
 
 	// obtain the right handle

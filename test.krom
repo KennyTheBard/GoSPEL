@@ -1,16 +1,3 @@
-save
-	(modify
-		(print
-			here
-			(filter
-				(try
-					(load invalid.jpg)
-					(load test.jpg)
-				)
-				(gen filter blur 7)
-			)
-		)
-		(gen modif grayscale 0.33 0.33 0.33)
-	)
-	result
-	png
+print
+	    'almost done'
+	(load test.jpg)

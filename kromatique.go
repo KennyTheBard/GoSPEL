@@ -7,13 +7,13 @@ import (
     krom "./krom"
 )
 
-// func printTree(space string, tree krom.Atom) {
-// 	fmt.Println(space, tree.Process)
-// 	space = "~" + space
-// 	for _, branch := range tree.Subatoms {
-// 		printTree(space, branch)
-// 	}
-// }
+func printTree(space string, tree krom.Atom) {
+	fmt.Println(space, tree.Process)
+	space = "~" + space
+	for _, branch := range tree.Subatoms {
+		printTree(space, branch.(krom.Atom))
+	}
+}
 
 func main() {
     args := os.Args[1:]
