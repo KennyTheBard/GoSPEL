@@ -16,7 +16,7 @@ func normalEvaluation(namespace generics.Namespace, handle generics.Handle,
 		args []generics.Void) (generics.Void, error.Error) {
 
     // call the handle to interpret the arguments
-    ret, err := handle(append([]generics.Void{namespace}, args))
+    ret, err := handle(append([]generics.Void{namespace}, args...))
     if err.Code != error.NoError {
         return nil, err
     } else {

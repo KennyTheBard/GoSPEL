@@ -1,7 +1,13 @@
 save
-	(filter
-		(load test.jpg)
-		(gen filter blur 7)
+	(modify
+		(filter
+			(try
+				(load invalid.jpg)
+				(load test.jpg)
+			)
+			(gen filter blur 7)
+		)
+		(gen modif grayscale 0.33 0.33 0.33)
 	)
 	result
 	png
