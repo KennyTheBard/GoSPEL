@@ -12,31 +12,31 @@ import (
 func GetHandle(process string) (generics.Handle, Evaluation, error.Error) {
     switch process {
     case "copy":
-        return handles.CopyHandle, normalEvaluation, error.CreateNoError()
+        return handles.CopyHandle, reverseEvaluation, error.CreateNoError()
     case "load":
-        return handles.LoadHandle, normalEvaluation, error.CreateNoError()
+        return handles.LoadHandle, reverseEvaluation, error.CreateNoError()
     case "save":
-        return handles.SaveHandle, normalEvaluation, error.CreateNoError()
+        return handles.SaveHandle, reverseEvaluation, error.CreateNoError()
     case "point":
-        return handles.PointHandle, normalEvaluation, error.CreateNoError()
+        return handles.PointHandle, reverseEvaluation, error.CreateNoError()
     case "rect":
-        return handles.RectangleHandle, normalEvaluation, error.CreateNoError()
+        return handles.RectangleHandle, reverseEvaluation, error.CreateNoError()
     case "resize":
-        return handles.ResizeHandle, normalEvaluation, error.CreateNoError()
+        return handles.ResizeHandle, reverseEvaluation, error.CreateNoError()
     case "rotate":
-        return handles.RotateHandle, normalEvaluation, error.CreateNoError()
+        return handles.RotateHandle, reverseEvaluation, error.CreateNoError()
     case "gen":
-        return handles.GeneratorHandle, normalEvaluation, error.CreateNoError()
+        return handles.GeneratorHandle, reverseEvaluation, error.CreateNoError()
     case "sizeof":
-        return handles.SizeofHandle, normalEvaluation, error.CreateNoError()
+        return handles.SizeofHandle, reverseEvaluation, error.CreateNoError()
     case "filter":
-        return handles.ApplyFilterHandle, normalEvaluation, error.CreateNoError()
+        return handles.ApplyFilterHandle, reverseEvaluation, error.CreateNoError()
     case "modify":
-        return handles.ModifyColorsHandle, normalEvaluation, error.CreateNoError()
+        return handles.ModifyColorsHandle, reverseEvaluation, error.CreateNoError()
     case "merge":
-        return handles.MergeHandle, normalEvaluation, error.CreateNoError()
+        return handles.MergeHandle, reverseEvaluation, error.CreateNoError()
     case "crop":
-        return handles.CropHandle, normalEvaluation, error.CreateNoError()
+        return handles.CropHandle, reverseEvaluation, error.CreateNoError()
     default:
         return nil, nil, error.CreateError(error.UnknownHandle,
             "Unknown handle name \"" + process + "\"!")
