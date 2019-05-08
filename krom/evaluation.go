@@ -16,12 +16,7 @@ func normalEvaluation(namespace generics.Namespace, handle generics.Handle,
 		args []generics.Void) (generics.Void, error.Error) {
 
     // call the handle to interpret the arguments
-    ret, err := handle(append([]generics.Void{namespace}, args...))
-    if err.Code != error.NoError {
-        return nil, err
-    } else {
-        return ret, err
-    }
+    return handle(append([]generics.Void{namespace}, args...))
 }
 
 /**
@@ -42,10 +37,5 @@ func reverseEvaluation(namespace generics.Namespace, handle generics.Handle,
     }
 
     // call the handle to interpret the arguments
-    ret, err := handle(args)
-    if err.Code != error.NoError {
-        return nil, err
-    } else {
-        return ret, err
-    }
+    return handle(args)
 }
