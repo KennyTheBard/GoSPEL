@@ -1,1 +1,22 @@
-save (load test.jpg) result jpg
+
+define
+    (load test.jpg)
+    img
+    (save
+        (resize
+            $img
+            (define
+                (sizeof $img)
+                size
+                (rect new
+                    (rect first $size)
+                    (point add
+                        (rect last $size)
+                        (point new -250 750)
+                    )
+                )
+            )
+        )
+        result
+        jpg
+    )

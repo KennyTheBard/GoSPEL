@@ -42,6 +42,8 @@ func GetHandle(process string) (generics.Handle, Evaluation, error.Error) {
         return ctrl.TryHandle, normalEvaluation, error.CreateNoError()
     case "print":
         return ctrl.PrintHandle, normalEvaluation, error.CreateNoError()
+    case "define":
+        return ctrl.DefineHandle, normalEvaluation, error.CreateNoError()
     default:
         return nil, nil, error.CreateError(error.UnknownHandle,
             "Unknown handle name \"" + process + "\"!")

@@ -36,7 +36,7 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
 	var args []generics.Void
     for _, branch := range tree.Subatoms {
 		// replace the variable name with value from the current scope
-		if name, err := isVariable(branch); err.Code == error.NoError && name != "" {
+		if name, err := branch.IsVariable(); err.Code == error.NoError && name != "" {
 			value := namespace.Get(name)
 
 			if value != nil {
@@ -51,18 +51,19 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
 	return evaluation(namespace, handle, args)
 }
 
-func isVariable(elem generics.Void) (string, error.Error) {
-	str, ok := elem.(string)
-    if !ok {
-		return "", error.CreateNoError()
-	}
-    if len(str) < 1 {
+func (tree Atom) IsVariable() (string, error.Error) {
+	// check if it's a leaf
+	if len(tree.Subatoms) > 0 {
+			return "", error.CreateNoError()
+    }
+
+	//check if it is a variable
+	if tree.Process[0] != '$' {
         return "", error.CreateNoError()
     }
-	if str[0] != '$' {
-        return "", error.CreateNoError()
-    }
-	name := str[1:]
+
+	// check if it's correctly defined
+	name := tree.Process[1:]
 	if len(name) < 1 {
 		return "", error.CreateError(error.MissingIdentifier, "No string found after $!")
 	}

@@ -29,6 +29,7 @@ type ImageProcessing func(Arguments) Void
  */
 type InterpreterTree interface {
     Interpret(Namespace) (Void, error.Error)
+    IsVariable() (string, error.Error)
 }
 
 /**
