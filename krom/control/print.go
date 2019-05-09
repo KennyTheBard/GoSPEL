@@ -10,50 +10,31 @@ import (
 func PrintHandle(args []generics.Void) (generics.Void, error.Error) {
     var err error.Error
 
-    err = error.AssertNumberArgument(3, len(args))
+    err = error.AssertNumberArgumentControl(3, len(args))
     if err.Code != error.NoError {
         return nil, err
     }
 
-    var aux generics.InterpreterTree
     var arg0 generics.Namespace
-    var msg generics.Void
+    var arg1 string
+    var arg2 generics.InterpreterTree
+    var aux generics.Void
     var ok bool
     pos := 0
 
-    arg0, ok = args[pos].(generics.Namespace)
-    err = error.AssertArgumentType(!ok, pos + 1, "generics.Namespace",
-        reflect.TypeOf(args[pos]).Name())
-    if err.Code != error.NoError {
-        return nil, err
-    }
+    arg0 = args[pos].(generics.Namespace)
     pos += 1
 
-    aux, ok = args[pos].(generics.InterpreterTree)
-    err = error.AssertArgumentType(!ok, pos + 1, "generics.InterpreterTree",
-        reflect.TypeOf(args[pos]).Name())
-    if err.Code != error.NoError {
-        return nil, err
-    }
-
-    msg, err = aux.Interpret(arg0)
-    _, ok = msg.(string)
-    err = error.AssertArgumentType(err.Code != error.NoError, pos + 1, "string",
+    aux, err = args[pos].(generics.InterpreterTree).Interpret(arg0)
+    arg1, ok = aux.(string)
+    err = error.AssertArgumentType(!ok, pos + 1, "string",
         reflect.TypeOf(aux).Name())
     if err.Code != error.NoError {
         return nil, err
     }
     pos += 1
 
-    _, ok = args[pos].(generics.InterpreterTree)
-    err = error.AssertArgumentType(!ok, pos + 1, "generics.InterpreterTree",
-        reflect.TypeOf(args[pos]).Name())
-    if err.Code != error.NoError {
-        return nil, err
-    }
-
-    arg1, _ := msg.(string)
-    arg2, _ := args[2].(generics.InterpreterTree)
+    arg2 = args[pos].(generics.InterpreterTree)
 
     var ret generics.Void
     ret, err = arg2.Interpret(arg0)

@@ -9,7 +9,7 @@ import (
 func TryHandle(args []generics.Void) (generics.Void, error.Error) {
     var err error.Error
 
-    err = error.AssertNumberArgument(3, len(args))
+    err = error.AssertNumberArgumentControl(3, len(args))
     if err.Code != error.NoError {
         return nil, err
     }
