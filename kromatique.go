@@ -7,14 +7,6 @@ import (
     krom "./krom"
 )
 
-func printTree(space string, tree krom.Atom) {
-	fmt.Println(space, tree.Process)
-	space = "~" + space
-	for _, branch := range tree.Subatoms {
-		printTree(space, branch.(krom.Atom))
-	}
-}
-
 func main() {
     file, err_file := os.Open(os.Args[1])
     if err_file != nil {
@@ -25,9 +17,9 @@ func main() {
     bs, _ := ioutil.ReadAll(file)
     script := string(bs)
 
-    tree := krom.BuildTree(script)
-    // printTree(">", tree)
+    forrest := krom.BuildForrest(script)
+
     args := os.Args[2:]
-    _, err := krom.Execute(tree, krom.ConvertStringArguments(args))
+    err := krom.ExecuteAll(forrest, krom.ConvertStringArguments(args))
     fmt.Println(err)
 }

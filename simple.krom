@@ -1,4 +1,6 @@
-
+print "One" (load test.jpg);
+print "Two" (load test.jpg);
+print "Three" (load test.jpg);
 let
     (load $0)
     img

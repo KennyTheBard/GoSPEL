@@ -10,6 +10,7 @@ const LiteralMarking = '\''
 const OpenAtom = '('
 const CloseAtom = ')'
 const Separator = ' '
+const CommandEnding = ';'
 
 const Whitespaces = " \t\n"
 
@@ -67,6 +68,41 @@ func Standardize(str string) (string) {
 	}
 
 	return ret
+}
+
+/**
+ *	Divide the code of a script into commands.
+ */
+func Divide(str string) ([]string) {
+	var cmds []string
+	literal := false
+	prev := 0
+
+	for pos, ch := range str {
+		// flag the current slice as literal
+		if ch == LiteralMarking {
+			literal = !literal
+		}
+
+		if !literal {
+			// divide the command
+			if ch == CommandEnding {
+				cmd := str[prev : pos]
+				if len(cmd) > 0 {
+					cmds = append(cmds, cmd)
+				}
+				prev = pos + 2
+			}
+		}
+	}
+
+	// pass the last command in case there is one
+	cmd := str[prev :]
+	if len(cmd) > 0 {
+		cmds = append(cmds, cmd)
+	}
+
+	return cmds
 }
 
 /**
@@ -135,30 +171,44 @@ func Tokenize(str string) ([]string) {
 }
 
 /**
+ *	Parse the contents of a script into interpreter
+ *	units in order to be sequentially executed.
+ */
+func BuildForrest(str string) ([]generics.InterpreterTree) {
+	if len(str) == 0 {
+		aux := make([]generics.InterpreterTree, 0)
+		return []generics.InterpreterTree{ Atom{"", aux}}
+	}
+
+	var forrest []generics.InterpreterTree
+
+	code := Standardize(str)
+	cmds := Divide(code)
+
+	for _, cmd := range cmds {
+		forrest = append(forrest, BuildTree(cmd))
+	}
+
+	return forrest
+}
+
+/**
  *	Parse a command into an atom tree ready
  *	to be interpreted. The leafs have only
  *	values in process field.
  */
-func BuildTree(str string) (Atom) {
+func BuildTree(str string) (generics.InterpreterTree) {
 	if len(str) == 0 {
-		aux := make([]generics.InterpreterTree, 0)
-		return Atom{"", aux}
+		return Atom{"", make([]generics.InterpreterTree, 0)}
 	}
 
-	cmd := Standardize(str)
-	// fmt.Println("cmd: ", cmd)
-	tokens := Tokenize(cmd)
-	// fmt.Println("tokens: ")
-	// for _, tok := range tokens {
-	// 	fmt.Print(tok)
-	// 	fmt.Println(", ")
-	// }
+	tokens := Tokenize(str)
 
 	suba := make([]generics.InterpreterTree, len(tokens) - 1)
 	curr := Atom{tokens[0], suba}
 
 	for i := 1; i < len(tokens); i++ {
-		aux := BuildTree(tokens[i])
+		aux := BuildTree(tokens[i]).(Atom)
 		if aux.Process != "" {
 			curr.Subatoms[i - 1] = aux
 		}
