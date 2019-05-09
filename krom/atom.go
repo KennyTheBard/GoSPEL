@@ -19,7 +19,7 @@ type Atom struct {
 func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.Error) {
 	// check if this is a leaf
 	if len(tree.Subatoms) == 0 {
-		
+
 		// leaf case of literar string
 		if tree.Process[0] == LiteralMarking {
 			return tree.Process[1:len(tree.Process) - 1], error.CreateNoError()
@@ -49,6 +49,9 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
 
 			if value != nil {
 				args = append(args, value)
+			} else {
+				return nil, error.CreateError(error.UndeclaredIdentifier,
+					"The variable " + name + " was not declared!")
 			}
 		} else {
 			args = append(args, branch.(generics.Void))
