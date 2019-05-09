@@ -6,7 +6,7 @@ import (
     error "../error"
 )
 
-func DefineHandle(args []generics.Void) (generics.Void, error.Error) {
+func LetHandle(args []generics.Void) (generics.Void, error.Error) {
     var err error.Error
 
     err = error.AssertNumberArgumentControl(4, len(args))

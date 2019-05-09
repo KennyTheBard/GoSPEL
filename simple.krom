@@ -1,11 +1,11 @@
 
-define
+let
     (load test.jpg)
     img
     (save
         (resize
             $img
-            (define
+            (let
                 (sizeof $img)
                 size
                 (rect new
