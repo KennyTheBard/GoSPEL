@@ -3,6 +3,7 @@ package main
 import (
     "os"
     "fmt"
+    "strconv"
     "io/ioutil"
     krom "./krom"
 )
@@ -16,22 +17,25 @@ func printTree(space string, tree krom.Atom) {
 }
 
 func main() {
-    args := os.Args[1:]
-
-    for _, arg := range args {
-        file, err_file := os.Open(arg)
-        if err_file != nil {
-            fmt.Println("Could not open file", arg)
-            continue;
-        }
-        defer file.Close()
-
-        bs, _ := ioutil.ReadAll(file)
-        script := string(bs)
-
-        tree := krom.BuildTree(script)
-        // printTree(">", tree)
-        _, err := tree.Interpret(krom.NewScope())
-    	fmt.Println(err)
+    file, err_file := os.Open(os.Args[1])
+    if err_file != nil {
+        fmt.Println("Could not open script file", os.Args[1])
     }
+    defer file.Close()
+
+    bs, _ := ioutil.ReadAll(file)
+    script := string(bs)
+
+    tree := krom.BuildTree(script)
+    // printTree(">", tree)
+
+    args := os.Args[2:]
+    scope := krom.NewScope()
+
+    for i, arg := range args {
+        scope = scope.Extend(strconv.Itoa(i), arg).(krom.Scope)
+    }
+
+    _, err := tree.Interpret(scope)
+    fmt.Println(err)
 }

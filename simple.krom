@@ -1,6 +1,6 @@
 
 let
-    (load test.jpg)
+    (load $0)
     img
     (save
         (resize
