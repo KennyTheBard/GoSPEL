@@ -3,7 +3,6 @@ package main
 import (
     "os"
     "fmt"
-    "strconv"
     "io/ioutil"
     krom "./krom"
 )
@@ -28,14 +27,7 @@ func main() {
 
     tree := krom.BuildTree(script)
     // printTree(">", tree)
-
     args := os.Args[2:]
-    scope := krom.NewScope()
-
-    for i, arg := range args {
-        scope = scope.Extend(strconv.Itoa(i), arg).(krom.Scope)
-    }
-
-    _, err := tree.Interpret(scope)
+    _, err := krom.Execute(tree, krom.ConvertStringArguments(args))
     fmt.Println(err)
 }
