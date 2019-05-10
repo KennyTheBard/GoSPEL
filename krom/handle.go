@@ -10,42 +10,42 @@ import (
 /**
  *  Return the handle for the required function.
  */
-func GetHandle(process string) (generics.Handle, Evaluation, error.Error) {
+func GetHandle(process string) (generics.Handle, error.Error) {
     switch process {
     case "copy":
-        return op.CopyHandle, reverseEvaluation, error.CreateNoError()
+        return op.CopyHandle, error.CreateNoError()
     case "load":
-        return op.LoadHandle, reverseEvaluation, error.CreateNoError()
+        return op.LoadHandle, error.CreateNoError()
     case "save":
-        return op.SaveHandle, reverseEvaluation, error.CreateNoError()
+        return op.SaveHandle, error.CreateNoError()
     case "point":
-        return op.PointHandle, reverseEvaluation, error.CreateNoError()
+        return op.PointHandle, error.CreateNoError()
     case "rect":
-        return op.RectangleHandle, reverseEvaluation, error.CreateNoError()
+        return op.RectangleHandle, error.CreateNoError()
     case "resize":
-        return op.ResizeHandle, reverseEvaluation, error.CreateNoError()
+        return op.ResizeHandle, error.CreateNoError()
     case "rotate":
-        return op.RotateHandle, reverseEvaluation, error.CreateNoError()
+        return op.RotateHandle, error.CreateNoError()
     case "gen":
-        return op.GeneratorHandle, reverseEvaluation, error.CreateNoError()
+        return op.GeneratorHandle, error.CreateNoError()
     case "sizeof":
-        return op.SizeofHandle, reverseEvaluation, error.CreateNoError()
+        return op.SizeofHandle, error.CreateNoError()
     case "filter":
-        return op.ApplyFilterHandle, reverseEvaluation, error.CreateNoError()
+        return op.ApplyFilterHandle, error.CreateNoError()
     case "modify":
-        return op.ModifyColorsHandle, reverseEvaluation, error.CreateNoError()
+        return op.ModifyColorsHandle, error.CreateNoError()
     case "merge":
-        return op.MergeHandle, reverseEvaluation, error.CreateNoError()
+        return op.MergeHandle, error.CreateNoError()
     case "crop":
-        return op.CropHandle, reverseEvaluation, error.CreateNoError()
+        return op.CropHandle, error.CreateNoError()
     case "try":
-        return ctrl.TryHandle, normalEvaluation, error.CreateNoError()
+        return ctrl.TryHandle, error.CreateNoError()
     case "print":
-        return ctrl.PrintHandle, normalEvaluation, error.CreateNoError()
+        return ctrl.PrintHandle, error.CreateNoError()
     case "let":
-        return ctrl.LetHandle, normalEvaluation, error.CreateNoError()
+        return ctrl.LetHandle, error.CreateNoError()
     default:
-        return nil, nil, error.CreateError(error.UnknownHandle,
+        return nil, error.CreateError(error.UnknownHandle,
             "Unknown handle name \"" + process + "\"!")
     }
 }

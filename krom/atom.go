@@ -35,7 +35,7 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
     }
 
 	// obtain the right handle
-	handle, evaluation, err := GetHandle(tree.Process)
+	handle, err := GetHandle(tree.Process)
 	if err.Code != error.NoError {
 		return handle, err
 	}
@@ -59,7 +59,7 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
     }
 
 	// evaluate the interpretation atom
-	return evaluation(namespace, handle, args)
+	return handle(namespace.Clone(), args)
 }
 
 func (tree Atom) IsVariable() (string, error.Error) {

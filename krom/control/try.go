@@ -7,7 +7,7 @@ import (
 
 func TryHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
-    expected := 3
+    expected := 2
     received := len(raw_args)
     if expected != received {
         return nil, error.NumberArgumentsError(expected, received)
