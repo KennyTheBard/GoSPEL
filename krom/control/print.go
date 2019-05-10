@@ -7,39 +7,39 @@ import (
     error "../error"
 )
 
-func PrintHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgumentControl(3, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func PrintHandle(raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 3
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected - 1, received - 1)
     }
 
-    var arg0 generics.Namespace
-    var arg1 string
-    var arg2 generics.InterpreterTree
-    var aux generics.Void
-    var ok bool
+    // extract function scope
+    scope := raw_args[0].(generics.Namespace)
+
+    // prepare extraction for function arguments
+    func_args := raw_args[1:]
+    args := make([]generics.InterpreterTree, len(func_args))
     pos := 0
 
-    arg0 = args[pos].(generics.Namespace)
-    pos += 1
-
-    aux, err = args[pos].(generics.InterpreterTree).Interpret(arg0)
-    arg1, ok = aux.(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(aux).Name())
+    // extract the mesage
+    args[pos] = func_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    mesage, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
+    }
     pos += 1
 
-    arg2 = args[pos].(generics.InterpreterTree)
+    // execute the body
+    args[pos] = func_args[pos].(generics.InterpreterTree)
+    ret, err := args[pos].Interpret(scope.Clone())
 
-    var ret generics.Void
-    ret, err = arg2.Interpret(arg0)
-
-    fmt.Println(arg1)
-
+    // print
+    fmt.Println(mesage)
     return ret, err
 }

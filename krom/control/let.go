@@ -6,44 +6,43 @@ import (
     error "../error"
 )
 
-func LetHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgumentControl(4, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func LetHandle(raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 4
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected - 1, received - 1)
     }
 
-    var arg0 generics.Namespace
-    var arg1 generics.InterpreterTree
-    var name string
-    var arg3 generics.InterpreterTree
-    var value generics.Void
-    var aux generics.Void
-    var ok bool
+    // extract function scope
+    scope := raw_args[0].(generics.Namespace)
+
+    // prepare extraction for function arguments
+    func_args := raw_args[1:]
+    args := make([]generics.InterpreterTree, len(func_args))
     pos := 0
 
-    arg0 = args[pos].(generics.Namespace)
+    // extract the variable name
+    args[pos] = func_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
+    if err.Code != error.NoError {
+        return nil, err
+    }
+    name, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
+    }
     pos += 1
 
-    arg1 = args[pos].(generics.InterpreterTree)
-    pos += 1
-
-    aux, err = args[pos].(generics.InterpreterTree).Interpret(arg0)
-    name, ok = aux.(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(aux).Name())
+    // extract the variable value
+    args[pos] = func_args[pos].(generics.InterpreterTree)
+    value, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
     pos += 1
 
-    arg3 = args[pos].(generics.InterpreterTree)
-
-    value, err = arg1.Interpret(arg0)
-    if err.Code != error.NoError {
-        return nil, err
-    }
-
-    return arg3.Interpret(arg0.Extend(name, value))
+    // continue interpretation
+    args[pos] = func_args[pos].(generics.InterpreterTree)
+    return args[pos].Interpret(scope.Extend(name, value))
 }

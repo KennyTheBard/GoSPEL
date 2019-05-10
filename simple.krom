@@ -2,14 +2,14 @@ print One .;
 print Two .;
 print Three .;
 let
-    (load $0)
     img
+    (load $0)
     (save
         (resize
             $img
             (let
-                (sizeof $img)
                 size
+                (sizeof $img)
                 (rect new
                     (rect first $size)
                     (point add

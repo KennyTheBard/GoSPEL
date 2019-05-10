@@ -7,48 +7,30 @@ import (
 )
 
 func TryHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgumentControl(3, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+    // check the number of arguments
+    expected := 3
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected - 1, received - 1)
     }
 
-    var ok bool
+    // extract function scope
+    scope := raw_args[0].(generics.Namespace)
+
+    // prepare extraction for function arguments
+    func_args := raw_args[1:]
+    args := make([]generics.InterpreterTree, len(func_args))
     pos := 0
 
-    _, ok = args[pos].(generics.Namespace)
-    err = error.AssertArgumentType(!ok, pos + 1, "generics.Namespace",
-        reflect.TypeOf(args[pos]).Name())
-    if err.Code != error.NoError {
-        return nil, err
-    }
-    pos += 1
-
-    _, ok = args[pos].(generics.InterpreterTree)
-    err = error.AssertArgumentType(!ok, pos + 1, "generics.InterpreterTree",
-        reflect.TypeOf(args[pos]).Name())
-    if err.Code != error.NoError {
-        return nil, err
-    }
-    pos += 1
-
-    _, ok = args[pos].(generics.InterpreterTree)
-    err = error.AssertArgumentType(!ok, pos + 1, "generics.InterpreterTree",
-        reflect.TypeOf(args[pos]).Name())
-    if err.Code != error.NoError {
-        return nil, err
-    }
-
-    arg0, _ := args[0].(generics.Namespace)
-    arg1, _ := args[1].(generics.InterpreterTree)
-
-    var ret generics.Void
-    ret, err = arg1.Interpret(arg0)
+    // execute the risky branch
+    args[pos] = func_args[pos].(generics.InterpreterTree)
+    ret, err := args[pos].Interpret(scope.Clone())
     if err.Code == error.NoError {
         return ret, err
-    } else {
-        arg2, _ := args[2].(generics.InterpreterTree)
-        return arg2.Interpret(arg0)
     }
+    pos += 1
+
+    // execute the fall-back branch
+    args[pos] = func_args[pos].(generics.InterpreterTree)
+    return args[pos].Interpret(scope.Clone())
 }
