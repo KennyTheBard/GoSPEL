@@ -7,24 +7,20 @@ import (
     error "../error"
 )
 
-func PrintHandle(raw_args []generics.Void) (generics.Void, error.Error) {
+func PrintHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 3
     received := len(raw_args)
     if expected != received {
-        return nil, error.NumberArgumentsError(expected - 1, received - 1)
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    // extract function scope
-    scope := raw_args[0].(generics.Namespace)
-
     // prepare extraction for function arguments
-    func_args := raw_args[1:]
-    args := make([]generics.InterpreterTree, len(func_args))
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
     // extract the mesage
-    args[pos] = func_args[pos].(generics.InterpreterTree)
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
     aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
@@ -36,7 +32,7 @@ func PrintHandle(raw_args []generics.Void) (generics.Void, error.Error) {
     pos += 1
 
     // execute the body
-    args[pos] = func_args[pos].(generics.InterpreterTree)
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
     ret, err := args[pos].Interpret(scope.Clone())
 
     // print

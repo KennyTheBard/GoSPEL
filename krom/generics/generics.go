@@ -44,4 +44,4 @@ type Namespace interface {
 /**
  *  Declare a type for all handles.
  */
-type Handle func([]Void) (Void, error.Error)
+type Handle func(Namespace, []Void) (Void, error.Error)
