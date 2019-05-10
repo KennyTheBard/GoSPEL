@@ -6,134 +6,151 @@ import (
     error "../error"
 )
 
-func GeneratorHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgumentAtLeast(2, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func GeneratorHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 2
+    received := len(raw_args)
+    if expected >= received {
+        return nil, error.NumberArgumentsErrorAtLeast(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the sub-handle
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    sub_handle, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
+    }
 
-    arg0, _ := args[0].(string)
-
+    // obtain the correct handle
     var handler generics.Handle
-    switch arg0 {
+    switch sub_handle {
     case "filter":
-        handler, err = FilterHandle([]generics.Void{args[1]})
+        handler, err = FilterHandle(scope, []generics.Void{args[pos]})
     case "modif":
-        handler, err = ModifierHandle([]generics.Void{args[1]})
+        handler, err = ModifierHandle(scope, []generics.Void{args[pos]})
     case "transf":
-        handler, err = TransformationHandle([]generics.Void{args[1]})
+        handler, err = TransformationHandle(scope, []generics.Void{args[pos]})
     default:
         return nil, error.CreateError(error.UnknownHandle,
-            "Unknown sub-handle namefor generators \"" + arg0 + "\"!")
+            "Unknown sub-handle name for generator \"" + sub_handle + "\"!")
     }
 
+    // pass the rest fo the arguments to the handle
     if err.Code != error.NoError {
         return nil, err
     }
-    return handler(args[2:])
+    return handler(scope, args[2:])
 }
 
-func FilterHandle(args []generics.Void) (generics.Handle, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(1, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func FilterHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Handle, error.Error) {
+    // check the number of arguments
+    expected := 1
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the filter's name
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    name, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
+    }
 
-    arg0, _ := args[0].(string)
-
-    switch arg0 {
+    // return the filter's handle
+    switch name {
     case "blur":
         return BoxBlurHandle, error.CreateNoError()
     case "custom":
         return CustomFilterHandle, error.CreateNoError()
     default:
         return nil, error.CreateError(error.UnknownHandle,
-            "Unknown filter name \"" + arg0 + "\"!")
+            "Unknown filter name \"" + name + "\"!")
     }
 }
 
-func ModifierHandle(args []generics.Void) (generics.Handle, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(1, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func ModifierHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Handle, error.Error) {
+    // check the number of arguments
+    expected := 1
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the modifier's name
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    name, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
+    }
 
-    arg0, _ := args[0].(string)
-
-    switch arg0 {
+    // return the modifier's handle
+    switch name {
     case "grayscale":
         return GrayscaleHandle, error.CreateNoError()
     case "custom":
         return CustomModifierHandle, error.CreateNoError()
     default:
         return nil, error.CreateError(error.UnknownHandle,
-            "Unknown modifier name \"" + arg0 + "\"!")
+            "Unknown modifier name \"" + name + "\"!")
     }
 }
 
-func TransformationHandle(args []generics.Void) (generics.Handle, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(1, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func TransformationHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Handle, error.Error) {
+    // check the number of arguments
+    expected := 1
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the transformation's name
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    name, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
+    }
 
-    arg0, _ := args[0].(string)
-
-    switch arg0 {
+    // return the transformation's handle
+    switch name {
     // case "mirror":
     //     // TODO
     // case "custom":
     //     // TODO
     default:
         return nil, error.CreateError(error.UnknownHandle,
-            "Unknown transformation name \"" + arg0 + "\"!")
+            "Unknown transformation name \"" + name + "\"!")
     }
 }

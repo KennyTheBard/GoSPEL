@@ -8,42 +8,53 @@ import (
     error "../error"
 )
 
-func MergeHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(3, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func MergeHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 3
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(image.Image)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Image",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the image
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
+    }
+    trg, ok := aux.(image.Image)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "image.Image", reflect.TypeOf(aux).Name())
     }
     pos += 1
 
-    _, ok = args[pos].(image.Image)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Image",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the image
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
+    }
+    over, ok := aux.(image.Image)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "image.Image", reflect.TypeOf(aux).Name())
     }
     pos += 1
 
-    _, ok = args[pos].(image.Point)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Point",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the bounds
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    offset, ok := aux.(image.Point)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "image.Point", reflect.TypeOf(aux).Name())
+    }
 
-    arg0, _ := args[0].(image.Image)
-    arg1, _ := args[1].(image.Image)
-    arg2, _ := args[2].(image.Point)
-    return lib.Merge(arg0, arg1, arg2), error.CreateNoError()
+    // call the operation
+    return lib.Merge(trg, over, offset), error.CreateNoError()
 }

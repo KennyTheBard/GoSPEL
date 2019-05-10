@@ -7,111 +7,132 @@ import (
     error "../error"
 )
 
-func RectangleHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgumentAtLeast(1, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func RectangleHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    expected := 1
+    received := len(raw_args)
+    if expected >= received {
+        return nil, error.NumberArgumentsErrorAtLeast(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the sub-handle
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
-
-
-    arg0, _ := args[0].(string)
-
-    switch arg0 {
-    case "new":
-        return NewRectangleHandle(args[1:])
-    case "first":
-        return FirstHandle(args[1:])
-    case "last":
-        return LastHandle(args[1:])
-    default:
-        return nil, error.CreateError(error.UnknownHandle,
-            "Unknown sub-handle name for rectangle \"" + arg0 + "\"!")
-    }
-}
-
-func NewRectangleHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(2, len(args))
-    if err.Code != error.NoError {
-        return nil, err
-    }
-
-    var ok bool
-    pos := 0
-
-    _, ok = args[pos].(image.Point)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Point",
-        reflect.TypeOf(args[pos]).Name())
-    if err.Code != error.NoError {
-        return nil, err
+    sub_handle, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
     }
     pos += 1
 
-    _, ok = args[pos].(image.Point)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Point",
-        reflect.TypeOf(args[pos]).Name())
-    if err.Code != error.NoError {
-        return nil, err
+    // execute the sub-handle
+    switch sub_handle {
+    case "new":
+        return NewRectangleHandle(scope, args[pos:])
+    case "first":
+        return FirstHandle(scope, args[pos:])
+    case "last":
+        return LastHandle(scope, args[pos:])
+    default:
+        return nil, error.CreateError(error.UnknownHandle,
+            "Unknown sub-handle name for rectangle \"" + sub_handle + "\"!")
     }
-
-    arg0, _ := args[0].(image.Point)
-    arg1, _ := args[1].(image.Point)
-    return image.Rectangle{arg0, arg1}, error.CreateNoError()
 }
 
-func FirstHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(1, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func NewRectangleHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 2
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(image.Rectangle)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Rectangle",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the min point
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    min, ok := aux.(image.Point)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "image.Point", reflect.TypeOf(aux).Name())
+    }
+    pos += 1
 
-    arg0, _ := args[0].(image.Rectangle)
-    return arg0.Min, error.CreateNoError()
+    // extract the max point
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
+    if err.Code != error.NoError {
+        return nil, err
+    }
+    max, ok := aux.(image.Point)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "image.Point", reflect.TypeOf(aux).Name())
+    }
+
+    // call the operation
+    return image.Rectangle{min, max}, error.CreateNoError()
 }
 
-func LastHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(1, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func FirstHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 1
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(image.Rectangle)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Rectangle",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the A point
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    rect, ok := aux.(image.Rectangle)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "image.Rectangle", reflect.TypeOf(aux).Name())
+    }
 
-    arg0, _ := args[0].(image.Rectangle)
-    return arg0.Max, error.CreateNoError()
+    // call the operation
+    return rect.Min, error.CreateNoError()
+}
+
+func LastHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 1
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
+    }
+
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
+    pos := 0
+
+    // extract the A point
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
+    if err.Code != error.NoError {
+        return nil, err
+    }
+    rect, ok := aux.(image.Rectangle)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "image.Rectangle", reflect.TypeOf(aux).Name())
+    }
+
+    // call the operation
+    return rect.Max, error.CreateNoError()
 }

@@ -9,73 +9,93 @@ import (
     error "../error"
 )
 
-func BoxBlurHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(1, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func BoxBlurHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 1
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the diameter coordinate
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux_x, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    diam, ok := aux_x.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux_x).Name())
+    }
+    x, ok := strconv.Atoi(aux_x)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux_x).Name())
+    }
 
-    aux0, _ := args[0].(string)
-    arg0, _ := strconv.Atoi(aux0)
-    return filters.BoxBlur(arg0), error.CreateNoError()
+    // call the operation
+    return filters.BoxBlur(diam), error.CreateNoError()
 }
 
-func CustomFilterHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
+func CustomFilterHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 1
+    received := len(raw_args)
+    if expected >= received {
+        return nil, error.NumberArgumentsErrorAtLeast(expected, received)
+    }
 
-    err = error.AssertNumberArgumentAtLeast(1, len(args))
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
+    pos := 0
+
+    // extract the size coordinate
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
-
-    var ok bool
-
-    _, ok = args[0].(string)
-    err = error.AssertArgumentType(!ok, 1, "string",
-        reflect.TypeOf(args[0]).Name())
-    if err.Code != error.NoError {
-        return nil, err
+    str, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
+    }
+    size, ok := strconv.Atoi(str)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
 
-    aux_size, _ := args[0].(string)
-    size, _ := strconv.Atoi(aux_size)
-
-    err = error.AssertNumberArgument(size * size + 1, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+    // check the number of arguments depending on the size
+    expected = size * size + 1
+    if expected != received {
+        return nil, error.NumberArgumentsErrorAtLeast(expected, received)
     }
 
-    mat := make([][]float64, size)
-    for i := range mat {
-        mat[i] = make([]float64, size)
-    }
+    // create a matrix
+    var mat [size][size]float64
 
+    // extract all the members of the filter
     for i := 1; i < size * size + 1; i++ {
-        _, ok = args[i].(string)
-        err = error.AssertArgumentType(!ok, i + 1, "string",
-            reflect.TypeOf(args[i]).Name())
+        args[pos] = raw_args[pos].(generics.InterpreterTree)
+        aux, err := args[pos].Interpret(scope.Clone())
         if err.Code != error.NoError {
             return nil, err
         }
-
-        aux, _ := args[i].(string)
-        arg, _ := strconv.ParseFloat(aux, 64)
+        str, ok := aux.(string)
+        if !ok {
+            return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+        }
+        member, ok := strconv.ParseFloat(aux, 64)
+        if !ok {
+            return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+        }
 
         idx := i - 1
-        mat[idx / size][idx % size] = arg
+        mat[idx / size][idx % size] = member
     }
 
+    // create the filter
     return lib.Filter{mat}, error.CreateNoError()
 }

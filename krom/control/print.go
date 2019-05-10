@@ -15,7 +15,7 @@ func PrintHandle(scope generics.Namespace, raw_args []generics.Void) (generics.V
         return nil, error.NumberArgumentsError(expected, received)
     }
 
-    // prepare extraction for function arguments
+    // prepare extraction of function arguments
     args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 

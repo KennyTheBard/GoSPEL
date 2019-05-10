@@ -9,82 +9,111 @@ import (
     error "../error"
 )
 
-func GrayscaleHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(3, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func GrayscaleHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 3
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the red channel
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
+    }
+    str, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+    }
+    red, ok := strconv.ParseFloat(aux, 64)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
     }
     pos += 1
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the green channel
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
+    }
+    str, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+    }
+    green, ok := strconv.ParseFloat(aux, 64)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
     }
     pos += 1
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the blue channel
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    str, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+    }
+    blue, ok := strconv.ParseFloat(aux, 64)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+    }
 
-    aux0, _ := args[0].(string)
-    arg0, _ := strconv.ParseFloat(aux0, 64)
-    aux1, _ := args[1].(string)
-    arg1, _ := strconv.ParseFloat(aux1, 64)
-    aux2, _ := args[2].(string)
-    arg2, _ := strconv.ParseFloat(aux2, 64)
-    return modifiers.Grayscale(arg0, arg1, arg2), error.CreateNoError()
+    // call the operation
+    return modifiers.Grayscale(red, green, blue), error.CreateNoError()
 }
 
-func CustomModifierHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-    const mat_size = 4 * 4
-    const constants = 4
+func CustomModifierHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // create a matrix and an array
+    const size = 4
+    var mat [size][size]float64
+    const const_num = 4
+    var constants [const_num]float64
 
-    err = error.AssertNumberArgument(mat_size + constants, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+    // check the number of arguments
+    expected := size * size + const_num
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
+    pos := 0
 
-    var mat [4][4]float64
-    var consts [4]float64
-
-    for i := 0; i < mat_size + constants; i++ {
-        _, ok = args[i].(string)
-        err = error.AssertArgumentType(!ok, i + 1, "string",
-            reflect.TypeOf(args[i]).Name())
+    // extract all the members of the modifier
+    for i := 0; i < size * size + const_num; i++ {
+        args[pos] = raw_args[pos].(generics.InterpreterTree)
+        aux, err := args[pos].Interpret(scope.Clone())
         if err.Code != error.NoError {
             return nil, err
         }
-
-        aux, _ := args[i].(string)
-        arg, _ := strconv.ParseFloat(aux, 64)
+        str, ok := aux.(string)
+        if !ok {
+            return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+        }
+        member, ok := strconv.ParseFloat(aux, 64)
+        if !ok {
+            return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+        }
 
         idx := i + 1
         if idx % 5 == 0 {
-            consts[i / 5] = arg
+            constants[i / 5] = member
         } else {
-            mat[i / 5][i % 5] = arg
+            mat[i / 5][i % 5] = member
         }
     }
 
-    return lib.Modifier{mat, consts}, error.CreateNoError()
+    // return the modifier
+    return lib.Modifier{mat, constants}, error.CreateNoError()
 }

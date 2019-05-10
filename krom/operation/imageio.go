@@ -8,68 +8,88 @@ import (
     error "../error"
 )
 
-func LoadHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(1, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func LoadHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 1
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the file's name
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
-
-    arg0, _ := args[0].(string)
-    img := lib.DecodeImage(arg0)
-    if img == nil {
-        return nil, error.CreateError(error.FailedOpenFile, "Could not open \"" + arg0 + "\"")
+    filename, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
     }
-    return lib.DecodeImage(arg0), error.CreateNoError()
+
+    // decode image
+    img := lib.DecodeImage(filename)
+    if img == nil {
+        return nil, error.CreateError(error.FileError, "Could not open \"" + filename + "\"")
+    }
+    return img, error.CreateNoError()
 }
 
-func SaveHandle(args []generics.Void) (generics.Void, error.Error) {
-    var err error.Error
-
-    err = error.AssertNumberArgument(3, len(args))
-    if err.Code != error.NoError {
-        return nil, err
+func SaveHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+    // check the number of arguments
+    expected := 3
+    received := len(raw_args)
+    if expected != received {
+        return nil, error.NumberArgumentsError(expected, received)
     }
 
-    var ok bool
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    _, ok = args[pos].(image.Image)
-    err = error.AssertArgumentType(!ok, pos + 1, "image.Image",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the image
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
+    }
+    img, ok := aux.(image.Image)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "image.Image", reflect.TypeOf(aux).Name())
     }
     pos += 1
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the file's name
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
+    }
+    filename, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
     }
     pos += 1
 
-    _, ok = args[pos].(string)
-    err = error.AssertArgumentType(!ok, pos + 1, "string",
-        reflect.TypeOf(args[pos]).Name())
+    // extract the file's format
+    args[pos] = raw_args[pos].(generics.InterpreterTree)
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
+    format, ok := aux.(string)
+    if !ok {
+        return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
+    }
 
-    arg0, _ := args[0].(image.Image)
-    arg1, _ := args[1].(string)
-    arg2, _ := args[2].(string)
-    return lib.EncodeImage(arg0, arg1, arg2), error.CreateNoError()
+    // encode image
+    img := lib.EncodeImage(img, filename, format),
+    if img == nil {
+        return nil, error.CreateError(error.FileError, "Could not create \"" + filename + "\"")
+    }
+    return img, error.CreateNoError()
 }
