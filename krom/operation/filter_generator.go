@@ -21,23 +21,23 @@ func BoxBlurHandle(scope generics.Namespace, raw_args []generics.Void) (generics
     args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
-    // extract the diameter coordinate
+    // extract the diameter
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux_x, err := args[pos].Interpret(scope.Clone())
+    aux, err := args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
-    diam, ok := aux_x.(string)
+    str, ok := aux.(string)
     if !ok {
-        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux_x).Name())
+        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
-    x, ok := strconv.Atoi(aux_x)
-    if !ok {
-        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux_x).Name())
+    diameter, conv_err := strconv.Atoi(str)
+    if conv_err != nil {
+        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
 
     // call the operation
-    return filters.BoxBlur(diam), error.CreateNoError()
+    return filters.BoxBlur(diameter), error.CreateNoError()
 }
 
 func CustomFilterHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
@@ -62,8 +62,8 @@ func CustomFilterHandle(scope generics.Namespace, raw_args []generics.Void) (gen
     if !ok {
         return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
-    size, ok := strconv.Atoi(str)
-    if !ok {
+    size, conv_err := strconv.Atoi(str)
+    if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
 
@@ -74,7 +74,10 @@ func CustomFilterHandle(scope generics.Namespace, raw_args []generics.Void) (gen
     }
 
     // create a matrix
-    var mat [size][size]float64
+    mat := make([][]float64, 1)
+    for i := range mat {
+        mat[i] = make([]float64, size)
+    }
 
     // extract all the members of the filter
     for i := 1; i < size * size + 1; i++ {
@@ -87,8 +90,8 @@ func CustomFilterHandle(scope generics.Namespace, raw_args []generics.Void) (gen
         if !ok {
             return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
         }
-        member, ok := strconv.ParseFloat(aux, 64)
-        if !ok {
+        member, conv_err := strconv.ParseFloat(str, 64)
+        if conv_err != nil {
             return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
         }
 

@@ -15,6 +15,10 @@ func SizeofHandle(scope generics.Namespace, raw_args []generics.Void) (generics.
         return nil, error.NumberArgumentsError(expected, received)
     }
 
+    // prepare extraction of function arguments
+    args := make([]generics.InterpreterTree, len(raw_args))
+    pos := 0
+
     // extract the image
     args[pos] = raw_args[pos].(generics.InterpreterTree)
     aux, err := args[pos].Interpret(scope.Clone())

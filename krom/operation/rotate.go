@@ -35,7 +35,7 @@ func RotateHandle(scope generics.Namespace, raw_args []generics.Void) (generics.
 
     // extract the filter
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
@@ -43,11 +43,11 @@ func RotateHandle(scope generics.Namespace, raw_args []generics.Void) (generics.
     if !ok {
         return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
     }
-    angle, ok := strconv.ParseFloat(aux, 64)
-    if !ok {
+    angle, conv_err := strconv.ParseFloat(str, 64)
+    if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
     }
 
     // call the operation
-    return lib.Rotate(umg, angle), error.CreateNoError()
+    return lib.Rotate(img, angle), error.CreateNoError()
 }

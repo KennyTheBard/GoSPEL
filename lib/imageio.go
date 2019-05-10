@@ -23,14 +23,21 @@ func DecodeImage(path string) (image.Image, ) {
 }
 
 func EncodeImage(img image.Image, name, format string) (image.Image) {
-    fout, _ := os.Create(strings.Join([]string{name, format}, "."))
+    fout, err_create := os.Create(strings.Join([]string{name, format}, "."))
+    if err_create != nil {
+        return nil
+    }
     defer fout.Close()
 
     switch format {
     case "png":
-        png.Encode(fout, img)
+        if png.Encode(fout, img) != nil {
+            return nil
+        }
     case "jpeg", "jpg":
-        jpeg.Encode(fout, img, &jpeg.Options{jpeg.DefaultQuality})
+        if jpeg.Encode(fout, img, &jpeg.Options{jpeg.DefaultQuality}) != nil {
+            return nil
+        }
     }
 
     return img

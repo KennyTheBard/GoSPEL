@@ -1,7 +1,6 @@
 package control
 
 import (
-    "reflect"
     generics "../generics"
     error "../error"
 )

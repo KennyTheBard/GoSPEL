@@ -17,12 +17,10 @@ func PointHandle(scope generics.Namespace, raw_args []generics.Void) (generics.V
     }
 
     // prepare extraction of function arguments
-    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
     // extract the sub-handle
-    args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err := raw_args[pos].(generics.InterpreterTree).Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
@@ -35,13 +33,13 @@ func PointHandle(scope generics.Namespace, raw_args []generics.Void) (generics.V
     // execute the sub-handle
     switch sub_handle {
     case "new":
-        return NewPointHandle(scope, args[pos:])
+        return NewPointHandle(scope, raw_args[pos:])
     case "add":
-        return AddPointHandle(scope, args[pos:])
+        return AddPointHandle(scope, raw_args[pos:])
     case "multiply":
-        return MultiplyPointHandle(scope, args[pos:])
+        return MultiplyPointHandle(scope, raw_args[pos:])
     case "divide":
-        return DividePointHandle(scope, args[pos:])
+        return DividePointHandle(scope, raw_args[pos:])
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown sub-handle name for point \"" + sub_handle + "\"!")
@@ -70,24 +68,24 @@ func NewPointHandle(scope generics.Namespace, raw_args []generics.Void) (generic
     if !ok {
         return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
-    x, ok := strconv.Atoi(str)
-    if !ok {
+    x, conv_err := strconv.Atoi(str)
+    if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
     pos += 1
 
     // extract the y coordinate
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
-    str, ok := aux.(string)
+    str, ok = aux.(string)
     if !ok {
         return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
-    y, ok := strconv.Atoi(str)
-    if !ok {
+    y, conv_err := strconv.Atoi(str)
+    if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
 
@@ -121,7 +119,7 @@ func AddPointHandle(scope generics.Namespace, raw_args []generics.Void) (generic
 
     // extract the B point
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
@@ -160,7 +158,7 @@ func MultiplyPointHandle(scope generics.Namespace, raw_args []generics.Void) (ge
 
     // extract the B point
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
@@ -199,7 +197,7 @@ func DividePointHandle(scope generics.Namespace, raw_args []generics.Void) (gene
 
     // extract the B point
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }

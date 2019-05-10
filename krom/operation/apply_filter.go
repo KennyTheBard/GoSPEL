@@ -34,7 +34,7 @@ func ApplyFilterHandle(scope generics.Namespace, raw_args []generics.Void) (gene
 
     // extract the filter
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }

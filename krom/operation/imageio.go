@@ -65,7 +65,7 @@ func SaveHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Vo
 
     // extract the file's name
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
@@ -77,7 +77,7 @@ func SaveHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Vo
 
     // extract the file's format
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
@@ -87,7 +87,7 @@ func SaveHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Vo
     }
 
     // encode image
-    img := lib.EncodeImage(img, filename, format),
+    img = lib.EncodeImage(img, filename, format)
     if img == nil {
         return nil, error.CreateError(error.FileError, "Could not create \"" + filename + "\"")
     }

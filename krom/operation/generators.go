@@ -15,12 +15,10 @@ func GeneratorHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     }
 
     // prepare extraction of function arguments
-    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
     // extract the sub-handle
-    args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err := raw_args[0].(generics.InterpreterTree).Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
@@ -33,11 +31,11 @@ func GeneratorHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     var handler generics.Handle
     switch sub_handle {
     case "filter":
-        handler, err = FilterHandle(scope, []generics.Void{args[pos]})
+        handler, err = FilterHandle(scope, []generics.Void{raw_args[1]})
     case "modif":
-        handler, err = ModifierHandle(scope, []generics.Void{args[pos]})
+        handler, err = ModifierHandle(scope, []generics.Void{raw_args[1]})
     case "transf":
-        handler, err = TransformationHandle(scope, []generics.Void{args[pos]})
+        handler, err = TransformationHandle(scope, []generics.Void{raw_args[1]})
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown sub-handle name for generator \"" + sub_handle + "\"!")
@@ -47,7 +45,7 @@ func GeneratorHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     if err.Code != error.NoError {
         return nil, err
     }
-    return handler(scope, args[2:])
+    return handler(scope, raw_args[2:])
 }
 
 func FilterHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Handle, error.Error) {

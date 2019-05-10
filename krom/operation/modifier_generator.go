@@ -31,40 +31,40 @@ func GrayscaleHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     if !ok {
         return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
     }
-    red, ok := strconv.ParseFloat(aux, 64)
-    if !ok {
+    red, conv_err := strconv.ParseFloat(str, 64)
+    if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
     }
     pos += 1
 
     // extract the green channel
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
-    str, ok := aux.(string)
+    str, ok = aux.(string)
     if !ok {
         return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
     }
-    green, ok := strconv.ParseFloat(aux, 64)
-    if !ok {
+    green, conv_err := strconv.ParseFloat(str, 64)
+    if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
     }
     pos += 1
 
     // extract the blue channel
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
-    str, ok := aux.(string)
+    str, ok = aux.(string)
     if !ok {
         return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
     }
-    blue, ok := strconv.ParseFloat(aux, 64)
-    if !ok {
+    blue, conv_err := strconv.ParseFloat(str, 64)
+    if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
     }
 
@@ -101,8 +101,8 @@ func CustomModifierHandle(scope generics.Namespace, raw_args []generics.Void) (g
         if !ok {
             return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
         }
-        member, ok := strconv.ParseFloat(aux, 64)
-        if !ok {
+        member, conv_err := strconv.ParseFloat(str, 64)
+        if conv_err != nil {
             return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
         }
 

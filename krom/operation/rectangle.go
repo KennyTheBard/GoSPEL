@@ -15,12 +15,10 @@ func RectangleHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     }
 
     // prepare extraction of function arguments
-    args := make([]generics.InterpreterTree, len(raw_args))
     pos := 0
 
     // extract the sub-handle
-    args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err := raw_args[pos].(generics.InterpreterTree).Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
@@ -33,11 +31,11 @@ func RectangleHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     // execute the sub-handle
     switch sub_handle {
     case "new":
-        return NewRectangleHandle(scope, args[pos:])
+        return NewRectangleHandle(scope, raw_args[pos:])
     case "first":
-        return FirstHandle(scope, args[pos:])
+        return FirstHandle(scope, raw_args[pos:])
     case "last":
-        return LastHandle(scope, args[pos:])
+        return LastHandle(scope, raw_args[pos:])
     default:
         return nil, error.CreateError(error.UnknownHandle,
             "Unknown sub-handle name for rectangle \"" + sub_handle + "\"!")
@@ -70,7 +68,7 @@ func NewRectangleHandle(scope generics.Namespace, raw_args []generics.Void) (gen
 
     // extract the max point
     args[pos] = raw_args[pos].(generics.InterpreterTree)
-    aux, err := args[pos].Interpret(scope.Clone())
+    aux, err = args[pos].Interpret(scope.Clone())
     if err.Code != error.NoError {
         return nil, err
     }
