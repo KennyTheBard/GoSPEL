@@ -39,8 +39,6 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
 					"The variable " + name + " was not declared!")
 			}
 
-		// } else if expression := macro
-
 		// default leaf case
 		} else {
 			return tree.Process, error.CreateNoError()
@@ -53,12 +51,22 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
 		args[pos] = branch
 	}
 
-	// obtain the right handle and evaluate the interpretation atom
+	// obtain the right handle
 	ret := GetHandle(tree.Process)
+
+	// case of function handle
 	if handle, ok := isHandle(ret); ok {
 		return handle(namespace.Clone(), args)
+
+	// case of macro
 	} else if macro, ok := ret.(generics.InterpreterTree); ok {
-		return Execute(macro, args)
+		ret, err := Execute(macro, args)
+		if err.Code != error.NoError {
+			return nil, err
+		}
+		return ret.(generics.InterpreterTree).Interpret(namespace.Clone())
+
+	// case of unknown handle
 	} else {
 		return nil, error.CreateError(error.UnknownHandle,
             "Unknown handle name \"" + tree.Process + "\" !")

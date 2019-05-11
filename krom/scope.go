@@ -38,11 +38,6 @@ func (s Scope) Extend(key string, value generics.Void) generics.Namespace {
  */
 func (s Scope) Get(key string) generics.Void {
     return s.Args[key]
-    // if value, ok := s.Args[key]; ok {
-    //     return value
-    // } else {
-    //     return nil
-    // }
 }
 
 func NewScope() Scope {
