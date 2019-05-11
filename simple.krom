@@ -1,20 +1,23 @@
 print One .;
 print Two .;
 print Three .;
+define pr (print 'Success!' $0);
 let
     img
     (load $0)
     (save
-        (resize
-            $img
-            (let
-                size
-                (sizeof $img)
-                (rect new
-                    (rect first $size)
-                    (point add
-                        (rect last $size)
-                        (point new -250 750)
+        (pr
+            (resize
+                $img
+                (let
+                    size
+                    (sizeof $img)
+                    (rect new
+                        (rect first $size)
+                        (point add
+                            (rect last $size)
+                            (point new -250 750)
+                        )
                     )
                 )
             )

@@ -4,6 +4,7 @@ import (
     op "./operation"
     ctrl "./control"
     generics "./generics"
+    macro "./macro"
 )
 
 /**
@@ -43,7 +44,9 @@ func GetHandle(process string) (generics.Void) {
         return ctrl.PrintHandle
     case "let":
         return ctrl.LetHandle
+    case "define":
+        return ctrl.DefineHandle
     default:
-        return Macros.GetMacro(process)
+        return macro.Macros.GetMacro(process)
     }
 }
