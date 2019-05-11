@@ -1,7 +1,6 @@
 package krom
 
 import (
-    error "./error"
     op "./operation"
     ctrl "./control"
     generics "./generics"
@@ -10,42 +9,41 @@ import (
 /**
  *  Return the handle for the required function.
  */
-func GetHandle(process string) (generics.Handle, error.Error) {
+func GetHandle(process string) (generics.Void) {
     switch process {
     case "copy":
-        return op.CopyHandle, error.CreateNoError()
+        return op.CopyHandle
     case "load":
-        return op.LoadHandle, error.CreateNoError()
+        return op.LoadHandle
     case "save":
-        return op.SaveHandle, error.CreateNoError()
+        return op.SaveHandle
     case "point":
-        return op.PointHandle, error.CreateNoError()
+        return op.PointHandle
     case "rect":
-        return op.RectangleHandle, error.CreateNoError()
+        return op.RectangleHandle
     case "resize":
-        return op.ResizeHandle, error.CreateNoError()
+        return op.ResizeHandle
     case "rotate":
-        return op.RotateHandle, error.CreateNoError()
+        return op.RotateHandle
     case "gen":
-        return op.GeneratorHandle, error.CreateNoError()
+        return op.GeneratorHandle
     case "sizeof":
-        return op.SizeofHandle, error.CreateNoError()
+        return op.SizeofHandle
     case "filter":
-        return op.ApplyFilterHandle, error.CreateNoError()
+        return op.ApplyFilterHandle
     case "modify":
-        return op.ModifyColorsHandle, error.CreateNoError()
+        return op.ModifyColorsHandle
     case "merge":
-        return op.MergeHandle, error.CreateNoError()
+        return op.MergeHandle
     case "crop":
-        return op.CropHandle, error.CreateNoError()
+        return op.CropHandle
     case "try":
-        return ctrl.TryHandle, error.CreateNoError()
+        return ctrl.TryHandle
     case "print":
-        return ctrl.PrintHandle, error.CreateNoError()
+        return ctrl.PrintHandle
     case "let":
-        return ctrl.LetHandle, error.CreateNoError()
+        return ctrl.LetHandle
     default:
-        return nil, error.CreateError(error.UnknownHandle,
-            "Unknown handle name \"" + process + "\"!")
+        return Macros.GetMacro(process)
     }
 }

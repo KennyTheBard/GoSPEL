@@ -39,26 +39,30 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
 					"The variable " + name + " was not declared!")
 			}
 
+		// } else if expression := macro
+
 		// default leaf case
 		} else {
 			return tree.Process, error.CreateNoError()
 		}
     }
 
-	// obtain the right handle
-	handle, err := GetHandle(tree.Process)
-	if err.Code != error.NoError {
-		return handle, err
-	}
-
 	// prepare the arguments to be passed on
-	args := make( []generics.Void, len(tree.Subatoms))
+	args := make([]generics.Void, len(tree.Subatoms))
 	for pos, branch := range tree.Subatoms {
 		args[pos] = branch
 	}
 
-	// evaluate the interpretation atom
-	return handle(namespace.Clone(), args)
+	// obtain the right handle and evaluate the interpretation atom
+	ret := GetHandle(tree.Process)
+	if handle, ok := isHandle(ret); ok {
+		return handle(namespace.Clone(), args)
+	} else if macro, ok := ret.(generics.InterpreterTree); ok {
+		return Execute(macro, args)
+	} else {
+		return nil, error.CreateError(error.UnknownHandle,
+            "Unknown handle name \"" + tree.Process + "\" !")
+	}
 }
 
 func (tree Atom) IsVariable() (string, error.Error) {
@@ -77,4 +81,13 @@ func (tree Atom) IsVariable() (string, error.Error) {
 	//     fmt.Printf("%q looks like a number.\n", v)
 	// }
 	return name, error.CreateNoError()
+}
+
+/**
+ *	Used only to make a type assertion less crude.
+ */
+func isHandle(obj generics.Void) (generics.Handle, bool) {
+	handle, ok := obj.(func(generics.Namespace, []generics.Void) (generics.Void, error.Error))
+
+	return handle, ok
 }

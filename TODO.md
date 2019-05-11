@@ -76,11 +76,7 @@
 
 ### Debugging
 - [ ] The black border for the Swirl effect
-<<<<<<< HEAD
 - [x] The problem with types at runtime
-=======
-- [ ] The problem with types at runtime
->>>>>>> 87190e4f627619e7f447da3cc3f2409d9a480933
 
 ### Documentation
 - [ ] Add comments to every handle
