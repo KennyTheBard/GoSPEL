@@ -1,11 +1,8 @@
 # Kromatique
 <img src="https://raw.githubusercontent.com/KennyTheBard/Kromatique/master/logo.png" width="128">
 
-<<<<<<< HEAD
 ## Short description
 
-=======
->>>>>>> b166633abd658ec40d425dec48f930106309c7ac
     Project **Kromatique** is a image processing program that uses an internal
 library and a proprietary scripting language in order to empower its users to
 have as much control as possible over the processes applied to their images. In
