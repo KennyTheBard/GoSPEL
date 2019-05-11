@@ -28,6 +28,17 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
 		} else if tree.Process == "."{
 			return nil, error.CreateNoError()
 
+		// leaf case of variable
+		} else if name, err := tree.IsVariable();
+				err.Code == error.NoError && name != "" {
+			value := namespace.Get(name)
+			if value != nil {
+				return value, error.CreateNoError()
+			} else {
+				return nil, error.CreateError(error.UndeclaredIdentifier,
+					"The variable " + name + " was not declared!")
+			}
+
 		// default leaf case
 		} else {
 			return tree.Process, error.CreateNoError()
@@ -40,34 +51,17 @@ func (tree Atom) Interpret(namespace generics.Namespace) (generics.Void, error.E
 		return handle, err
 	}
 
-	// process the arguments
-	var args []generics.Void
-    for _, branch := range tree.Subatoms {
-		// replace the variable name with value from the current scope
-		if name, err := branch.IsVariable(); err.Code == error.NoError && name != "" {
-			value := namespace.Get(name)
-
-			if value != nil {
-				args = append(args, value)
-			} else {
-				return nil, error.CreateError(error.UndeclaredIdentifier,
-					"The variable " + name + " was not declared!")
-			}
-		} else {
-			args = append(args, branch.(generics.Void))
-		}
-    }
+	// prepare the arguments to be passed on
+	args := make( []generics.Void, len(tree.Subatoms))
+	for pos, branch := range tree.Subatoms {
+		args[pos] = branch
+	}
 
 	// evaluate the interpretation atom
 	return handle(namespace.Clone(), args)
 }
 
 func (tree Atom) IsVariable() (string, error.Error) {
-	// check if it's a leaf
-	if len(tree.Subatoms) > 0 {
-			return "", error.CreateNoError()
-    }
-
 	//check if it is a variable
 	if tree.Process[0] != '$' {
         return "", error.CreateNoError()
@@ -78,6 +72,7 @@ func (tree Atom) IsVariable() (string, error.Error) {
 	if len(name) < 1 {
 		return "", error.CreateError(error.MissingIdentifier, "No string found after $!")
 	}
+
 	// if _, err := strconv.Atoi(v); err == nil {
 	//     fmt.Printf("%q looks like a number.\n", v)
 	// }
