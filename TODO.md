@@ -76,6 +76,7 @@
 
 ### Debugging
 - [ ] The black border for the Swirl effect
+- [x] The problem with types at runtime
 
 ### Documentation
 - [ ] Add comments to every handle
