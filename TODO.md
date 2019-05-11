@@ -49,7 +49,7 @@
 - [x] Added Swirl function generator
 - [x] Treat literal atoms as one word
 - [x] Execute script from file
-- [ ] Implement let/define handle
+- [x] Implement let/define handle
 - [x] Implement control structures
 - [ ] Implement keyword approximation
 - [ ] Add support for comments
@@ -61,8 +61,7 @@
 - [x] Make all rectangle and point operations to have sub-handles in their respective handle OR make overloaded handles (add point point and add rectangle point)
 - [ ] Refactor shear operations as a transformation
 - [x] Remove most of the error code checks from krom package
-- [ ] Rework all handles to use type insertion only once for each variable
-- [ ] Replace file formats with constants in order to check them in the handle
+- [x] Rework all handles to use type insertion only once for each variable
 
 ### Testing
 - [ ] Test cubic interpolation
