@@ -35,7 +35,7 @@ func DefineHandle(scope generics.Namespace, raw_args []generics.Void) (generics.
     args[pos] = raw_args[pos].(generics.InterpreterTree)
 
     // create a new macro entry
-    macro.Macros = macro.Macros.AddMacro(name, args[pos])
+    (&macro.Macros).AddMacro(name, args[pos])
 
     // return
     return nil, error.CreateNoError()

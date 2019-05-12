@@ -31,7 +31,7 @@ func UndefineHandle(scope generics.Namespace, raw_args []generics.Void) (generic
     }
 
     // remove the macro from the global defined list
-    macro.Macros = macro.Macros.RemoveMacro(name)
+    (&macro.Macros).RemoveMacro(name)
 
     // return
     return nil, error.CreateNoError()

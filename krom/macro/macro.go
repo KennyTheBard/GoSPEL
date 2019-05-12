@@ -41,22 +41,20 @@ func (def Defines) GetMacro(name string) generics.InterpreterTree {
 /**
  *	Creates a new macro and tracks it.
  */
-func (def Defines) AddMacro(name string, expression generics.InterpreterTree) Defines {
+func (def *Defines) AddMacro(name string, expression generics.InterpreterTree) {
     def.Macros = append(def.Macros, Macro{name, expression})
-    return def
 }
 
 /**
  *	Removes the last matching macro.
  */
-func (def Defines) RemoveMacro(name string) Defines {
+func (def *Defines) RemoveMacro(name string) {
     for i := len(def.Macros) - 1; i >= 0; i-- {
         if def.Macros[i].Match(name) {
             def.Macros = append(def.Macros[:i], def.Macros[i+1:]...)
-            break
+            return
         }
     }
-    return def
 }
 
 var Macros Defines
