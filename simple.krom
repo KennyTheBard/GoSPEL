@@ -32,4 +32,6 @@ let
         )
         result
         jpg
-    )
+    );
+undefine pr;
+pr .

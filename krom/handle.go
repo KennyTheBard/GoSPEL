@@ -46,6 +46,8 @@ func GetHandle(process string) (generics.Void) {
         return ctrl.LetHandle
     case "define":
         return ctrl.DefineHandle
+    case "undefine":
+        return ctrl.UndefineHandle
     default:
         return macro.Macros.GetMacro(process)
     }

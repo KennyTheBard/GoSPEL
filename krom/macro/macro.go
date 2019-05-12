@@ -49,13 +49,14 @@ func (def Defines) AddMacro(name string, expression generics.InterpreterTree) De
 /**
  *	Removes the last matching macro.
  */
-func (def Defines) RemoveMacro(name string) {
+func (def Defines) RemoveMacro(name string) Defines {
     for i := len(def.Macros) - 1; i >= 0; i-- {
         if def.Macros[i].Match(name) {
             def.Macros = append(def.Macros[:i], def.Macros[i+1:]...)
-            return
+            break
         }
     }
+    return def
 }
 
 var Macros Defines
