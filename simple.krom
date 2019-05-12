@@ -7,18 +7,26 @@ let
     (load $0)
     (save
         (pr
-            (resize
-                $img
-                (let
-                    size
-                    (sizeof $img)
-                    (rect new
-                        (rect first $size)
-                        (point add
-                            (rect last $size)
-                            (point new -250 750)
+            (modify
+                (resize
+                    $img
+                    (let
+                        size
+                        (sizeof $img)
+                        (rect new
+                            (rect first $size)
+                            (point add
+                                (rect last $size)
+                                (point new -250 750)
+                            )
                         )
                     )
+                )
+                (gen modif custom
+                    -1  0   0   0   1
+                    0   -1  0   0   1
+                    0   0   -1  0   1
+                    0   0   0   1   0
                 )
             )
         )

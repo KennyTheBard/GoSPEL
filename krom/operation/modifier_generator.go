@@ -88,10 +88,9 @@ func CustomModifierHandle(scope generics.Namespace, raw_args []generics.Void) (g
 
     // prepare extraction of function arguments
     args := make([]generics.InterpreterTree, len(raw_args))
-    pos := 0
 
     // extract all the members of the modifier
-    for i := 0; i < size * size + const_num; i++ {
+    for pos := 0; pos < size * size + const_num; pos++ {
         args[pos] = raw_args[pos].(generics.InterpreterTree)
         aux, err := args[pos].Interpret(scope.Clone())
         if err.Code != error.NoError {
@@ -106,11 +105,11 @@ func CustomModifierHandle(scope generics.Namespace, raw_args []generics.Void) (g
             return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
         }
 
-        idx := i + 1
+        idx := pos + 1
         if idx % 5 == 0 {
-            constants[i / 5] = member
+            constants[pos / 5] = member
         } else {
-            mat[i / 5][i % 5] = member
+            mat[pos / 5][pos % 5] = member
         }
     }
 
