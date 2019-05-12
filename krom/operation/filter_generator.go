@@ -9,6 +9,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and return the required BoxBlur filter.
+ *  Usage: gen filter blur <box_diameter>
+ */
 func BoxBlurHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1
@@ -40,6 +44,10 @@ func BoxBlurHandle(scope generics.Namespace, raw_args []generics.Void) (generics
     return filters.BoxBlur(diameter), error.CreateNoError()
 }
 
+/**
+ *  Handle the arguments and return the required custom filter.
+ *  Usage: gen filter custom <size> <size*size_float_elements>
+ */
 func CustomFilterHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1

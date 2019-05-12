@@ -7,6 +7,10 @@ import (
     macro "../macro"
 )
 
+/**
+ *  Handle the arguments and undefine a macro with the given name.
+ *  Usage: undefine <name>
+ */
 func UndefineHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1

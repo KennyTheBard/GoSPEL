@@ -8,6 +8,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and call the Resize function from the lib.
+ *  Usage: resize <image> <target_dimension>
+ */
 func ResizeHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2

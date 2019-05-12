@@ -7,6 +7,11 @@ import (
     macro "../macro"
 )
 
+/**
+ *  Handle the arguments and define a macro with
+ *  the given name and InterpreterTree.
+ *  Usage: define <name> (<code>)
+ */
 func DefineHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2

@@ -8,6 +8,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and call the Copy function from the lib.
+ *  Usage: copy <image>
+ */
 func CopyHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1

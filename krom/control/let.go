@@ -6,6 +6,11 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and define a variable with the given value
+ *  in the scope of the code that needs to be executed.
+ *  Usage: let <name> <value> (<code>)
+ */
 func LetHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 3

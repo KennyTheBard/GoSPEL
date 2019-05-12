@@ -5,6 +5,12 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and try an operation, if it
+ *  returns any error, it will execute the second operation
+ *  returning its results.
+ *  Usage: try (<risky_code>) (<fallback_code>)
+ */
 func TryHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2

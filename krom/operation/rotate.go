@@ -9,6 +9,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and call the Rotate function from the lib.
+ *  Usage: rotate <image> <angle_in_degrees>
+ */
 func RotateHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2

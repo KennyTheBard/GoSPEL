@@ -7,6 +7,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and return the bounds of an image.
+ *  Usage: sizeof <image>
+ */
 func SizeofHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1

@@ -8,6 +8,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and call the Crop function from the lib.
+ *  Usage: crop <image> <bounds>
+ */
 func CropHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2

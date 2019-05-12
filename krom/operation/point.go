@@ -8,6 +8,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and call the required sub-handle.
+ *  Usage: point <sub_handle> ...
+ */
 func PointHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1
@@ -36,9 +40,9 @@ func PointHandle(scope generics.Namespace, raw_args []generics.Void) (generics.V
         return NewPointHandle(scope, raw_args[pos:])
     case "add":
         return AddPointHandle(scope, raw_args[pos:])
-    case "multiply":
+    case "mul":
         return MultiplyPointHandle(scope, raw_args[pos:])
-    case "divide":
+    case "div":
         return DividePointHandle(scope, raw_args[pos:])
     default:
         return nil, error.CreateError(error.UnknownHandle,
@@ -46,6 +50,10 @@ func PointHandle(scope generics.Namespace, raw_args []generics.Void) (generics.V
     }
 }
 
+/**
+ *  Handle the arguments and create a new Point.
+ *  Usage: point new <int_x> <int_y>
+ */
 func NewPointHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2
@@ -93,6 +101,10 @@ func NewPointHandle(scope generics.Namespace, raw_args []generics.Void) (generic
     return image.Point{x, y}, error.CreateNoError()
 }
 
+/**
+ *  Handle the arguments and return the sum of the two points.
+ *  Usage: point add <point_A> <point_B>
+ */
 func AddPointHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2
@@ -132,6 +144,10 @@ func AddPointHandle(scope generics.Namespace, raw_args []generics.Void) (generic
     return image.Point{a.X + b.X, a.Y + b.Y}, error.CreateNoError()
 }
 
+/**
+ *  Handle the arguments and return the product of the two points.
+ *  Usage: point mul <point_A> <point_B>
+ */
 func MultiplyPointHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2
@@ -171,6 +187,10 @@ func MultiplyPointHandle(scope generics.Namespace, raw_args []generics.Void) (ge
     return image.Point{a.X * b.X, a.Y * b.Y}, error.CreateNoError()
 }
 
+/**
+ *  Handle the arguments and return the quotient of the two points.
+ *  Usage: point div <point_A> <point_B>
+ */
 func DividePointHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2

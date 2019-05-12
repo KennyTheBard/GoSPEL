@@ -8,6 +8,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and call the Merge function from the lib.
+ *  Usage: merge <target_image> <overlay_image> <offset>
+ */
 func MergeHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 3

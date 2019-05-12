@@ -8,6 +8,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and call the Load function from the lib.
+ *  Usage: load <file_image>
+ */
 func LoadHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1
@@ -39,6 +43,10 @@ func LoadHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Vo
     return img, error.CreateNoError()
 }
 
+/**
+ *  Handle the arguments and call the Save function from the lib.
+ *  Usage: save <image> <file_name> <format>
+ */
 func SaveHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 3

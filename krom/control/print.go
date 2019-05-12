@@ -7,6 +7,11 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and prints the given mesage after
+ *  the code finished execution.
+ *  Usage: print <mesage> (<code>)
+ */
 func PrintHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2

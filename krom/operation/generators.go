@@ -6,6 +6,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and call the required sub-handle.
+ *  Usage: gen <sub_handle> ...
+ */
 func GeneratorHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2
@@ -48,6 +52,10 @@ func GeneratorHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     return handler(scope, raw_args[2:])
 }
 
+/**
+ *  Handle the arguments and return the required filter handle.
+ *  Usage: gen filter...
+ */
 func FilterHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Handle, error.Error) {
     // check the number of arguments
     expected := 1
@@ -83,6 +91,10 @@ func FilterHandle(scope generics.Namespace, raw_args []generics.Void) (generics.
     }
 }
 
+/**
+ *  Handle the arguments and return the required modifier handle.
+ *  Usage: gen modif...
+ */
 func ModifierHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Handle, error.Error) {
     // check the number of arguments
     expected := 1
@@ -118,6 +130,10 @@ func ModifierHandle(scope generics.Namespace, raw_args []generics.Void) (generic
     }
 }
 
+/**
+ *  Handle the arguments and return the required transformation handle.
+ *  Usage: gen transf...
+ */
 func TransformationHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Handle, error.Error) {
     // check the number of arguments
     expected := 1

@@ -9,6 +9,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and return the required Grayscale modifier.
+ *  Usage: gen modif grayscale <red_ratio> <green_ratio> <blue_ratio>
+ */
 func GrayscaleHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 3
@@ -72,6 +76,12 @@ func GrayscaleHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     return modifiers.Grayscale(red, green, blue), error.CreateNoError()
 }
 
+/**
+ *  Handle the arguments and return the required custom modifier.
+ *  Usage: gen modif custom <4*5_float_elements>
+ *      the elements represent groups of 4 ratios for channels
+  *     + 1 ratio for max channel value; one group for each channel
+ */
 func CustomModifierHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // create a matrix and an array
     const size = 4

@@ -7,6 +7,10 @@ import (
     error "../error"
 )
 
+/**
+ *  Handle the arguments and call the required sub-handle.
+ *  Usage: rect <sub_handle> ...
+ */
 func RectangleHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     expected := 1
     received := len(raw_args)
@@ -42,6 +46,10 @@ func RectangleHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     }
 }
 
+/**
+ *  Handle the arguments and create a new Rectangle.
+ *  Usage: rect new <point_A> <point_B>
+ */
 func NewRectangleHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 2
@@ -81,6 +89,10 @@ func NewRectangleHandle(scope generics.Namespace, raw_args []generics.Void) (gen
     return image.Rectangle{min, max}, error.CreateNoError()
 }
 
+/**
+ *  Handle the arguments and returns the first point of the rectangle.
+ *  Usage: rect new first <rectangle>
+ */
 func FirstHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1
@@ -108,6 +120,10 @@ func FirstHandle(scope generics.Namespace, raw_args []generics.Void) (generics.V
     return rect.Min, error.CreateNoError()
 }
 
+/**
+ *  Handle the arguments and returns the last point of the rectangle.
+ *  Usage: rect new last <rectangle>
+ */
 func LastHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1

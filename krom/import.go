@@ -8,14 +8,23 @@ import (
     error "./error"
 )
 
+/**
+ *  Structure for holding filenames.
+ */
 type Files struct {
     paths []string
 }
 
+/**
+ *  Add a new file to the list.
+ */
 func (fs *Files) Import(filepath string) {
     fs.paths = append(fs.paths, filepath)
 }
 
+/**
+ *  Check if a file is already imported.
+ */
 func (fs Files) isImported(filepath string) bool {
     for _, path := range fs.paths {
         if filepath == path {
@@ -27,6 +36,11 @@ func (fs Files) isImported(filepath string) bool {
 
 var ImportedFiles Files
 
+/**
+ *  Imports a file by filepath and execute all the code inside.
+ *  Should be used mainly for bringing defines into global space.
+ *  Usage: import <filepath>
+ */
 func Import(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1

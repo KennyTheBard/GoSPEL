@@ -78,4 +78,4 @@
 - [x] The problem with types at runtime
 
 ### Documentation
-- [ ] Add comments to every handle
+- [x] Add comments to every handle
