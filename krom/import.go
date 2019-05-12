@@ -8,7 +8,26 @@ import (
     error "./error"
 )
 
-func ImportHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+type Files struct {
+    paths []string
+}
+
+func (fs *Files) Import(filepath string) {
+    fs.paths = append(fs.paths, filepath)
+}
+
+func (fs Files) isImported(filepath string) bool {
+    for _, path := range fs.paths {
+        if filepath == path {
+            return true
+        }
+    }
+    return false
+}
+
+var ImportedFiles Files
+
+func Import(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1
     received := len(raw_args)
@@ -26,18 +45,26 @@ func ImportHandle(scope generics.Namespace, raw_args []generics.Void) (generics.
     if err.Code != error.NoError {
         return nil, err
     }
-    name, ok := aux.(string)
+    filepath, ok := aux.(string)
     if !ok {
         return nil, error.ArgumentTypeError(pos, "string", reflect.TypeOf(aux).Name())
     }
 
+    // in case there might be a cyclic import
+    if ImportedFiles.isImported(filepath) {
+        return nil, error.CreateNoError()
+    }
+
     // attempt to open the file
-    file, err_open := os.Open(name + ".krom")
+    file, err_open := os.Open(filepath)
     if err_open != nil {
         return nil, error.CreateError(error.FileError,
-            "The file " + name + "could not be imported!")
+            "The file " + filepath + "could not be imported!")
     }
     defer file.Close()
+
+    // add the file to imported list
+    (&ImportedFiles).Import(filepath)
 
     // parse and interpret
     bs, _ := ioutil.ReadAll(file)

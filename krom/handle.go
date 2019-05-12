@@ -49,7 +49,7 @@ func GetHandle(process string) (generics.Void) {
     case "undefine":
         return ctrl.UndefineHandle
     case "import":
-        return ImportHandle
+        return Import
     default:
         return macro.Macros.GetMacro(process)
     }

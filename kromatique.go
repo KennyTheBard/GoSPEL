@@ -8,15 +8,16 @@ import (
 )
 
 func main() {
-    file, err_file := os.Open(os.Args[1])
+    filepath := os.Args[1]
+    file, err_file := os.Open(filepath)
     if err_file != nil {
-        fmt.Println("Could not open script file", os.Args[1])
+        fmt.Println("Could not open script file", filepath)
     }
     defer file.Close()
 
     bs, _ := ioutil.ReadAll(file)
     script := string(bs)
-
+    (&krom.ImportedFiles).Import(filepath)
     forrest := krom.BuildForrest(script)
 
     args := os.Args[2:]
