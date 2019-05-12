@@ -3,7 +3,7 @@
 
 ## Short description
 
-    Project **Kromatique** is a image processing program that uses an internal
+   Project **Kromatique** is a image processing program that uses an internal
 library and a proprietary scripting language in order to empower its users to
 have as much control as possible over the processes applied to their images. In
 all its grace, this software could be reduced at best to a self-sufficient
