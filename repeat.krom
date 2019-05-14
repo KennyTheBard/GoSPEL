@@ -1,0 +1,12 @@
+save
+    (repeat
+        20
+        img
+        (load test.jpg)
+        (filter
+            $img
+            (gen filter blur 3)
+        )
+    )
+    result
+    jpg

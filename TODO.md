@@ -76,6 +76,7 @@
 ### Debugging
 - [ ] The black border for the Swirl effect
 - [x] The problem with types at runtime
+- [ ] Find a way in repeat to return error if the in and out are different types
 
 ### Documentation
 - [x] Add comments to every handle

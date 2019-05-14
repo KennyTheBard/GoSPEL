@@ -48,6 +48,8 @@ func GetHandle(process string) (generics.Void) {
         return ctrl.DefineHandle
     case "undefine":
         return ctrl.UndefineHandle
+    case "repeat":
+        return ctrl.RepeatHandle
     case "import":
         return Import
     default:
