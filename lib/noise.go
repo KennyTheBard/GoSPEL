@@ -7,7 +7,6 @@ import (
     "image/draw"
     "image/color"
     utils "./utils"
-    interp "./interpolation"
 )
 
 const (
@@ -17,21 +16,14 @@ const (
 
 type NoiseGenerator func (col color.Color, rand_gen *rand.Rand, chance float64) (uint32, uint32, uint32, uint32)
 
-/**
-    Returns the color channels of the noised pixel
-*/
-func get_noise(col color.Color, rand_gen *rand.Rand, chance float64, noiseFunc NoiseGenerator) (uint32, uint32, uint32, uint32)  {
-    return noiseFunc(col, rand_gen, chance)
-}
-
 
 /**
-    Create noise on the image img over the given mask using the given
+    Create noise on the image img using the given
     mode, strength and chance of placing a noised pixel.
 
     The chance shoudl be a number in [0, 1] interval.
 */
-func Noise(img image.Image, mask image.Image, mode, strength int, chance float64) (image.Image) {
+func Noise(img image.Image, mode, strength int, chance float64) (image.Image) {
     bounds := img.Bounds()
     ret := Copy(img)
 
@@ -87,18 +79,9 @@ func Noise(img image.Image, mask image.Image, mode, strength int, chance float64
 
             for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
                 for x := bounds.Min.X; x < bounds.Max.X; x ++ {
-                    r, g, b, a := get_noise(img.At(x, y), rand_gen, chance, noiseFunc)
+                    r, g, b, a := noiseFunc(img.At(x, y), rand_gen, chance)
 
-                    r_aux, g_aux, b_aux, a_aux := ret.At(x, y).RGBA()
-                    r_mask, g_mask, b_mask, a_mask := mask.At(x, y).RGBA()
-
-                    // calculate the color modification through mask
-                    fin_r := interp.LinearInterpolation(int32(r_aux), int32(r), float64(r_mask) / float64((256 << 8) - 1))
-                    fin_g := interp.LinearInterpolation(int32(g_aux), int32(g), float64(g_mask) / float64((256 << 8) - 1))
-                    fin_b := interp.LinearInterpolation(int32(b_aux), int32(b), float64(b_mask) / float64((256 << 8) - 1))
-                    fin_a := interp.LinearInterpolation(int32(a_aux), int32(a), float64(a_mask) / float64((256 << 8) - 1))
-
-                    ret.(draw.Image).Set(x, y, color.RGBA{uint8(fin_r >> 8), uint8(fin_g >> 8), uint8(fin_b >> 8), uint8(fin_a >> 8)})
+                    ret.(draw.Image).Set(x, y, color.RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)})
                 }
             }
 

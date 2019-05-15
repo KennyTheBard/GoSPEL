@@ -3,12 +3,12 @@ package main
 import (
     "fmt"
     "time"
-    //"image/color"
+    // "image/color"
     lib "./lib"
     //ut "./ut"
     // filters "./lib/generators/filters"
     // modifiers "./lib/generators/modifiers"
-    trans "./lib/generators/transformations"
+    // trans "./lib/generators/transformations"
 )
 
 func main() {
@@ -32,8 +32,8 @@ func main() {
     // card = lib.ApplyFilter(card, card.Bounds(), f, 1)
     // card = lib.ModifyColors(card, card.Bounds(), modifiers.ExctractColorChannel(modifiers.RED_CHANNEL))
 
-    card = lib.Transform(card, trans.SwirlFunc(-0.001))
-
+    //card = lib.Transform(card, trans.SwirlFunc(-0.001))
+    card = lib.Noise(card, lib.DIGITAL_NOISE, 25, 1)
     elapsed := time.Since(start)
 
     fmt.Printf("Done in %s!\n", elapsed)
