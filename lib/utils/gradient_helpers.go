@@ -2,6 +2,7 @@ package utils
 
 import (
     "math"
+    "image"
     "image/color"
 )
 
@@ -37,8 +38,10 @@ func Search_interval(ys []int, y int) (int, int) {
 /**
     Returns the distance between 2 points.
 */
-func Distance(x1, y1, x2, y2 float64) float64 {
-    return math.Sqrt(math.Pow(x1 - x2, 2) + math.Pow(y1 - y2, 2))
+func Distance(a, b image.Point) float64 {
+    x := float64(a.X - b.X)
+    y := float64(a.Y - b.Y)
+    return math.Sqrt(math.Pow(x, 2) + math.Pow(y, 2))
 }
 
 
