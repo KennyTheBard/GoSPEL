@@ -1,6 +1,7 @@
 package control
 
 import (
+    "fmt"
     "strconv"
     "reflect"
     generics "../generics"
@@ -66,10 +67,9 @@ func RepeatHandle(scope generics.Namespace, raw_args []generics.Void) (generics.
         if err.Code != error.NoError {
             return nil, err
         }
-        // if reflect.TypeOf(ret) != reflect.TypeOf(value) {
-        //     return nil, error.CreateError(error.InvalidArgumentType, "The repeating code produces elements of type " +
-        //             reflect.TypeOf(ret).Name() + ", but it expects " + reflect.TypeOf(value).Name() + ". It needs the same type!")
-        // }
+        if reflect.TypeOf(ret) != reflect.TypeOf(value) {
+            return nil, error.CreateError(error.InvalidArgumentType, "The repeating code produces and consumes values of different types. It needs the same type!")
+        }
         value = ret
     }
 

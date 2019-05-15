@@ -2,6 +2,7 @@ package operation
 
 import (
     "image"
+    "image/draw"
     "reflect"
     lib "../../lib"
     generics "../generics"
@@ -40,7 +41,10 @@ func LoadHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Vo
     if img == nil {
         return nil, error.CreateError(error.FileError, "Could not open \"" + filename + "\"")
     }
-    return img, error.CreateNoError()
+
+    ret := image.NewRGBA(img.Bounds())
+    draw.Draw(ret, ret.Bounds(), img, img.Bounds().Min, draw.Src)
+    return ret, error.CreateNoError()
 }
 
 /**

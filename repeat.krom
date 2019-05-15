@@ -1,6 +1,6 @@
 save
     (repeat
-        20
+        1
         img
         (load test.jpg)
         (filter
