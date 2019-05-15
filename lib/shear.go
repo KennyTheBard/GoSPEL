@@ -52,7 +52,7 @@ func xshear(img image.Image, shear float64) (image.Image) {
             for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
                 // calculate padding
                 proc := float64(y - bounds.Min.Y) / float64(height)
-                padding := int(interp.LinearInterpolation(0, int32(shear_factor), proc))
+                padding := int(interp.LERP(0, int32(shear_factor), proc))
 
                 for x := bounds.Min.X; x < bounds.Max.X; x++ {
                     r, g, b, a := img.At(x, y).RGBA()
@@ -92,7 +92,7 @@ func yshear(img image.Image, shear float64) (image.Image) {
     paddings := make([]int, width)
     for x := bounds.Min.X; x < bounds.Max.X; x++ {
         proc := float64(x - bounds.Min.X) / float64(width)
-        paddings[x - bounds.Min.X] = int(interp.LinearInterpolation(0, int32(shear_factor), proc))
+        paddings[x - bounds.Min.X] = int(interp.LERP(0, int32(shear_factor), proc))
     }
 
     n := 10

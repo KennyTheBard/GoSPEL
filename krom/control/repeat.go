@@ -1,7 +1,6 @@
 package control
 
 import (
-    "fmt"
     "strconv"
     "reflect"
     generics "../generics"

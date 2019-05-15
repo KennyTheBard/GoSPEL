@@ -167,10 +167,10 @@ func AddHSV(img image.Image, mask image.Image, hue int32, saturation float64, va
                     r_mask, g_mask, b_mask, a_mask := mask.At(x, y).RGBA()
 
                     // calculate the color modification through mask
-                    r_fin := uint32(interp.LinearInterpolation(int32(r_aux), int32(r), float64(r_mask) / float64((256 << 8) - 1)))
-                    g_fin := uint32(interp.LinearInterpolation(int32(g_aux), int32(g), float64(g_mask) / float64((256 << 8) - 1)))
-                    b_fin := uint32(interp.LinearInterpolation(int32(b_aux), int32(b), float64(b_mask) / float64((256 << 8) - 1)))
-                    a_fin := uint32(interp.LinearInterpolation(int32(a_aux), int32(a), float64(a_mask) / float64((256 << 8) - 1)))
+                    r_fin := uint32(interp.LERP(int32(r_aux), int32(r), float64(r_mask) / float64((256 << 8) - 1)))
+                    g_fin := uint32(interp.LERP(int32(g_aux), int32(g), float64(g_mask) / float64((256 << 8) - 1)))
+                    b_fin := uint32(interp.LERP(int32(b_aux), int32(b), float64(b_mask) / float64((256 << 8) - 1)))
+                    a_fin := uint32(interp.LERP(int32(a_aux), int32(a), float64(a_mask) / float64((256 << 8) - 1)))
 
                     ret.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
                 }

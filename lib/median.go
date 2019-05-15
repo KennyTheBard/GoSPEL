@@ -56,10 +56,10 @@ func Median(img image.Image, mask image.Image, radius int) (image.Image) {
                     r_mask, g_mask, b_mask, a_mask := mask.At(x, y).RGBA()
 
                     // calculate the color modification through mask
-                    fin_r := interp.LinearInterpolation(int32(r_aux), int32(sum_r), float64(r_mask) / float64((256 << 8) - 1))
-                    fin_g := interp.LinearInterpolation(int32(g_aux), int32(sum_g), float64(g_mask) / float64((256 << 8) - 1))
-                    fin_b := interp.LinearInterpolation(int32(b_aux), int32(sum_b), float64(b_mask) / float64((256 << 8) - 1))
-                    fin_a := interp.LinearInterpolation(int32(a_aux), int32(sum_a), float64(a_mask) / float64((256 << 8) - 1))
+                    fin_r := interp.LERP(int32(r_aux), int32(sum_r), float64(r_mask) / float64((256 << 8) - 1))
+                    fin_g := interp.LERP(int32(g_aux), int32(sum_g), float64(g_mask) / float64((256 << 8) - 1))
+                    fin_b := interp.LERP(int32(b_aux), int32(sum_b), float64(b_mask) / float64((256 << 8) - 1))
+                    fin_a := interp.LERP(int32(a_aux), int32(sum_a), float64(a_mask) / float64((256 << 8) - 1))
 
                     ret.(draw.Image).Set(x, y, color.RGBA{uint8(fin_r >> 8), uint8(fin_g >> 8), uint8(fin_b >> 8), uint8(fin_a >> 8)})
                 }
