@@ -1,6 +1,6 @@
 # TODO List
 
-### Developing
+### Develop
 - [x] Command handler
 - [x] Filter generators
 - [x] Modifier generators
@@ -32,7 +32,7 @@
 - [ ] Design a data structure to optimize keyword recognition
 - [ ] Encapsulate all keywords and related handles into a map (keyword, handle)
 
-### Implementing
+### Extend
 - [x] Implement keyword recognition
 - [x] Implement functionalities call
 - [x] Implement axial blur
@@ -53,8 +53,9 @@
 - [x] Implement control structures
 - [ ] Implement keyword approximation
 - [ ] Add support for comments
+- [ ] Create some standard libraries with defines for fill and mask merge
 
-### Refactoring
+### Refactor
 - [x] Check for each function to return origin centered images
 - [ ] Make all error code checks for Nikrom to use bitwise AND
 - [ ] Replace the current error system with one that would be able to hold multiple errors and the throwing command
@@ -63,7 +64,7 @@
 - [x] Remove most of the error code checks from krom package
 - [x] Rework all handles to use type insertion only once for each variable
 
-### Testing
+### Test
 - [ ] Test cubic interpolation
 - [ ] Unit tests for Median
 - [ ] Unit tests for Shift
@@ -73,7 +74,7 @@
 - [ ] Unit tests for Select
 - [ ] Use unit testing functionalities incorporated in language
 
-### Debugging
+### Debug
 - [ ] The black border for the Swirl effect
 - [x] The problem with types at runtime
 - [x] Find a way in repeat to return error if the in and out are different types
