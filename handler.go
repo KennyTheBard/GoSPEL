@@ -33,7 +33,7 @@ func main() {
     // card = lib.ModifyColors(card, card.Bounds(), modifiers.ExctractColorChannel(modifiers.RED_CHANNEL))
 
     //card = lib.Transform(card, trans.SwirlFunc(-0.001))
-    card = lib.Noise(card, lib.DIGITAL_NOISE, 25, 1)
+    card = lib.DigitalNoise(card, 200, 1)
     elapsed := time.Since(start)
 
     fmt.Printf("Done in %s!\n", elapsed)
