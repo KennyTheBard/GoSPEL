@@ -37,8 +37,9 @@ func main() {
     b := card.Bounds()
 
     gmap := lib.GradientMap{ []lib.ColorCore{
-                            lib.ColorCore{image.Point{0, 0}, color.RGBA{255, 255, 0, 255}},
-                            lib.ColorCore{image.Point{b.Max.X, b.Max.Y}, color.RGBA{0, 0, 0, 255}}} }
+                            lib.ColorCore{image.Point{0, 0}, color.RGBA{255, 0, 0, 255}},
+                            lib.ColorCore{image.Point{b.Max.X / 2, b.Max.Y / 2}, color.RGBA{0, 255, 0, 255}},
+                            lib.ColorCore{image.Point{b.Max.X, b.Max.Y}, color.RGBA{0, 0, 255, 255}}} }
 
     grd := lib.Gradient(b, gmap)
     // fmt.Println(grd)

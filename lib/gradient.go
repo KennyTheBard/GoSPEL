@@ -1,7 +1,6 @@
 package lib
 
 import (
-    // "fmt"
     "math"
     "image"
     "image/draw"
@@ -36,7 +35,12 @@ func ClosestPoints(gmap GradientMap, center image.Point) []ColorCore {
         }
     }
 
-    return aux[:3]
+    last := 3
+    if len(aux) < 3 {
+        last = len(aux)
+    }
+
+    return aux[:last]
 }
 
 /**
@@ -56,34 +60,31 @@ func Gradient(bounds image.Rectangle, gmap GradientMap) (image.Image) {
             for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
                 for x := bounds.Min.X; x < bounds.Max.X; x ++ {
                     center := image.Point{x, y}
-                    // close := ClosestPoints(gmap, center)
+                    close := ClosestPoints(gmap, center)
 
-                    // var totalDist float64
-                    // for _, core := range close {
-                    //     totalDist += utils.Distance(center, core.Point)
-                    // }
+                    var totalDist float64
+                    for _, core := range close {
+                        totalDist += utils.Distance(center, core.Point)
+                    }
 
-                    totalDist := 0.0
                     r_aux := 0.0
                     g_aux := 0.0
                     b_aux := 0.0
                     a_aux := 0.0
-                    for _, core := range gmap.Cores {
-                        weight := 1 / utils.Distance(center, core.Point)
+                    for _, core := range close {
+                        weight := utils.Distance(center, core.Point) / totalDist
                         r, g, b, a := core.Color.RGBA()
 
                         r_aux += weight * float64(r)
                         g_aux += weight * float64(g)
                         b_aux += weight * float64(b)
                         a_aux += weight * float64(a)
-
-                        totalDist += weight
                     }
 
-                    r_fin := uint32(math.Round(r_aux / totalDist))
-                    g_fin := uint32(math.Round(g_aux / totalDist))
-                    b_fin := uint32(math.Round(b_aux / totalDist))
-                    a_fin := uint32(math.Round(a_aux / totalDist))
+                    r_fin := uint32(math.Round(r_aux))
+                    g_fin := uint32(math.Round(g_aux))
+                    b_fin := uint32(math.Round(b_aux))
+                    a_fin := uint32(math.Round(a_aux))
 
                     ret.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
                 }
