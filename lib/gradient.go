@@ -35,7 +35,7 @@ func ClosestPoints(gmap GradientMap, center image.Point) []ColorCore {
         }
     }
 
-    last := 3
+    last := 4
     if len(aux) < 3 {
         last = len(aux)
     }
@@ -67,12 +67,9 @@ func Gradient(bounds image.Rectangle, gmap GradientMap) (image.Image) {
                         totalDist += utils.Distance(center, core.Point)
                     }
 
-                    r_aux := 0.0
-                    g_aux := 0.0
-                    b_aux := 0.0
-                    a_aux := 0.0
+                    var r_aux, g_aux, b_aux, a_aux float64
                     for _, core := range close {
-                        weight := utils.Distance(center, core.Point) / totalDist
+                        weight := (totalDist - utils.Distance(center, core.Point)) / totalDist
                         r, g, b, a := core.Color.RGBA()
 
                         r_aux += weight * float64(r)
