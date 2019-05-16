@@ -63,6 +63,8 @@
 - [ ] Refactor shear operations as a transformation
 - [x] Remove most of the error code checks from krom package
 - [x] Rework all handles to use type insertion only once for each variable
+- [ ] Rewrite ColorCores to be indifferent to image size (coordinates in floats)
+- [ ] Rewrite the gradient function to use barycentric coordinates for calculation (https://codeplea.com/triangular-interpolation)
 
 ### Test
 - [ ] Test cubic interpolation

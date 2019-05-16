@@ -1,12 +1,12 @@
 package lib
 
 import (
-    // "math"
+    // "fmt"
+    "math"
     "image"
     "image/draw"
     "image/color"
     utils "./utils"
-    interp "./interpolation"
 
 )
 
@@ -19,6 +19,7 @@ type GradientMap struct {
     Cores []ColorCore
 }
 
+// UNUSED
 func ClosestPoints(gmap GradientMap, center image.Point) []ColorCore {
     aux := make([]ColorCore, len(gmap.Cores))
     for i, core := range gmap.Cores {
@@ -38,7 +39,9 @@ func ClosestPoints(gmap GradientMap, center image.Point) []ColorCore {
     return aux[:3]
 }
 
-
+/**
+ *  Creates a gradient image given the size and color map.
+ */
 func Gradient(bounds image.Rectangle, gmap GradientMap) (image.Image) {
     ret := image.Image(image.NewRGBA(bounds))
 
@@ -53,29 +56,34 @@ func Gradient(bounds image.Rectangle, gmap GradientMap) (image.Image) {
             for y := bounds.Min.Y + rank; y < bounds.Max.Y; y += n {
                 for x := bounds.Min.X; x < bounds.Max.X; x ++ {
                     center := image.Point{x, y}
-                    close := ClosestPoints(gmap, center)
+                    // close := ClosestPoints(gmap, center)
 
-                    var totalDist float64
-                    for _, core := range close {
-                        totalDist += utils.Distance(center, core.Point)
-                    }
+                    // var totalDist float64
+                    // for _, core := range close {
+                    //     totalDist += utils.Distance(center, core.Point)
+                    // }
 
-                    addedDist := 0.0
-                    r_fin := 0
-                    g_fin := 0
-                    b_fin := 0
-                    a_fin := 0
-                    for _, core := range close {
-                        dist := utils.Distance(center, core.Point)
+                    totalDist := 0.0
+                    r_aux := 0.0
+                    g_aux := 0.0
+                    b_aux := 0.0
+                    a_aux := 0.0
+                    for _, core := range gmap.Cores {
+                        weight := 1 / utils.Distance(center, core.Point)
                         r, g, b, a := core.Color.RGBA()
 
-                        r = uint32(interp.LERP(int32(r_fin), int32(r), dist / (addedDist + dist)))
-                        g = uint32(interp.LERP(int32(g_fin), int32(g), dist / (addedDist + dist)))
-                        b = uint32(interp.LERP(int32(b_fin), int32(b), dist / (addedDist + dist)))
-                        a = uint32(interp.LERP(int32(a_fin), int32(a), dist / (addedDist + dist)))
+                        r_aux += weight * float64(r)
+                        g_aux += weight * float64(g)
+                        b_aux += weight * float64(b)
+                        a_aux += weight * float64(a)
 
-                        addedDist += dist
+                        totalDist += weight
                     }
+
+                    r_fin := uint32(math.Round(r_aux / totalDist))
+                    g_fin := uint32(math.Round(g_aux / totalDist))
+                    b_fin := uint32(math.Round(b_aux / totalDist))
+                    a_fin := uint32(math.Round(a_aux / totalDist))
 
                     ret.(draw.Image).Set(x, y, color.RGBA{uint8(r_fin >> 8), uint8(g_fin >> 8), uint8(b_fin >> 8), uint8(a_fin >> 8)})
                 }

@@ -3,7 +3,8 @@ package main
 import (
     "fmt"
     "time"
-    // "image/color"
+    "image"
+    "image/color"
     lib "./lib"
     //ut "./ut"
     // filters "./lib/generators/filters"
@@ -12,7 +13,7 @@ import (
 )
 
 func main() {
-    img := lib.DecodeImage("humans.jpg")
+    img := lib.DecodeImage("test.jpg")
 
     start := time.Now()
 
@@ -33,7 +34,16 @@ func main() {
     // card = lib.ModifyColors(card, card.Bounds(), modifiers.ExctractColorChannel(modifiers.RED_CHANNEL))
 
     //card = lib.Transform(card, trans.SwirlFunc(-0.001))
-    card = lib.DigitalNoise(card, 200, 1)
+    b := card.Bounds()
+
+    gmap := lib.GradientMap{ []lib.ColorCore{
+                            lib.ColorCore{image.Point{0, 0}, color.RGBA{255, 255, 0, 255}},
+                            lib.ColorCore{image.Point{b.Max.X, b.Max.Y}, color.RGBA{0, 0, 0, 255}}} }
+
+    grd := lib.Gradient(b, gmap)
+    // fmt.Println(grd)
+    card = lib.Merge(card, grd, image.Point{0, 0})
+
     elapsed := time.Since(start)
 
     fmt.Printf("Done in %s!\n", elapsed)
