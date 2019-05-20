@@ -80,6 +80,7 @@
 - [ ] The black border for the Swirl effect
 - [x] The problem with types at runtime
 - [x] Find a way in repeat to return error if the in and out are different types
+- [ ] Divide gradient map into triangles
 
 ### Documentation
 - [x] Add comments to every handle

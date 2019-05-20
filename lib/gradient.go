@@ -65,11 +65,7 @@ func Gradient(bounds image.Rectangle, gmap GradientMap) (image.Image) {
 
                     var totalDist float64
                     var dists [3]float64
-                    // fmt.Println(len(close))
                     for pos := range close {
-                        // fmt.Print(pos, " ")
-                        // fmt.Print((pos + 1) % 3, " ")
-                        // fmt.Println((pos + 2) % 3)
                         dists[pos] = utils.MinDistancePointToSegment(center,
                             close[(pos + 1) % 3].Point,  close[(pos + 2) % 3].Point)
                         totalDist += dists[pos]
