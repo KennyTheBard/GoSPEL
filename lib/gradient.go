@@ -1,6 +1,7 @@
 package lib
 
 import (
+    // "fmt"
     "math"
     "image"
     "image/draw"
@@ -35,7 +36,7 @@ func ClosestPoints(gmap GradientMap, center image.Point) []ColorCore {
         }
     }
 
-    last := 4
+    last := 3
     if len(aux) < 3 {
         last = len(aux)
     }
@@ -63,13 +64,20 @@ func Gradient(bounds image.Rectangle, gmap GradientMap) (image.Image) {
                     close := ClosestPoints(gmap, center)
 
                     var totalDist float64
-                    for _, core := range close {
-                        totalDist += utils.Distance(center, core.Point)
+                    var dists [3]float64
+                    // fmt.Println(len(close))
+                    for pos := range close {
+                        // fmt.Print(pos, " ")
+                        // fmt.Print((pos + 1) % 3, " ")
+                        // fmt.Println((pos + 2) % 3)
+                        dists[pos] = utils.MinDistancePointToSegment(center,
+                            close[(pos + 1) % 3].Point,  close[(pos + 2) % 3].Point)
+                        totalDist += dists[pos]
                     }
 
                     var r_aux, g_aux, b_aux, a_aux float64
-                    for _, core := range close {
-                        weight := (totalDist - utils.Distance(center, core.Point)) / totalDist
+                    for pos, core := range close {
+                        weight := dists[pos] / totalDist
                         r, g, b, a := core.Color.RGBA()
 
                         r_aux += weight * float64(r)
@@ -77,6 +85,7 @@ func Gradient(bounds image.Rectangle, gmap GradientMap) (image.Image) {
                         b_aux += weight * float64(b)
                         a_aux += weight * float64(a)
                     }
+
 
                     r_fin := uint32(math.Round(r_aux))
                     g_fin := uint32(math.Round(g_aux))

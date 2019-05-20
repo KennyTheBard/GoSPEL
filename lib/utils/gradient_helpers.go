@@ -44,6 +44,33 @@ func Distance(a, b image.Point) float64 {
     return math.Sqrt(math.Pow(x, 2) + math.Pow(y, 2))
 }
 
+func lenSegmentSquared(a, b image.Point) float64 {
+    ax := float64(a.X)
+    bx := float64(b.X)
+    ay := float64(a.Y)
+    by := float64(b.Y)
+    return (ax - bx) * (ax - bx) + (ay - by) * (ay - by)
+}
+
+func divPoints(a, b image.Point) image.Point {
+    return image.Point{a.X - b.X, a.Y - b.Y}
+}
+
+func dotPoints(a, b image.Point) int {
+    return a.X * b.X + a.Y * b.Y
+}
+
+func MinDistancePointToSegment(p, a, b image.Point) float64 {
+    seg_len := lenSegmentSquared(a, b)
+    if seg_len == 0.0 {
+        return Distance(p, a)
+    }
+
+    t := math.Max(0, math.Min(1, float64(dotPoints(divPoints(p, b), divPoints(a, b))) / seg_len))
+    dif := divPoints(a, b)
+    proj := image.Point{int(math.Round(float64(b.X) + t * float64(dif.X))), int(math.Round(float64(b.Y) + t * float64(dif.Y)))}
+    return Distance(p, proj)
+}
 
 /**
     Returns the sorted color points.
