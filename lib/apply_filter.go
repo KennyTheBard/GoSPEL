@@ -1,6 +1,7 @@
 package lib
 
 import (
+    "math"
     "image"
     "image/color"
     "image/draw"
@@ -39,17 +40,17 @@ func ApplyFilter(img image.Image, f Filter) (image.Image) {
                             // values are returned as uint32
                             r, g, b, a := utils.Safe_Get_Color(img, x + j, y + i)
 
-                            sum_r += float64(r) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
-                            sum_g += float64(g) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
-                            sum_b += float64(b) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
-                            sum_a += float64(a) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
+                            sum_r += float64(r * r) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
+                            sum_g += float64(g * g) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
+                            sum_b += float64(b * b) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
+                            sum_a += float64(a * a) * f.Mat[i + len(f.Mat) / 2][j + len(f.Mat[i + len(f.Mat) / 2]) / 2]
                         }
                     }
 
-                    fin_r := int32(sum_r)
-                    fin_g := int32(sum_g)
-                    fin_b := int32(sum_b)
-                    fin_a := int32(sum_a)
+                    fin_r := int32(math.Sqrt(sum_r))
+                    fin_g := int32(math.Sqrt(sum_g))
+                    fin_b := int32(math.Sqrt(sum_b))
+                    fin_a := int32(math.Sqrt(sum_a))
 
                     trg.(draw.Image).Set(x, y, color.RGBA{uint8(fin_r >> 8), uint8(fin_g >> 8), uint8(fin_b >> 8), uint8(fin_a >> 8)})
                 }
