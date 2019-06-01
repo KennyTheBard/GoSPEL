@@ -10,13 +10,57 @@ import (
 
 )
 
+type Gradient interface {
+    DrawPixel(image.Point, image.Rectangle) (color.Color)
+}
+
 type ColorCore struct {
-    Point image.Point
+    Coord float64
     Color color.Color
 }
 
-type GradientMap struct {
+type LinearGradient struct {
+    Angle float64
     Cores []ColorCore
+}
+
+func (grd LinearGradient) DrawPixel(p image.Point, bounds image.Rectangle) (color.Color) {
+    k := image.Point{bounds.Max.X,
+        int32(math.Round(bounds.Max.X * math.Tan(grd.Angle)))}
+    dotProd := p.X * k.X + p.Y * k.X
+    len := p.X * p.X + p.Y * p.Y
+    proj := image.Point{int32((dotProd * p.X) / len), int32((dotProd * p.Y) / len)}
+
+    total := k.X * k.X + k.Y * k.Y
+    projLen := proj.X * proj.X + proj.Y * proj.Y
+
+    val := float64(projLen) / float64(total)
+
+    curr := 0
+    for pos, core := range grd.Cores {
+        if core.Coord > val {
+            curr = pos
+            break
+        }
+    }
+
+    if curr == 0 {
+        return grd.Cores[0].Color
+    }
+
+    if curr == len(grd.Cores) - 1 {
+        return grd.Cores[len(grd.Cores) - 1].Color
+    }
+
+    r1, g1, b1, a1 := grd.Cores[curr - 1].Color.RGBA()
+    p1 := utils.Pixel{r1, g1, b1, a1}
+    r2, g2, b2, a2 := grd.Cores[curr].Color.RGBA()
+    p2 := utils.Pixel{r2, g2, b2, a2}
+
+    px := utils.Pixel_linear_interpolation(p1, p2,
+        (val - grd.Cores[curr - 1].Coord) / (grd.Cores[curr].Coord - grd.Cores[curr - 1].Coord))
+
+    return color.RGBA{uint8(px.R >> 8), uint8(px.G >> 8), uint8(px.B >> 8), uint8(px.A >> 8)}
 }
 
 // UNUSED
