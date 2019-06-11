@@ -36,15 +36,15 @@ func main() {
     //card = lib.Transform(card, trans.SwirlFunc(-0.001))
     b := card.Bounds()
 
-    gmap := lib.GradientMap{ []lib.ColorCore{
-                            lib.ColorCore{image.Point{0, 0}, color.RGBA{0, 0, 255, 255}},
-                            lib.ColorCore{image.Point{b.Max.X, 0}, color.RGBA{255, 0, 0, 255}},
-                            lib.ColorCore{image.Point{0, b.Max.Y}, color.RGBA{0, 255, 0, 255}},
-                            lib.ColorCore{image.Point{b.Max.X, b.Max.Y}, color.RGBA{0, 0, 255, 255}}} }
+    grd := lib.LinearGradient{45, []lib.ColorCore{}}
+    grd.Cores = append(grd.Cores, lib.ColorCore{0.0, color.RGBA{0, 0, 255, 255}})
+    grd.Cores = append(grd.Cores, lib.ColorCore{0.3, color.RGBA{255, 0, 255, 255}})
+    grd.Cores = append(grd.Cores, lib.ColorCore{0.6, color.RGBA{0, 255, 255, 255}})
+    grd.Cores = append(grd.Cores, lib.ColorCore{1.0, color.RGBA{255, 255, 255, 255}})
 
-    grd := lib.Gradient(b, gmap)
+    grdimg := lib.ApplyGradient(b, grd)
     // fmt.Println(grd)
-    card = lib.Merge(card, grd, image.Point{0, 0})
+    card = lib.Merge(card, grdimg, image.Point{0, 0})
 
     elapsed := time.Since(start)
 

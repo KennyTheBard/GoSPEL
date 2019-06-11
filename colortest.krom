@@ -1,6 +1,0 @@
-save
-	(filter
-		(load testcolor.png)
-		(gen filter blur 10)
-	)
-	result png
