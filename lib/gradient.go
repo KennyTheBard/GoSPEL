@@ -15,13 +15,14 @@ type Gradient interface {
 }
 
 type ColorCore struct {
-    Coord float64
-    Color color.Color
+    Coord   float64
+    Color   color.Color
 }
 
 type LinearGradient struct {
-    Angle float64
-    Cores []ColorCore
+    Angle   float64
+    Offset  image.Point
+    Cores   []ColorCore
 }
 
 func DistanceToLine(P, A, B image.Point) float64 {
