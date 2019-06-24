@@ -1,4 +1,4 @@
-package aritmethic
+package arithmetic
 
 import (
     "reflect"
@@ -12,7 +12,7 @@ import (
  *  aritmethic expresion.
  *  Usage: define <name> (<code>)
  */
-func AritmethicHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
+func ArithmeticHandle(scope generics.Namespace, raw_args []generics.Void) (generics.Void, error.Error) {
     // check the number of arguments
     expected := 1
     received := len(raw_args)
