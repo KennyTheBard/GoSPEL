@@ -1,6 +1,7 @@
 package operation
 
 import (
+    "math"
     "strconv"
     "reflect"
     lib "../../lib"
@@ -33,15 +34,15 @@ func BoxBlurHandle(scope generics.Namespace, raw_args []generics.Void) (generics
     }
     str, ok := aux.(string)
     if !ok {
-        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
+        return nil, error.ArgumentTypeError(pos, "number as a string", reflect.TypeOf(aux).Name())
     }
-    diameter, conv_err := strconv.Atoi(str)
+    diameter, conv_err := strconv.ParseFloat(str, 64)
     if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
 
     // call the operation
-    return filters.BoxBlur(diameter), error.CreateNoError()
+    return filters.BoxBlur(int(math.Round(diameter))), error.CreateNoError()
 }
 
 /**
@@ -68,12 +69,13 @@ func CustomFilterHandle(scope generics.Namespace, raw_args []generics.Void) (gen
     }
     str, ok := aux.(string)
     if !ok {
-        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
+        return nil, error.ArgumentTypeError(pos, "number as a string", reflect.TypeOf(aux).Name())
     }
-    size, conv_err := strconv.Atoi(str)
+    aux_size, conv_err := strconv.ParseFloat(str, 64)
     if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
+    size := int(math.Round(aux_size))
 
     // check the number of arguments depending on the size
     expected = size * size + 1
@@ -96,7 +98,7 @@ func CustomFilterHandle(scope generics.Namespace, raw_args []generics.Void) (gen
         }
         str, ok := aux.(string)
         if !ok {
-            return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+            return nil, error.ArgumentTypeError(pos, "number as a string", reflect.TypeOf(aux).Name())
         }
         member, conv_err := strconv.ParseFloat(str, 64)
         if conv_err != nil {

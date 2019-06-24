@@ -33,7 +33,7 @@ func GrayscaleHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     }
     str, ok := aux.(string)
     if !ok {
-        return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+        return nil, error.ArgumentTypeError(pos, "number as a string", reflect.TypeOf(aux).Name())
     }
     red, conv_err := strconv.ParseFloat(str, 64)
     if conv_err != nil {
@@ -49,7 +49,7 @@ func GrayscaleHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     }
     str, ok = aux.(string)
     if !ok {
-        return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+        return nil, error.ArgumentTypeError(pos, "number as a string", reflect.TypeOf(aux).Name())
     }
     green, conv_err := strconv.ParseFloat(str, 64)
     if conv_err != nil {
@@ -65,7 +65,7 @@ func GrayscaleHandle(scope generics.Namespace, raw_args []generics.Void) (generi
     }
     str, ok = aux.(string)
     if !ok {
-        return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+        return nil, error.ArgumentTypeError(pos, "number as a string", reflect.TypeOf(aux).Name())
     }
     blue, conv_err := strconv.ParseFloat(str, 64)
     if conv_err != nil {
@@ -108,7 +108,7 @@ func CustomModifierHandle(scope generics.Namespace, raw_args []generics.Void) (g
         }
         str, ok := aux.(string)
         if !ok {
-            return nil, error.ArgumentTypeError(pos, "float", reflect.TypeOf(aux).Name())
+            return nil, error.ArgumentTypeError(pos, "number as a string", reflect.TypeOf(aux).Name())
         }
         member, conv_err := strconv.ParseFloat(str, 64)
         if conv_err != nil {

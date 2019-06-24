@@ -1,6 +1,7 @@
 package operation
 
 import (
+    "math"
     "image"
     "reflect"
     "strconv"
@@ -74,9 +75,9 @@ func NewPointHandle(scope generics.Namespace, raw_args []generics.Void) (generic
     }
     str, ok := aux.(string)
     if !ok {
-        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
+        return nil, error.ArgumentTypeError(pos, "number as a string", reflect.TypeOf(aux).Name())
     }
-    x, conv_err := strconv.Atoi(str)
+    x, conv_err := strconv.ParseFloat(str, 64)
     if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
@@ -90,15 +91,15 @@ func NewPointHandle(scope generics.Namespace, raw_args []generics.Void) (generic
     }
     str, ok = aux.(string)
     if !ok {
-        return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
+        return nil, error.ArgumentTypeError(pos, "number as a string", reflect.TypeOf(aux).Name())
     }
-    y, conv_err := strconv.Atoi(str)
+    y, conv_err := strconv.ParseFloat(str, 64)
     if conv_err != nil {
         return nil, error.ArgumentTypeError(pos, "integer", reflect.TypeOf(aux).Name())
     }
 
     // call the operation
-    return image.Point{x, y}, error.CreateNoError()
+    return image.Point{int(math.Round(x)), int(math.Round(y))}, error.CreateNoError()
 }
 
 /**
