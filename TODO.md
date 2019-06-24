@@ -31,6 +31,7 @@
 - [x] Write a standardization function to convert script format to command format
 - [ ] Design a data structure to optimize keyword recognition
 - [ ] Encapsulate all keywords and related handles into a map (keyword, handle)
+- [x] Implemented arithmetic handle
 
 ### Extend
 - [x] Implement keyword recognition
@@ -75,6 +76,7 @@
 - [ ] Unit tests for Create Image
 - [ ] Unit tests for Select
 - [ ] Use unit testing functionalities incorporated in language
+- [ ] Test arithmetic handle
 
 ### Debug
 - [ ] The black border for the Swirl effect
