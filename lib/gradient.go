@@ -25,11 +25,18 @@ type LinearGradient struct {
     Cores   []ColorCore
 }
 
+func iAbs(i int) int {
+    if i < 0 {
+        return -i
+    }
+    return i
+}
+
 func DistanceToLine(P, A, B image.Point) float64 {
-    aux_y := B.Y - A.Y
-    aux_x := B.X - A.X
+    aux_y := float64(B.Y - A.Y)
+    aux_x := float64(B.X - A.X)
     length := math.Sqrt(aux_y * aux_y + aux_x * aux_x)
-    return math.Abs((B.Y - A.Y) * P.X - (B.X - A.X) * P.Y + B.X * A.Y - B.Y * A.X) / length
+    return float64(iAbs((B.Y - A.Y) * P.X - (B.X - A.X) * P.Y + B.X * A.Y - B.Y * A.X)) / length
 }
 
 func (grd LinearGradient) DrawPixel(p image.Point, bounds image.Rectangle) (color.Color) {

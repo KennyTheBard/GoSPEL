@@ -18,7 +18,7 @@ let
                             (rect first $size)
                             (point add
                                 (rect last $size)
-                                (point new -250 750)
+                                (point new -250 100)
                             )
                         )
                     )
